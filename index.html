@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TTCKVN</title>
+<style>
+  * { box-sizing: border-box; }
+  body { background: #000; color: #fff; font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 20px; }
+  h1 { text-align: center; font-size: 28px; margin: 8px 0 6px; }
+  .sub { text-align: center; color: #bbb; font-size: 13px; margin-bottom: 18px; line-height: 1.5; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; max-width: 1200px; margin: 0 auto; }
+  .cell { aspect-ratio: 1 / 1; border: 1px solid #fff; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 10px; text-align: center; }
+  .cell.up { background: #00FF22; color: #000; }
+  .cell.down { background: #C40000; color: #fff; }
+  .cell.flat { background: #FFCC00; color: #000; }
+  .sym { font-weight: bold; font-size: 18px; }
+  .chg { font-size: 15px; }
+  .val { font-size: 15px; }
+  .foot { text-align: center; color: #888; font-size: 12px; margin-top: 20px; line-height: 1.5; }
+  #status { text-align: center; color: #bbb; }
+</style>
+</head>
+<body>
+<h1 id="title">TTCKVN</h1>
+<p class="sub" id="sub"></p>
+<div class="grid" id="grid"></div>
+<p id="status">Đang tải dữ liệu…</p>
+<p class="foot">Nguồn dữ liệu: vnstock 4.x (KBS). Lọc: giá trị giao dịch &gt; 10 tỷ đồng trong phiên gần nhất. Top 100 theo khối lượng giao dịch giảm dần. Đây chỉ là bảng hiển thị dữ liệu, không phải khuyến nghị đầu tư.</p>
+<script>
+const EX_MAP = { HOSE: 'HSX', HSX: 'HSX', HNX: 'HNX', UPCOM: 'UPCOM' };
+function fmtDate(iso) {
+  const p = iso.split('-');
+  return p[2] + '/' + p[1] + '/' + p[0];
+}
+function fmtChange(change, pct) {
+  const sign = change > 0 ? '+' : (change < 0 ? '' : '');
+  return sign + change.toFixed(2) + ' (' + (pct > 0 ? '+' : '') + pct.toFixed(1) + '%)';
+}
+fetch('data.json').then(r => {
+  if (!r.ok) throw new Error('Không tải được data.json');
+  return r.json();
+}).then(data => {
+  document.getElementById('title').textContent = 'TTCKVN Ngày ' + fmtDate(data.date);
+  document.getElementById('sub').textContent = 'Phiên ' + fmtDate(data.date) + ' • ' + data.items.length + ' mã • Sắp xếp theo khối lượng giảm dần • Tăng: nền xanh, Giảm: nền đỏ, Không đổi: nền vàng';
+  document.getElementById('status').textContent = '';
+  const grid = document.getElementById('grid');
+  data.items.forEach(it => {
+    const d = document.createElement('div');
+    d.className = 'cell ' + (it.change > 0 ? 'up' : (it.change < 0 ? 'down' : 'flat'));
+    const ex = EX_MAP[it.exchange] || it.exchange || '';
+    d.innerHTML = '<div class="sym">' + it.symbol + ' (' + ex + ')</div>'
+      + '<div class="chg">' + fmtChange(it.change, it.pct) + '</div>'
+      + '<div class="val">' + it.value_billion.toFixed(2) + ' tỷ</div>';
+    grid.appendChild(d);
+  });
+}).catch(e => {
+  document.getElementById('status').textContent = 'Chưa có dữ liệu: ' + e.message;
+});
+</script>
+</body>
+</html>
