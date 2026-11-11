@@ -123,8 +123,8 @@ function drawVNChart() {
   const plotW = cssW - L - R, plotH = cssH - T - B;
   let mn = Infinity, mx = -Infinity;
   items.forEach(it => {
-    mn = Math.min(mn, it.low, it.ema10, it.ema50, it.ema150, it.ema200);
-    mx = Math.max(mx, it.high, it.ema10, it.ema50, it.ema150, it.ema200);
+    mn = Math.min(mn, it.low, it.ma10, it.ma50, it.ma150, it.ma200);
+    mx = Math.max(mx, it.high, it.ma10, it.ma50, it.ma150, it.ma200);
   });
   const pad = (mx - mn) * 0.03;
   mn -= pad; mx += pad;
@@ -160,10 +160,10 @@ function drawVNChart() {
       ctx.fillText(label, lx, T + plotH + 6);
     }
   }
-  // EMA lines: colors as on Dat's AmiBroker screenshot
-  // (yellow = EMA150, green = EMA50, red = EMA200)
-  const emas = [['ema200', '#C40000'], ['ema150', '#FFCC00'], ['ema50', '#00FF22']];
-  emas.forEach(([key, col]) => {
+  // SMA lines, SMA only on this chart (Dat, 2026-11-11).
+  // Colors: MA50 green, MA150 yellow, MA200 red.
+  const mas = [['ma200', '#C40000'], ['ma150', '#FFCC00'], ['ma50', '#00FF22']];
+  mas.forEach(([key, col]) => {
     ctx.strokeStyle = col;
     ctx.lineWidth = 1.5;
     ctx.beginPath();
@@ -176,16 +176,16 @@ function drawVNChart() {
     });
     ctx.stroke();
   });
-  // EMA10: color changes along the line per Dat's AFL
-  // (C > EMA10: pale green #98FB98, C < EMA10: red #FF0000, C == EMA10: yellow #FFFF00)
+  // MA10: color changes along the line per Dat's AFL logic, applied to SMA10
+  // (C > SMA10: pale green #98FB98, C < SMA10: red #FF0000, C == SMA10: yellow #FFFF00)
   ctx.lineWidth = 1.5;
   for (let i = 1; i < n; i++) {
     const a = items[i - 1], b = items[i];
-    if (a.ema10 == null || b.ema10 == null) continue;
-    ctx.strokeStyle = a.ema10_color;
+    if (a.ma10 == null || b.ma10 == null) continue;
+    ctx.strokeStyle = a.ma10_color;
     ctx.beginPath();
-    ctx.moveTo(X(i - 1), Y(a.ema10));
-    ctx.lineTo(X(i), Y(b.ema10));
+    ctx.moveTo(X(i - 1), Y(a.ma10));
+    ctx.lineTo(X(i), Y(b.ma10));
     ctx.stroke();
   }
   const bw = Math.max(1, plotW / n * 0.6);
@@ -200,15 +200,15 @@ function drawVNChart() {
     ctx.lineTo(x + bw / 2, Y(it.close));
     ctx.stroke();
   });
-  // Value labels on the right price axis: VN Index (white bg) + 4 EMA values
+  // Value labels on the right price axis: VN Index (white bg) + 4 MA values
   // (bg = line color), black bold text. May overlap the axis tick marks.
   const last = items[n - 1];
   const vlabels = [
     { v: last.close, bg: '#FFFFFF' },
-    { v: last.ema10, bg: last.ema10_color },
-    { v: last.ema50, bg: '#00FF22' },
-    { v: last.ema150, bg: '#FFCC00' },
-    { v: last.ema200, bg: '#C40000' },
+    { v: last.ma10, bg: last.ma10_color },
+    { v: last.ma50, bg: '#00FF22' },
+    { v: last.ma150, bg: '#FFCC00' },
+    { v: last.ma200, bg: '#C40000' },
   ].filter(l => l.v != null);
   const LH = 15;
   const ys = vlabels.map(l => Y(l.v)).sort((a, b) => a - b);
