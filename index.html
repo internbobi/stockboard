@@ -6,27 +6,30 @@
 <title>TTCKVN</title>
 <style>
   * { box-sizing: border-box; }
-  body { background: #000; color: #fff; font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 20px; }
-  h1 { text-align: center; font-size: 28px; margin: 8px 0 18px; }
-  .grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 10px; max-width: 1100px; margin: 0 auto; }
-  .cell { aspect-ratio: 4 / 3; border: 1px solid #fff; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 6px 4px; text-align: center; }
+  body { background: #000; color: #fff; font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; }
+  .board { width: 25%; min-height: 100vh; container-type: inline-size; padding: 1.5cqw 1.2cqw; }
+  h1 { text-align: center; font-size: 2.6cqw; margin: 0.8cqw 0 1.4cqw; line-height: 1.2; }
+  .grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 0.9cqw; }
+  .cell { border: 1px solid #fff; border-radius: 0.9cqw; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.2cqw; padding: 0.5cqw 0.2cqw; text-align: center; line-height: 1.15; overflow: hidden; }
   .cell.up { background: #00FF22; color: #000; }
   .cell.down { background: #C40000; color: #fff; }
   .cell.flat { background: #FFCC00; color: #000; }
-  .sym { font-weight: bold; font-size: 13px; }
-  .close { font-size: 11px; }
-  .chg { font-size: 11px; }
-  .val { font-size: 11px; }
-  .foot { text-align: center; color: #888; font-size: 12px; margin-top: 20px; line-height: 1.5; }
+  .sym { font-weight: bold; font-size: 1.4cqw; white-space: nowrap; }
+  .close { font-size: 1.15cqw; }
+  .chg { font-size: 1.05cqw; white-space: nowrap; }
+  .val { font-size: 1.15cqw; white-space: nowrap; }
+  .foot { text-align: center; color: #888; font-size: 1.05cqw; margin-top: 1.6cqw; line-height: 1.5; }
   #countdown { position: fixed; right: 14px; bottom: 12px; background: rgba(255,255,255,0.14); color: #fff; font-size: 12px; padding: 6px 10px; border-radius: 8px; z-index: 10; }
-  #status { text-align: center; color: #bbb; }
+  #status { text-align: center; color: #bbb; font-size: 1.1cqw; }
 </style>
 </head>
 <body>
+<div class="board">
 <h1 id="title">TTCKVN</h1>
 <div class="grid" id="grid"></div>
 <p id="status">Đang tải dữ liệu…</p>
 <p class="foot">Đây chỉ là bảng hiển thị dữ liệu, không phải khuyến nghị đầu tư.</p>
+</div>
 <div id="countdown"></div>
 <script>
 const EX_MAP = { HOSE: 'HSX', HSX: 'HSX', HNX: 'HNX', UPCOM: 'UPCOM' };
