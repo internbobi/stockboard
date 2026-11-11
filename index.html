@@ -23,6 +23,8 @@
   .market { width: 33.33%; min-height: 100vh; container-type: inline-size; padding: 1.5cqw 1.2cqw; }
   .market canvas { width: 100%; height: 420px; display: block; background: #000; }
   .vninfo { text-align: center; color: #bbb; font-size: 1.6cqw; margin: 0.5cqw 0 1cqw; line-height: 1.5; }
+  .layer-title { font-size: 1.9cqw; margin: 2.5cqw 0 0.5cqw; }
+  #ema50chart { height: 260px; }
 </style>
 </head>
 <body>
@@ -36,6 +38,9 @@
 <h1>Trạng thái TTCKVN</h1>
 <div id="vninfo" class="vninfo">Đang tải dữ liệu…</div>
 <canvas id="vnchart"></canvas>
+<h1 class="layer-title">Tầng 2: Tỷ lệ mã trên/dưới EMA50</h1>
+<div id="ema50info" class="vninfo">Đang tải dữ liệu…</div>
+<canvas id="ema50chart"></canvas>
 </div>
 <div id="countdown"></div>
 <script>
@@ -263,8 +268,108 @@ loadVNChart();
 let vnResizeT = null;
 window.addEventListener('resize', () => {
   clearTimeout(vnResizeT);
-  vnResizeT = setTimeout(drawVNChart, 150);
+  vnResizeT = setTimeout(() => { drawVNChart(); drawEMA50Chart(); }, 150);
 });
+</script>
+<script>
+// ---- Feature 2, Layer 2: % of stocks above/below EMA50 (dots) ----
+let ema50Data = null;
+function drawArrow(ctx, x, y, up, col) {
+  ctx.fillStyle = col;
+  ctx.beginPath();
+  if (up) {
+    ctx.moveTo(x, y - 4);
+    ctx.lineTo(x - 4, y + 3);
+    ctx.lineTo(x + 4, y + 3);
+  } else {
+    ctx.moveTo(x, y + 4);
+    ctx.lineTo(x - 4, y - 3);
+    ctx.lineTo(x + 4, y - 3);
+  }
+  ctx.closePath();
+  ctx.fill();
+}
+function drawEMA50Chart() {
+  if (!ema50Data) return;
+  const cv = document.getElementById('ema50chart');
+  const cssW = cv.clientWidth, cssH = cv.clientHeight;
+  if (!cssW || !cssH) return;
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = Math.round(cssW * dpr);
+  cv.height = Math.round(cssH * dpr);
+  const ctx = cv.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, cssW, cssH);
+  const items = ema50Data.items, n = items.length;
+  const L = 6, R = 44, T = 8, B = 26;
+  const plotW = cssW - L - R, plotH = cssH - T - B;
+  const Y = p => T + (100 - p) / 100 * plotH;
+  const X = i => L + (i + 0.5) * plotW / n;
+  ctx.font = '11px Arial';
+  ctx.textBaseline = 'middle';
+  for (let p = 0; p <= 100; p += 20) {
+    const y = Y(p);
+    ctx.strokeStyle = '#222';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(L, y); ctx.lineTo(cssW - R, y); ctx.stroke();
+    ctx.fillStyle = '#aaa';
+    ctx.textAlign = 'left';
+    ctx.fillText(String(p), cssW - R + 6, y);
+  }
+  ctx.strokeStyle = '#fff';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([5, 4]);
+  ctx.beginPath(); ctx.moveTo(L, Y(50)); ctx.lineTo(cssW - R, Y(50)); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  for (let i = 0; i < n; i++) {
+    const d = items[i].date;
+    const m = parseInt(d.slice(5, 7), 10);
+    const prevM = i > 0 ? parseInt(items[i - 1].date.slice(5, 7), 10) : null;
+    if (m !== prevM) {
+      const x = X(i);
+      ctx.strokeStyle = '#222';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(x, T); ctx.lineTo(x, T + plotH); ctx.stroke();
+      ctx.fillStyle = '#aaa';
+      const label = (m === 1) ? d.slice(0, 4) : VN_MONTHS[m - 1];
+      const lx = Math.max(14, Math.min(cssW - R - 14, x));
+      ctx.fillText(label, lx, T + plotH + 6);
+    }
+  }
+  items.forEach((it, i) => {
+    const x = X(i);
+    ctx.fillStyle = '#00FF22';
+    ctx.beginPath(); ctx.arc(x, Y(it.pct_above), 2, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#C40000';
+    ctx.beginPath(); ctx.arc(x, Y(it.pct_below), 2, 0, Math.PI * 2); ctx.fill();
+  });
+  items.forEach((it, i) => {
+    if (i === 0) return;
+    const prev = items[i - 1].pct_above, cur = it.pct_above;
+    const x = X(i), y = Y(cur);
+    if (prev < 50 && cur >= 50) drawArrow(ctx, x, y + 10, true, '#00FF22');
+    else if (prev > 50 && cur <= 50) drawArrow(ctx, x, y - 10, false, '#C40000');
+  });
+}
+function loadEMA50Chart() {
+  fetch('pct_ema50.json?t=' + Date.now()).then(r => {
+    if (!r.ok) throw new Error('Không tải được pct_ema50.json');
+    return r.json();
+  }).then(data => {
+    ema50Data = data;
+    const l = data.latest;
+    document.getElementById('ema50info').innerHTML =
+      '%&gt;EMA50: <span style="color:#00FF22">' + l.pct_above.toFixed(2) + '%</span>' +
+      ' &nbsp;|&nbsp; %&lt;EMA50: <span style="color:#C40000">' + l.pct_below.toFixed(2) + '%</span>' +
+      ' &nbsp;(' + l.total + ' mã, ' + l.date.split('-').reverse().join('/') + ')';
+    drawEMA50Chart();
+  }).catch(e => {
+    document.getElementById('ema50info').textContent = 'Chưa có dữ liệu: ' + e.message;
+  });
+}
+loadEMA50Chart();
 </script>
 </body>
 </html>
