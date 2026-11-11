@@ -211,9 +211,11 @@ function drawVNChart() {
     { v: last.ma200, bg: '#C40000' },
   ].filter(l => l.v != null);
   const LH = 15;
+  const GAP = LH + 2; // 2px gap: labels never touch or overlap, all stay visible;
+  // sorted by value top-to-bottom (larger value on top), pushed down only as needed
   const ys = vlabels.map(l => Y(l.v)).sort((a, b) => a - b);
   for (let i = 1; i < ys.length; i++) {
-    if (ys[i] - ys[i - 1] < LH) ys[i] = ys[i - 1] + LH;
+    if (ys[i] - ys[i - 1] < GAP) ys[i] = ys[i - 1] + GAP;
   }
   if (ys.length && ys[ys.length - 1] + LH / 2 > T + plotH) {
     const shift = ys[ys.length - 1] + LH / 2 - (T + plotH);
