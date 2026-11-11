@@ -23,7 +23,6 @@
   .market { width: 33.33%; min-height: 100vh; container-type: inline-size; padding: 1.5cqw 1.2cqw; }
   .market canvas { width: 100%; height: 420px; display: block; background: #000; }
   .vninfo { text-align: center; color: #bbb; font-size: 1.6cqw; margin: 0.5cqw 0 1cqw; line-height: 1.5; }
-  .vnlegend { text-align: center; color: #bbb; font-size: 1.5cqw; margin-top: 1cqw; line-height: 1.6; }
 </style>
 </head>
 <body>
@@ -37,7 +36,6 @@
 <h1>Trạng thái TTCKVN</h1>
 <div id="vninfo" class="vninfo">Đang tải dữ liệu…</div>
 <canvas id="vnchart"></canvas>
-<div class="vnlegend"><span style="color:#FFCC00">— MA50</span> &nbsp; <span style="color:#00FF22">— MA150</span> &nbsp; <span style="color:#C40000">— MA200</span><br>Bar: High – Low, Close (Open = Close)</div>
 </div>
 <div id="countdown"></div>
 <script>
@@ -125,8 +123,8 @@ function drawVNChart() {
   const plotW = cssW - L - R, plotH = cssH - T - B;
   let mn = Infinity, mx = -Infinity;
   items.forEach(it => {
-    mn = Math.min(mn, it.low, it.ma50, it.ma150, it.ma200);
-    mx = Math.max(mx, it.high, it.ma50, it.ma150, it.ma200);
+    mn = Math.min(mn, it.low, it.ema10, it.ema50, it.ema150, it.ema200);
+    mx = Math.max(mx, it.high, it.ema10, it.ema50, it.ema150, it.ema200);
   });
   const pad = (mx - mn) * 0.03;
   mn -= pad; mx += pad;
@@ -162,8 +160,10 @@ function drawVNChart() {
       ctx.fillText(label, lx, T + plotH + 6);
     }
   }
-  const mas = [['ma50', '#FFCC00'], ['ma150', '#00FF22'], ['ma200', '#C40000']];
-  mas.forEach(([key, col]) => {
+  // EMA lines: colors as on Dat's AmiBroker screenshot
+  // (yellow = EMA150, green = EMA50, red = EMA200)
+  const emas = [['ema200', '#C40000'], ['ema150', '#FFCC00'], ['ema50', '#00FF22']];
+  emas.forEach(([key, col]) => {
     ctx.strokeStyle = col;
     ctx.lineWidth = 1.5;
     ctx.beginPath();
@@ -176,6 +176,18 @@ function drawVNChart() {
     });
     ctx.stroke();
   });
+  // EMA10: color changes along the line per Dat's AFL
+  // (C > EMA10: pale green #98FB98, C < EMA10: red #FF0000, C == EMA10: yellow #FFFF00)
+  ctx.lineWidth = 1.5;
+  for (let i = 1; i < n; i++) {
+    const a = items[i - 1], b = items[i];
+    if (a.ema10 == null || b.ema10 == null) continue;
+    ctx.strokeStyle = a.ema10_color;
+    ctx.beginPath();
+    ctx.moveTo(X(i - 1), Y(a.ema10));
+    ctx.lineTo(X(i), Y(b.ema10));
+    ctx.stroke();
+  }
   const bw = Math.max(1, plotW / n * 0.6);
   items.forEach((it, i) => {
     const x = X(i);
@@ -187,6 +199,43 @@ function drawVNChart() {
     ctx.moveTo(x - bw / 2, Y(it.close));
     ctx.lineTo(x + bw / 2, Y(it.close));
     ctx.stroke();
+  });
+  // Value labels on the right price axis: VN Index (white bg) + 4 EMA values
+  // (bg = line color), black bold text. May overlap the axis tick marks.
+  const last = items[n - 1];
+  const vlabels = [
+    { v: last.close, bg: '#FFFFFF' },
+    { v: last.ema10, bg: last.ema10_color },
+    { v: last.ema50, bg: '#00FF22' },
+    { v: last.ema150, bg: '#FFCC00' },
+    { v: last.ema200, bg: '#C40000' },
+  ].filter(l => l.v != null);
+  const LH = 15;
+  const ys = vlabels.map(l => Y(l.v)).sort((a, b) => a - b);
+  for (let i = 1; i < ys.length; i++) {
+    if (ys[i] - ys[i - 1] < LH) ys[i] = ys[i - 1] + LH;
+  }
+  if (ys.length && ys[ys.length - 1] + LH / 2 > T + plotH) {
+    const shift = ys[ys.length - 1] + LH / 2 - (T + plotH);
+    for (let i = 0; i < ys.length; i++) ys[i] -= shift;
+  }
+  if (ys.length && ys[0] - LH / 2 < T) {
+    const shift = T - (ys[0] - LH / 2);
+    for (let i = 0; i < ys.length; i++) ys[i] += shift;
+  }
+  const sorted = vlabels.slice().sort((a, b) => b.v - a.v);
+  ctx.font = 'bold 10px Arial';
+  ctx.textBaseline = 'middle';
+  sorted.forEach((l, i) => {
+    const y = ys[i];
+    const txt = fmtNum(l.v, 2);
+    const w = Math.min(R - 4, ctx.measureText(txt).width + 8);
+    const x0 = cssW - R + 2;
+    ctx.fillStyle = l.bg;
+    ctx.fillRect(x0, y - LH / 2, w, LH);
+    ctx.fillStyle = '#000';
+    ctx.textAlign = 'center';
+    ctx.fillText(txt, x0 + w / 2, y + 0.5);
   });
 }
 function loadVNChart() {
@@ -202,10 +251,7 @@ function loadVNChart() {
       ', High ' + fmtNum(l.high, 2) +
       ', Low ' + fmtNum(l.low, 2) +
       ', Close ' + fmtNum(l.close, 2) +
-      ' (' + (l.change_pct > 0 ? '+' : '') + l.change_pct.toFixed(2) + '%)' +
-      '<br>MA50 <span style="color:#FFCC00">' + fmtNum(l.ma50, 2) + '</span>' +
-      ' &nbsp; MA150 <span style="color:#00FF22">' + fmtNum(l.ma150, 2) + '</span>' +
-      ' &nbsp; MA200 <span style="color:#C40000">' + fmtNum(l.ma200, 2) + '</span>';
+      ' (' + (l.change_pct > 0 ? '+' : '') + l.change_pct.toFixed(2) + '%)';
     drawVNChart();
   }).catch(e => {
     document.getElementById('vninfo').textContent = 'Chưa có dữ liệu: ' + e.message;
