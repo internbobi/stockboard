@@ -115,9 +115,13 @@ tickCountdown();
 setInterval(tickCountdown, 1000);
 </script>
 <script>
-// ---- Feature 2: VNINDEX chart (last 6 months, daily bars) ----
+// ---- Feature 2: VNINDEX chart (last 1 year, daily bars) ----
 let vnData = null;
 const VN_MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+// Empty space after the last session (Dat, 2026-11-12): ~15 bars of breathing
+// room on the right of every Block 2 chart, so the last bar is not jammed
+// against the right edge and the value labels sit clear of the data.
+const PAD_BARS = 15;
 function fmtNum(x, dec) {
   return x.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
 }
@@ -142,7 +146,7 @@ function drawVNChart() {
   });
   const pad = (mx - mn) * 0.03;
   mn -= pad; mx += pad;
-  const X = i => L + (i + 0.5) * plotW / n;
+  const X = i => L + (i + 0.5) * plotW / (n + PAD_BARS);
   const Y = p => T + (mx - p) / (mx - mn) * plotH;
   const range = mx - mn;
   const step = range > 400 ? 100 : range > 200 ? 50 : range > 100 ? 25 : 10;
@@ -202,7 +206,7 @@ function drawVNChart() {
     ctx.lineTo(X(i), Y(b.ma10));
     ctx.stroke();
   }
-  const bw = Math.max(1, plotW / n * 0.6);
+  const bw = Math.max(1, plotW / (n + PAD_BARS) * 0.6);
   items.forEach((it, i) => {
     const x = X(i);
     ctx.strokeStyle = it.color;
@@ -294,7 +298,7 @@ window.addEventListener('resize', () => {
 // ---- Feature 2, Layers 2-5: % of stocks above/below an EMA (line + dots) ----
 // One generic drawer/loader for all % layers: Layer 2 = EMA50
 // (MidStrong/MidWeak), Layer 3 = EMA200 (LongStrong/LongWeak), ...
-// All % layers share the time axis with Layer 1 (L=6, R=62, same 130 dates)
+// All % layers share the time axis with Layer 1 (L=6, R=62, same dates, 1 year)
 // and the same height (.pct-chart, 120px).
 const pctLayers = {}; // canvasId -> data (redrawn on resize)
 function drawArrow(ctx, x, y, up, col) {
@@ -323,12 +327,12 @@ function drawPctChart(cv, data) {
   ctx.scale(dpr, dpr);
   ctx.clearRect(0, 0, cssW, cssH);
   const items = data.items, n = items.length;
-  // Same time axis as Layer 1: L=6, R=62, same 130 dates (2026-05-11..2026-11-11),
+  // Same time axis as Layer 1: L=6, R=62, same dates (1 year, 2025-11-11..2026-11-11),
   // so every date sits at the exact same x in both layers.
   const L = 6, R = 62, T = 8, B = 26;
   const plotW = cssW - L - R, plotH = cssH - T - B;
   const Y = p => T + (100 - p) / 100 * plotH;
-  const X = i => L + (i + 0.5) * plotW / n;
+  const X = i => L + (i + 0.5) * plotW / (n + PAD_BARS);
   ctx.font = '11px Arial';
   ctx.textBaseline = 'middle';
   for (let p = 0; p <= 100; p += 20) {
@@ -484,7 +488,7 @@ function drawTMA5Chart(cv, data) {
   const L = 6, R = 62, T = 8, B = 26;
   const plotW = cssW - L - R, plotH = cssH - T - B;
   const Y = v => T + (ymax - v) / ymax * plotH;
-  const X = i => L + (i + 0.5) * plotW / n;
+  const X = i => L + (i + 0.5) * plotW / (n + PAD_BARS);
   ctx.font = '11px Arial';
   ctx.textBaseline = 'middle';
   for (let v = 0; v <= ymax; v += 50) {
