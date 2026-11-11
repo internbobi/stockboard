@@ -46,6 +46,10 @@
 <canvas id="ema50chart" class="pct-chart"></canvas>
 <div id="ema200info" class="vninfo">Đang tải dữ liệu…</div>
 <canvas id="ema200chart" class="pct-chart"></canvas>
+<div id="tma4info" class="vninfo">Đang tải dữ liệu…</div>
+<canvas id="tma4chart" class="pct-chart"></canvas>
+<div id="tma5info" class="vninfo">Đang tải dữ liệu…</div>
+<canvas id="tma5chart" class="pct-chart"></canvas>
 </div>
 <div id="countdown"></div>
 <script>
@@ -280,6 +284,9 @@ window.addEventListener('resize', () => {
         drawPctChart(document.getElementById(id), pctLayers[id]);
       });
     }
+    if (typeof tma5Data !== 'undefined' && tma5Data) {
+      drawTMA5Chart(document.getElementById('tma5chart'), tma5Data);
+    }
   }, 150);
 });
 </script>
@@ -435,6 +442,207 @@ function loadPctChart(file, infoId, canvasId, strongName, weakName) {
 }
 loadPctChart('pct_ema50.json', 'ema50info', 'ema50chart', 'MidStrong', 'MidWeak');
 loadPctChart('pct_ema200.json', 'ema200info', 'ema200chart', 'LongStrong', 'LongWeak');
+</script>
+<script>
+// ---- Feature 2, Layers 4 & 5: TMA 6-phase counts (shared foundation) ----
+// One fetch (tma_counts.json) feeds both layers. Layer 4 reuses drawPctChart
+// (PctVT/PctVG as pct_above/pct_below). Layer 5 draws the V3T/V3G counts.
+// Colors (Dat's AFL colorCustom12 / colorCustom11): V3T magenta #FF00FF,
+// V3G cyan #00FFFF; 3-month new-high circles bright green #00FF22.
+let tma5Data = null;
+function drawTMA5Chart(cv, data) {
+  if (!cv || !data) return;
+  const cssW = cv.clientWidth, cssH = cv.clientHeight;
+  if (!cssW || !cssH) return;
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = Math.round(cssW * dpr);
+  cv.height = Math.round(cssH * dpr);
+  const ctx = cv.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, cssW, cssH);
+  const all = data.items, nAll = all.length;
+  const startIdx = all.findIndex(it => it.date >= data.from);
+  const show = startIdx >= 0 ? all.slice(startIdx) : all;
+  const n = show.length;
+  // Rolling HHV(260) / HHV(65) of the V3 counts over the FULL history
+  // (not just the display window).
+  const hhv260t = [], hhv260g = [], hhv65t = [], hhv65g = [];
+  for (let i = 0; i < nAll; i++) {
+    const w260 = all.slice(Math.max(0, i - 259), i + 1);
+    const w65 = all.slice(Math.max(0, i - 64), i + 1);
+    hhv260t.push(Math.max.apply(null, w260.map(it => it.v3t)));
+    hhv260g.push(Math.max.apply(null, w260.map(it => it.v3g)));
+    hhv65t.push(Math.max.apply(null, w65.map(it => it.v3t)));
+    hhv65g.push(Math.max.apply(null, w65.map(it => it.v3g)));
+  }
+  // y range: max HHV over the display window, rounded up to a multiple of 50.
+  let ymax = 50;
+  for (let i = startIdx; i < nAll; i++) {
+    ymax = Math.max(ymax, hhv260t[i], hhv260g[i], all[i].v3t, all[i].v3g);
+  }
+  ymax = Math.ceil(ymax / 50) * 50;
+  const L = 6, R = 62, T = 8, B = 26;
+  const plotW = cssW - L - R, plotH = cssH - T - B;
+  const Y = v => T + (ymax - v) / ymax * plotH;
+  const X = i => L + (i + 0.5) * plotW / n;
+  ctx.font = '11px Arial';
+  ctx.textBaseline = 'middle';
+  for (let v = 0; v <= ymax; v += 50) {
+    const y = Y(v);
+    ctx.strokeStyle = '#222';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(L, y); ctx.lineTo(cssW - R, y); ctx.stroke();
+    ctx.fillStyle = '#aaa';
+    ctx.textAlign = 'left';
+    ctx.fillText(String(v), cssW - R + 6, y);
+  }
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  for (let i = 0; i < n; i++) {
+    const d = show[i].date;
+    const m = parseInt(d.slice(5, 7), 10);
+    const prevM = i > 0 ? parseInt(show[i - 1].date.slice(5, 7), 10) : null;
+    if (m !== prevM) {
+      const x = X(i);
+      ctx.strokeStyle = '#222';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(x, T); ctx.lineTo(x, T + plotH); ctx.stroke();
+      ctx.fillStyle = '#aaa';
+      const label = (m === 1) ? d.slice(0, 4) : VN_MONTHS[m - 1];
+      const lx = Math.max(14, Math.min(cssW - R - 14, x));
+      ctx.fillText(label, lx, T + plotH + 6);
+    }
+  }
+  // 52-week-high dashed lines (magenta V3T, cyan V3G).
+  const hhvLines = [[hhv260t, '#FF00FF'], [hhv260g, '#00FFFF']];
+  hhvLines.forEach(([arr, col]) => {
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 1;
+    ctx.setLineDash([5, 4]);
+    ctx.beginPath();
+    for (let i = 0; i < n; i++) {
+      const y = Y(arr[startIdx + i]);
+      if (i === 0) ctx.moveTo(X(i), y);
+      else ctx.lineTo(X(i), y);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+  });
+  // V3T / V3G count lines (magenta / cyan), no dots (AFL styleLine).
+  const countLines = [['v3t', '#FF00FF'], ['v3g', '#00FFFF']];
+  countLines.forEach(([key, col]) => {
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    show.forEach((it, i) => {
+      if (i === 0) ctx.moveTo(X(i), Y(it[key]));
+      else ctx.lineTo(X(i), Y(it[key]));
+    });
+    ctx.stroke();
+  });
+  // New-high circles + lead markers at the bottom (y = 2).
+  show.forEach((it, i) => {
+    const fi = startIdx + i;
+    const x = X(i);
+    // V3T: 52-week high (magenta, +10) / 3-month high (bright green, +5).
+    if (it.v3t >= hhv260t[fi]) {
+      ctx.fillStyle = '#FF00FF';
+      ctx.beginPath(); ctx.arc(x, Y(it.v3t) - 10, 2.5, 0, Math.PI * 2); ctx.fill();
+    }
+    if (it.v3t >= hhv65t[fi]) {
+      ctx.fillStyle = '#00FF22';
+      ctx.beginPath(); ctx.arc(x, Y(it.v3t) - 5, 2.5, 0, Math.PI * 2); ctx.fill();
+    }
+    // V3G: 52-week high (magenta, +10) / 3-month high (bright green, +5).
+    if (it.v3g >= hhv260g[fi]) {
+      ctx.fillStyle = '#FF00FF';
+      ctx.beginPath(); ctx.arc(x, Y(it.v3g) - 10, 2.5, 0, Math.PI * 2); ctx.fill();
+    }
+    if (it.v3g >= hhv65g[fi]) {
+      ctx.fillStyle = '#00FF22';
+      ctx.beginPath(); ctx.arc(x, Y(it.v3g) - 5, 2.5, 0, Math.PI * 2); ctx.fill();
+    }
+    // Lead: the phase with the largest count of all 6 phases.
+    const counts = [it.v1t, it.v2t, it.v3t, it.v1g, it.v2g, it.v3g];
+    if (it.v3t > Math.max(it.v1t, it.v2t, it.v1g, it.v2g, it.v3g)) {
+      ctx.fillStyle = '#FF00FF';
+      ctx.beginPath(); ctx.arc(x, Y(2), 2.5, 0, Math.PI * 2); ctx.fill();
+    } else if (it.v3g > Math.max(it.v1t, it.v2t, it.v3t, it.v1g, it.v2g)) {
+      ctx.fillStyle = '#00FFFF';
+      ctx.beginPath(); ctx.arc(x, Y(2), 2.5, 0, Math.PI * 2); ctx.fill();
+    }
+  });
+  // Value labels on the right value axis: V3T + 52WH_V3T (magenta bg),
+  // V3G + 52WH_V3G (cyan bg), black bold text. Same rules as Layer 1:
+  // bg = line color, sorted by value (larger on top), never overlap.
+  const last = show[n - 1];
+  const fi = startIdx + n - 1;
+  const vlabels = [
+    { v: last.v3t, bg: '#FF00FF' },
+    { v: last.v3g, bg: '#00FFFF' },
+    { v: hhv260t[fi], bg: '#FF00FF' },
+    { v: hhv260g[fi], bg: '#00FFFF' },
+  ].filter(l => l.v != null);
+  const LH = 15;
+  const GAP = LH + 2;
+  const ys = vlabels.map(l => Y(l.v)).sort((a, b) => a - b);
+  for (let i = 1; i < ys.length; i++) {
+    if (ys[i] - ys[i - 1] < GAP) ys[i] = ys[i - 1] + GAP;
+  }
+  if (ys.length && ys[ys.length - 1] + LH / 2 > T + plotH) {
+    const shift = ys[ys.length - 1] + LH / 2 - (T + plotH);
+    for (let i = 0; i < ys.length; i++) ys[i] -= shift;
+  }
+  if (ys.length && ys[0] - LH / 2 < T) {
+    const shift = T - (ys[0] - LH / 2);
+    for (let i = 0; i < ys.length; i++) ys[i] += shift;
+  }
+  const sorted = vlabels.slice().sort((a, b) => b.v - a.v);
+  ctx.font = 'bold 10px Arial';
+  ctx.textBaseline = 'middle';
+  sorted.forEach((l, i) => {
+    const y = ys[i];
+    const txt = String(l.v);
+    const w = Math.min(R - 4, ctx.measureText(txt).width + 8);
+    const x0 = cssW - R + 2;
+    ctx.fillStyle = l.bg;
+    ctx.fillRect(x0, y - LH / 2, w, LH);
+    ctx.fillStyle = '#000';
+    ctx.textAlign = 'center';
+    ctx.fillText(txt, x0 + w / 2, y + 0.5);
+  });
+}
+function loadTMA() {
+  fetch('tma_counts.json?t=' + Date.now()).then(r => {
+    if (!r.ok) throw new Error('Không tải được tma_counts.json');
+    return r.json();
+  }).then(data => {
+    const show = data.items.filter(it => it.date >= data.from);
+    // Layer 4: % up-phase vs % down-phase (same shape as Layers 2/3).
+    const pct4 = {
+      items: show.map(it => ({ date: it.date, pct_above: it.pct_vt, pct_below: it.pct_vg })),
+    };
+    pctLayers['tma4chart'] = pct4;
+    const l = data.latest;
+    document.getElementById('tma4info').innerHTML =
+      '%VT: <span style="color:#00FF22">' + l.pct_vt.toFixed(2) + '%</span>' +
+      ' &nbsp;|&nbsp; %VG: <span style="color:#C40000">' + l.pct_vg.toFixed(2) + '%</span>';
+    drawPctChart(document.getElementById('tma4chart'), pct4);
+    // Layer 5: V3T / V3G counts.
+    tma5Data = data;
+    const fmtChg = c => '(' + (c > 0 ? '+' : '') + c + ')';
+    document.getElementById('tma5info').innerHTML =
+      'V3T: <span style="color:#FF00FF">' + l.v3t + fmtChg(l.v3t_chg) + '</span>' +
+      ' &nbsp;|&nbsp; 52WH_V3T: <span style="color:#FF00FF">' + l.hhv260_v3t + '</span>' +
+      ' &nbsp;|&nbsp; V3G: <span style="color:#00FFFF">' + l.v3g + fmtChg(l.v3g_chg) + '</span>' +
+      ' &nbsp;|&nbsp; 52WH_V3G: <span style="color:#00FFFF">' + l.hhv260_v3g + '</span>';
+    drawTMA5Chart(document.getElementById('tma5chart'), data);
+  }).catch(e => {
+    document.getElementById('tma4info').textContent = 'Chưa có dữ liệu: ' + e.message;
+    document.getElementById('tma5info').textContent = 'Chưa có dữ liệu: ' + e.message;
+  });
+}
+loadTMA();
 </script>
 </body>
 </html>
