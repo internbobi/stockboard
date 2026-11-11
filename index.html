@@ -21,9 +21,11 @@
   #countdown { position: fixed; right: 14px; bottom: 12px; background: rgba(255,255,255,0.14); color: #fff; font-size: 12px; padding: 6px 10px; border-radius: 8px; z-index: 10; }
   #status { text-align: center; color: #bbb; font-size: 1.1cqw; }
   .market { width: 33.33%; min-height: 100vh; container-type: inline-size; padding: 1.5cqw 1.2cqw; }
-  .market canvas { width: 100%; height: 420px; display: block; background: #000; }
+  .market canvas { width: 100%; height: 320px; display: block; background: #000; }
   .vninfo { text-align: center; color: #bbb; font-size: 1.6cqw; margin: 0.5cqw 0 1cqw; line-height: 1.5; }
-  #ema50chart { height: 260px; }
+  /* % layers (Tang 2, 3, 4, 5) all share the same height, so the panel still
+     fits Layers 4 & 5 below. Layer 1 stays taller as the main chart. */
+  .pct-chart { height: 120px; }
 </style>
 </head>
 <body>
@@ -38,7 +40,9 @@
 <div id="vninfo" class="vninfo">Đang tải dữ liệu…</div>
 <canvas id="vnchart"></canvas>
 <div id="ema50info" class="vninfo">Đang tải dữ liệu…</div>
-<canvas id="ema50chart"></canvas>
+<canvas id="ema50chart" class="pct-chart"></canvas>
+<div id="ema200info" class="vninfo">Đang tải dữ liệu…</div>
+<canvas id="ema200chart" class="pct-chart"></canvas>
 </div>
 <div id="countdown"></div>
 <script>
@@ -266,12 +270,23 @@ loadVNChart();
 let vnResizeT = null;
 window.addEventListener('resize', () => {
   clearTimeout(vnResizeT);
-  vnResizeT = setTimeout(() => { drawVNChart(); drawEMA50Chart(); }, 150);
+  vnResizeT = setTimeout(() => {
+    drawVNChart();
+    if (typeof pctLayers !== 'undefined') {
+      Object.keys(pctLayers).forEach(id => {
+        drawPctChart(document.getElementById(id), pctLayers[id]);
+      });
+    }
+  }, 150);
 });
 </script>
 <script>
-// ---- Feature 2, Layer 2: % of stocks above/below EMA50 (dots) ----
-let ema50Data = null;
+// ---- Feature 2, Layers 2-5: % of stocks above/below an EMA (line + dots) ----
+// One generic drawer/loader for all % layers: Layer 2 = EMA50
+// (MidStrong/MidWeak), Layer 3 = EMA200 (LongStrong/LongWeak), ...
+// All % layers share the time axis with Layer 1 (L=6, R=62, same 130 dates)
+// and the same height (.pct-chart, 120px).
+const pctLayers = {}; // canvasId -> data (redrawn on resize)
 function drawArrow(ctx, x, y, up, col) {
   ctx.fillStyle = col;
   ctx.beginPath();
@@ -287,9 +302,8 @@ function drawArrow(ctx, x, y, up, col) {
   ctx.closePath();
   ctx.fill();
 }
-function drawEMA50Chart() {
-  if (!ema50Data) return;
-  const cv = document.getElementById('ema50chart');
+function drawPctChart(cv, data) {
+  if (!cv || !data) return;
   const cssW = cv.clientWidth, cssH = cv.clientHeight;
   if (!cssW || !cssH) return;
   const dpr = window.devicePixelRatio || 1;
@@ -298,7 +312,7 @@ function drawEMA50Chart() {
   const ctx = cv.getContext('2d');
   ctx.scale(dpr, dpr);
   ctx.clearRect(0, 0, cssW, cssH);
-  const items = ema50Data.items, n = items.length;
+  const items = data.items, n = items.length;
   // Same time axis as Layer 1: L=6, R=62, same 130 dates (2026-05-11..2026-11-11),
   // so every date sits at the exact same x in both layers.
   const L = 6, R = 62, T = 8, B = 26;
@@ -338,7 +352,7 @@ function drawEMA50Chart() {
       ctx.fillText(label, lx, T + plotH + 6);
     }
   }
-  // Lines through the points (MidStrong green, MidWeak red), dots on top.
+  // Lines through the points (above green, below red), dots on top.
   const series = [['pct_above', '#00FF22'], ['pct_below', '#C40000']];
   series.forEach(([key, col]) => {
     ctx.strokeStyle = col;
@@ -364,7 +378,7 @@ function drawEMA50Chart() {
     if (prev < 50 && cur >= 50) drawArrow(ctx, x, y + 10, true, '#00FF22');
     else if (prev > 50 && cur <= 50) drawArrow(ctx, x, y - 10, false, '#C40000');
   });
-  // Value labels on the right value axis: MidStrong (green bg) + MidWeak (red bg),
+  // Value labels on the right value axis: above (green bg) + below (red bg),
   // black bold text. Same rules as Layer 1: bg = line color, sorted by value
   // (larger on top), never overlap.
   const last = items[n - 1];
@@ -401,22 +415,23 @@ function drawEMA50Chart() {
     ctx.fillText(txt, x0 + w / 2, y + 0.5);
   });
 }
-function loadEMA50Chart() {
-  fetch('pct_ema50.json?t=' + Date.now()).then(r => {
-    if (!r.ok) throw new Error('Không tải được pct_ema50.json');
+function loadPctChart(file, infoId, canvasId, strongName, weakName) {
+  fetch(file + '?t=' + Date.now()).then(r => {
+    if (!r.ok) throw new Error('Không tải được ' + file);
     return r.json();
   }).then(data => {
-    ema50Data = data;
+    pctLayers[canvasId] = data;
     const l = data.latest;
-    document.getElementById('ema50info').innerHTML =
-      'MidStrong: <span style="color:#00FF22">' + l.pct_above.toFixed(2) + '%</span>' +
-      ' &nbsp;|&nbsp; MidWeak: <span style="color:#C40000">' + l.pct_below.toFixed(2) + '%</span>';
-    drawEMA50Chart();
+    document.getElementById(infoId).innerHTML =
+      strongName + ': <span style="color:#00FF22">' + l.pct_above.toFixed(2) + '%</span>' +
+      ' &nbsp;|&nbsp; ' + weakName + ': <span style="color:#C40000">' + l.pct_below.toFixed(2) + '%</span>';
+    drawPctChart(document.getElementById(canvasId), data);
   }).catch(e => {
-    document.getElementById('ema50info').textContent = 'Chưa có dữ liệu: ' + e.message;
+    document.getElementById(infoId).textContent = 'Chưa có dữ liệu: ' + e.message;
   });
 }
-loadEMA50Chart();
+loadPctChart('pct_ema50.json', 'ema50info', 'ema50chart', 'MidStrong', 'MidWeak');
+loadPctChart('pct_ema200.json', 'ema200info', 'ema200chart', 'LongStrong', 'LongWeak');
 </script>
 </body>
 </html>
