@@ -24,8 +24,11 @@
   .market canvas { width: 100%; height: 320px; display: block; background: #000; }
   .vninfo { text-align: center; color: #bbb; font-size: 1.6cqw; margin: 0.5cqw 0 1cqw; line-height: 1.5; }
   /* % layers (Tang 2, 3, 4, 5) all share the same height, so the panel still
-     fits Layers 4 & 5 below. Layer 1 stays taller as the main chart. */
-  .pct-chart { height: 120px; }
+     fits Layers 4 & 5 below. Layer 1 stays taller as the main chart.
+     NOTE: the selector must beat ".market canvas" (0,1,1), so it is written
+     as ".market canvas.pct-chart" (0,2,1) — a bare ".pct-chart" (0,1,0)
+     loses and the % layers silently stay 320px (caught 2026-11-11). */
+  .market canvas.pct-chart { height: 120px; }
 </style>
 </head>
 <body>
