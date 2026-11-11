@@ -7,17 +7,17 @@
 <style>
   * { box-sizing: border-box; }
   body { background: #000; color: #fff; font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; }
-  .board { width: 25%; min-height: 100vh; container-type: inline-size; padding: 1.5cqw 1.2cqw; }
+  .board { width: 25%; min-height: 100vh; container-type: inline-size; padding: 1.5cqw 1.2cqw; display: flex; flex-direction: column; }
   h1 { text-align: center; font-size: 2.6cqw; margin: 0.8cqw 0 1.4cqw; line-height: 1.2; }
-  .grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 0.9cqw; }
-  .cell { border: 1px solid #fff; border-radius: 0.9cqw; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.2cqw; padding: 0.5cqw 0.2cqw; text-align: center; line-height: 1.15; overflow: hidden; }
+  .grid { display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(10, 1fr); gap: 0.9cqw; flex: 1; }
+  .cell { border: 1px solid #fff; border-radius: 0.9cqw; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.2cqw; padding: 0.8cqw 0.3cqw; text-align: center; line-height: 1.15; overflow: hidden; min-height: 0; }
   .cell.up { background: #00FF22; color: #000; }
   .cell.down { background: #C40000; color: #fff; }
   .cell.flat { background: #FFCC00; color: #000; }
-  .sym { font-weight: bold; font-size: 1.4cqw; white-space: nowrap; }
-  .close { font-size: 1.15cqw; }
-  .chg { font-size: 1.05cqw; white-space: nowrap; }
-  .val { font-size: 1.15cqw; white-space: nowrap; }
+  .sym { font-weight: bold; font-size: 2.3cqw; overflow-wrap: break-word; }
+  .close { font-size: 2cqw; }
+  .chg { font-size: 2cqw; overflow-wrap: break-word; }
+  .val { font-size: 2cqw; overflow-wrap: break-word; }
   .foot { text-align: center; color: #888; font-size: 1.05cqw; margin-top: 1.6cqw; line-height: 1.5; }
   #countdown { position: fixed; right: 14px; bottom: 12px; background: rgba(255,255,255,0.14); color: #fff; font-size: 12px; padding: 6px 10px; border-radius: 8px; z-index: 10; }
   #status { text-align: center; color: #bbb; font-size: 1.1cqw; }
