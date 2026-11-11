@@ -6,7 +6,7 @@
 <title>TTCKVN</title>
 <style>
   * { box-sizing: border-box; }
-  body { background: #000; color: #fff; font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; }
+  body { background: #000; color: #fff; font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; display: flex; }
   .board { width: 33.33%; min-height: 100vh; container-type: inline-size; padding: 1.5cqw 1.2cqw; display: flex; flex-direction: column; }
   h1 { text-align: center; font-size: 2.6cqw; margin: 0.8cqw 0 1.4cqw; line-height: 1.2; }
   .grid { display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(17, 1fr); gap: 0.9cqw; flex: 1; }
@@ -20,6 +20,10 @@
   .foot { text-align: center; color: #888; font-size: 1.05cqw; margin-top: 1.6cqw; line-height: 1.5; }
   #countdown { position: fixed; right: 14px; bottom: 12px; background: rgba(255,255,255,0.14); color: #fff; font-size: 12px; padding: 6px 10px; border-radius: 8px; z-index: 10; }
   #status { text-align: center; color: #bbb; font-size: 1.1cqw; }
+  .market { width: 33.33%; min-height: 100vh; container-type: inline-size; padding: 1.5cqw 1.2cqw; }
+  .market canvas { width: 100%; height: 420px; display: block; background: #000; }
+  .vninfo { text-align: center; color: #bbb; font-size: 1.6cqw; margin: 0.5cqw 0 1cqw; line-height: 1.5; }
+  .vnlegend { text-align: center; color: #bbb; font-size: 1.5cqw; margin-top: 1cqw; line-height: 1.6; }
 </style>
 </head>
 <body>
@@ -28,6 +32,12 @@
 <div class="grid" id="grid"></div>
 <p id="status">Đang tải dữ liệu…</p>
 <p class="foot">Đây chỉ là bảng hiển thị dữ liệu, không phải khuyến nghị đầu tư.</p>
+</div>
+<div class="market">
+<h1>Trạng thái TTCKVN</h1>
+<div id="vninfo" class="vninfo">Đang tải dữ liệu…</div>
+<canvas id="vnchart"></canvas>
+<div class="vnlegend"><span style="color:#FFCC00">— MA50</span> &nbsp; <span style="color:#00FF22">— MA150</span> &nbsp; <span style="color:#C40000">— MA200</span><br>Bar: High – Low, Close (Open = Close)</div>
 </div>
 <div id="countdown"></div>
 <script>
@@ -91,6 +101,122 @@ function tickCountdown() {
 }
 tickCountdown();
 setInterval(tickCountdown, 1000);
+</script>
+<script>
+// ---- Feature 2: VNINDEX chart (last 6 months, daily bars) ----
+let vnData = null;
+const VN_MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function fmtNum(x, dec) {
+  return x.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+}
+function drawVNChart() {
+  if (!vnData) return;
+  const cv = document.getElementById('vnchart');
+  const cssW = cv.clientWidth, cssH = cv.clientHeight;
+  if (!cssW || !cssH) return;
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = Math.round(cssW * dpr);
+  cv.height = Math.round(cssH * dpr);
+  const ctx = cv.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, cssW, cssH);
+  const items = vnData.items, n = items.length;
+  const L = 6, R = 62, T = 8, B = 26;
+  const plotW = cssW - L - R, plotH = cssH - T - B;
+  let mn = Infinity, mx = -Infinity;
+  items.forEach(it => {
+    mn = Math.min(mn, it.low, it.ma50, it.ma150, it.ma200);
+    mx = Math.max(mx, it.high, it.ma50, it.ma150, it.ma200);
+  });
+  const pad = (mx - mn) * 0.03;
+  mn -= pad; mx += pad;
+  const X = i => L + (i + 0.5) * plotW / n;
+  const Y = p => T + (mx - p) / (mx - mn) * plotH;
+  const range = mx - mn;
+  const step = range > 400 ? 100 : range > 200 ? 50 : range > 100 ? 25 : 10;
+  ctx.font = '11px Arial';
+  ctx.textBaseline = 'middle';
+  for (let p = Math.ceil(mn / step) * step; p <= mx; p += step) {
+    const y = Y(p);
+    ctx.strokeStyle = '#222';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(L, y); ctx.lineTo(cssW - R, y); ctx.stroke();
+    ctx.fillStyle = '#aaa';
+    ctx.textAlign = 'left';
+    ctx.fillText(fmtNum(p, 0), cssW - R + 6, y);
+  }
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  for (let i = 0; i < n; i++) {
+    const d = items[i].date;
+    const m = parseInt(d.slice(5, 7), 10);
+    const prevM = i > 0 ? parseInt(items[i - 1].date.slice(5, 7), 10) : null;
+    if (m !== prevM) {
+      const x = X(i);
+      ctx.strokeStyle = '#222';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(x, T); ctx.lineTo(x, T + plotH); ctx.stroke();
+      ctx.fillStyle = '#aaa';
+      const label = (m === 1) ? d.slice(0, 4) : VN_MONTHS[m - 1];
+      const lx = Math.max(14, Math.min(cssW - R - 14, x));
+      ctx.fillText(label, lx, T + plotH + 6);
+    }
+  }
+  const mas = [['ma50', '#FFCC00'], ['ma150', '#00FF22'], ['ma200', '#C40000']];
+  mas.forEach(([key, col]) => {
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    let started = false;
+    items.forEach((it, i) => {
+      const v = it[key];
+      if (v == null) return;
+      if (!started) { ctx.moveTo(X(i), Y(v)); started = true; }
+      else ctx.lineTo(X(i), Y(v));
+    });
+    ctx.stroke();
+  });
+  const bw = Math.max(1, plotW / n * 0.6);
+  items.forEach((it, i) => {
+    const x = X(i);
+    ctx.strokeStyle = it.color;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(x, Y(it.high));
+    ctx.lineTo(x, Y(it.low));
+    ctx.moveTo(x - bw / 2, Y(it.close));
+    ctx.lineTo(x + bw / 2, Y(it.close));
+    ctx.stroke();
+  });
+}
+function loadVNChart() {
+  fetch('vnindex.json?t=' + Date.now()).then(r => {
+    if (!r.ok) throw new Error('Không tải được vnindex.json');
+    return r.json();
+  }).then(data => {
+    vnData = data;
+    const l = data.latest;
+    document.getElementById('vninfo').innerHTML =
+      'VNINDEX ' + l.date.split('-').reverse().join('/') +
+      ' &nbsp;|&nbsp; Open ' + fmtNum(l.open, 2) +
+      ', High ' + fmtNum(l.high, 2) +
+      ', Low ' + fmtNum(l.low, 2) +
+      ', Close ' + fmtNum(l.close, 2) +
+      ' (' + (l.change_pct > 0 ? '+' : '') + l.change_pct.toFixed(2) + '%)' +
+      '<br>MA50 <span style="color:#FFCC00">' + fmtNum(l.ma50, 2) + '</span>' +
+      ' &nbsp; MA150 <span style="color:#00FF22">' + fmtNum(l.ma150, 2) + '</span>' +
+      ' &nbsp; MA200 <span style="color:#C40000">' + fmtNum(l.ma200, 2) + '</span>';
+    drawVNChart();
+  }).catch(e => {
+    document.getElementById('vninfo').textContent = 'Chưa có dữ liệu: ' + e.message;
+  });
+}
+loadVNChart();
+let vnResizeT = null;
+window.addEventListener('resize', () => {
+  clearTimeout(vnResizeT);
+  vnResizeT = setTimeout(drawVNChart, 150);
+});
 </script>
 </body>
 </html>
