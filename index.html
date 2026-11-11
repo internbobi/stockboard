@@ -18,6 +18,7 @@
   .chg { font-size: 11px; }
   .val { font-size: 11px; }
   .foot { text-align: center; color: #888; font-size: 12px; margin-top: 20px; line-height: 1.5; }
+  #countdown { position: fixed; right: 14px; bottom: 12px; background: rgba(255,255,255,0.14); color: #fff; font-size: 12px; padding: 6px 10px; border-radius: 8px; z-index: 10; }
   #status { text-align: center; color: #bbb; }
 </style>
 </head>
@@ -26,6 +27,7 @@
 <div class="grid" id="grid"></div>
 <p id="status">Đang tải dữ liệu…</p>
 <p class="foot">Đây chỉ là bảng hiển thị dữ liệu, không phải khuyến nghị đầu tư.</p>
+<div id="countdown"></div>
 <script>
 const EX_MAP = { HOSE: 'HSX', HSX: 'HSX', HNX: 'HNX', UPCOM: 'UPCOM' };
 function fmtDate(iso) {
@@ -36,13 +38,11 @@ function fmtChange(change, pct) {
   const sign = change > 0 ? '+' : (change < 0 ? '' : '');
   return sign + change.toFixed(2) + ' (' + (pct > 0 ? '+' : '') + pct.toFixed(1) + '%)';
 }
-fetch('data.json').then(r => {
-  if (!r.ok) throw new Error('Không tải được data.json');
-  return r.json();
-}).then(data => {
+function renderBoard(data) {
   document.getElementById('title').textContent = 'TTCKVN Ngày ' + fmtDate(data.date);
   document.getElementById('status').textContent = '';
   const grid = document.getElementById('grid');
+  grid.innerHTML = '';
   data.items.forEach(it => {
     const d = document.createElement('div');
     d.className = 'cell ' + (it.change > 0 ? 'up' : (it.change < 0 ? 'down' : 'flat'));
@@ -53,9 +53,46 @@ fetch('data.json').then(r => {
       + '<div class="val">' + it.value_billion.toFixed(2) + ' tỷ</div>';
     grid.appendChild(d);
   });
-}).catch(e => {
-  document.getElementById('status').textContent = 'Chưa có dữ liệu: ' + e.message;
-});
+}
+function loadData() {
+  fetch('data.json?t=' + Date.now()).then(r => {
+    if (!r.ok) throw new Error('Không tải được data.json');
+    return r.json();
+  }).then(renderBoard).catch(e => {
+    document.getElementById('status').textContent = 'Chưa có dữ liệu: ' + e.message;
+  });
+}
+loadData();
+setInterval(loadData, 30000);
+function nextRefreshDate(now) {
+  const day = now.getDay();
+  if (day === 0 || day === 6) return null;
+  const mins = now.getHours() * 60 + now.getMinutes();
+  const start = 8 * 60 + 45, end = 15 * 60;
+  if (mins < start) {
+    const d = new Date(now); d.setHours(8, 45, 0, 0); return d;
+  }
+  if (mins >= end) return null;
+  const next = new Date(now);
+  next.setSeconds(0, 0);
+  next.setMinutes(next.getMinutes() + (5 - (next.getMinutes() % 5)));
+  if (next.getHours() * 60 + next.getMinutes() > end) return null;
+  return next;
+}
+function tickCountdown() {
+  const el = document.getElementById('countdown');
+  const target = nextRefreshDate(new Date());
+  if (!target) {
+    el.textContent = 'Đã hết phiên giao dịch — cập nhật tiếp theo lúc 8:45';
+    return;
+  }
+  const diff = Math.max(0, target - new Date());
+  const x = Math.floor(diff / 60000);
+  const y = Math.floor((diff % 60000) / 1000);
+  el.textContent = 'Cập nhật tiếp theo trong ' + x + ' phút ' + y + ' giây';
+}
+tickCountdown();
+setInterval(tickCountdown, 1000);
 </script>
 </body>
 </html>
