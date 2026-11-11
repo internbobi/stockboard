@@ -23,7 +23,6 @@
   .market { width: 33.33%; min-height: 100vh; container-type: inline-size; padding: 1.5cqw 1.2cqw; }
   .market canvas { width: 100%; height: 420px; display: block; background: #000; }
   .vninfo { text-align: center; color: #bbb; font-size: 1.6cqw; margin: 0.5cqw 0 1cqw; line-height: 1.5; }
-  .layer-title { font-size: 1.9cqw; margin: 2.5cqw 0 0.5cqw; }
   #ema50chart { height: 260px; }
 </style>
 </head>
@@ -38,7 +37,6 @@
 <h1>Trạng thái TTCKVN</h1>
 <div id="vninfo" class="vninfo">Đang tải dữ liệu…</div>
 <canvas id="vnchart"></canvas>
-<h1 class="layer-title">Tầng 2: Tỷ lệ mã trên/dưới EMA50</h1>
 <div id="ema50info" class="vninfo">Đang tải dữ liệu…</div>
 <canvas id="ema50chart"></canvas>
 </div>
@@ -301,7 +299,9 @@ function drawEMA50Chart() {
   ctx.scale(dpr, dpr);
   ctx.clearRect(0, 0, cssW, cssH);
   const items = ema50Data.items, n = items.length;
-  const L = 6, R = 44, T = 8, B = 26;
+  // Same time axis as Layer 1: L=6, R=62, same 130 dates (2026-05-11..2026-11-11),
+  // so every date sits at the exact same x in both layers.
+  const L = 6, R = 62, T = 8, B = 26;
   const plotW = cssW - L - R, plotH = cssH - T - B;
   const Y = p => T + (100 - p) / 100 * plotH;
   const X = i => L + (i + 0.5) * plotW / n;
@@ -338,6 +338,18 @@ function drawEMA50Chart() {
       ctx.fillText(label, lx, T + plotH + 6);
     }
   }
+  // Lines through the points (MidStrong green, MidWeak red), dots on top.
+  const series = [['pct_above', '#00FF22'], ['pct_below', '#C40000']];
+  series.forEach(([key, col]) => {
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    items.forEach((it, i) => {
+      if (i === 0) ctx.moveTo(X(i), Y(it[key]));
+      else ctx.lineTo(X(i), Y(it[key]));
+    });
+    ctx.stroke();
+  });
   items.forEach((it, i) => {
     const x = X(i);
     ctx.fillStyle = '#00FF22';
@@ -352,6 +364,42 @@ function drawEMA50Chart() {
     if (prev < 50 && cur >= 50) drawArrow(ctx, x, y + 10, true, '#00FF22');
     else if (prev > 50 && cur <= 50) drawArrow(ctx, x, y - 10, false, '#C40000');
   });
+  // Value labels on the right value axis: MidStrong (green bg) + MidWeak (red bg),
+  // black bold text. Same rules as Layer 1: bg = line color, sorted by value
+  // (larger on top), never overlap.
+  const last = items[n - 1];
+  const vlabels = [
+    { v: last.pct_above, bg: '#00FF22' },
+    { v: last.pct_below, bg: '#C40000' },
+  ].filter(l => l.v != null);
+  const LH = 15;
+  const GAP = LH + 2;
+  const ys = vlabels.map(l => Y(l.v)).sort((a, b) => a - b);
+  for (let i = 1; i < ys.length; i++) {
+    if (ys[i] - ys[i - 1] < GAP) ys[i] = ys[i - 1] + GAP;
+  }
+  if (ys.length && ys[ys.length - 1] + LH / 2 > T + plotH) {
+    const shift = ys[ys.length - 1] + LH / 2 - (T + plotH);
+    for (let i = 0; i < ys.length; i++) ys[i] -= shift;
+  }
+  if (ys.length && ys[0] - LH / 2 < T) {
+    const shift = T - (ys[0] - LH / 2);
+    for (let i = 0; i < ys.length; i++) ys[i] += shift;
+  }
+  const sorted = vlabels.slice().sort((a, b) => b.v - a.v);
+  ctx.font = 'bold 10px Arial';
+  ctx.textBaseline = 'middle';
+  sorted.forEach((l, i) => {
+    const y = ys[i];
+    const txt = l.v.toFixed(2) + '%';
+    const w = Math.min(R - 4, ctx.measureText(txt).width + 8);
+    const x0 = cssW - R + 2;
+    ctx.fillStyle = l.bg;
+    ctx.fillRect(x0, y - LH / 2, w, LH);
+    ctx.fillStyle = '#000';
+    ctx.textAlign = 'center';
+    ctx.fillText(txt, x0 + w / 2, y + 0.5);
+  });
 }
 function loadEMA50Chart() {
   fetch('pct_ema50.json?t=' + Date.now()).then(r => {
@@ -361,9 +409,8 @@ function loadEMA50Chart() {
     ema50Data = data;
     const l = data.latest;
     document.getElementById('ema50info').innerHTML =
-      '%&gt;EMA50: <span style="color:#00FF22">' + l.pct_above.toFixed(2) + '%</span>' +
-      ' &nbsp;|&nbsp; %&lt;EMA50: <span style="color:#C40000">' + l.pct_below.toFixed(2) + '%</span>' +
-      ' &nbsp;(' + l.total + ' mã, ' + l.date.split('-').reverse().join('/') + ')';
+      'MidStrong: <span style="color:#00FF22">' + l.pct_above.toFixed(2) + '%</span>' +
+      ' &nbsp;|&nbsp; MidWeak: <span style="color:#C40000">' + l.pct_below.toFixed(2) + '%</span>';
     drawEMA50Chart();
   }).catch(e => {
     document.getElementById('ema50info').textContent = 'Chưa có dữ liệu: ' + e.message;
