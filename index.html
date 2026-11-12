@@ -101,20 +101,35 @@ function nextRefreshDate(now) {
   const day = now.getDay();
   if (day === 0 || day === 6) return null;
   const mins = now.getHours() * 60 + now.getMinutes();
-  const start = 8 * 60 + 45, end = 15 * 60;
+  const start = 8 * 60 + 45, end = 15 * 60, lunchS = 11 * 60 + 30, lunchE = 13 * 60;
   if (mins < start) {
     const d = new Date(now); d.setHours(8, 45, 0, 0); return d;
   }
   if (mins >= end) return null;
+  // Lunch break 11:30-13:00 (Dat, 2026-11-12): no 5-min updates, next is 13:00.
+  if (mins >= lunchS && mins < lunchE) {
+    const d = new Date(now); d.setHours(13, 0, 0, 0); return d;
+  }
   const next = new Date(now);
   next.setSeconds(0, 0);
   next.setMinutes(next.getMinutes() + (5 - (next.getMinutes() % 5)));
-  if (next.getHours() * 60 + next.getMinutes() > end) return null;
+  const nm = next.getHours() * 60 + next.getMinutes();
+  if (nm > end) return null;
+  if (nm >= lunchS && nm < lunchE) {
+    const d = new Date(now); d.setHours(13, 0, 0, 0); return d;
+  }
   return next;
 }
 function tickCountdown() {
   const el = document.getElementById('countdown');
-  const target = nextRefreshDate(new Date());
+  const now = new Date();
+  const mins = now.getHours() * 60 + now.getMinutes();
+  // Lunch break message (Dat, 2026-11-12).
+  if (now.getDay() !== 0 && now.getDay() !== 6 && mins >= 11 * 60 + 30 && mins < 13 * 60) {
+    el.textContent = 'Nghỉ trưa — cập nhật tiếp theo lúc 13:00';
+    return;
+  }
+  const target = nextRefreshDate(now);
   if (!target) {
     el.textContent = 'Đã hết phiên giao dịch — cập nhật tiếp theo lúc 8:45';
     return;
