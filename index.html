@@ -82,8 +82,21 @@ function loadData() {
     document.getElementById('status').textContent = 'Chưa có dữ liệu: ' + e.message;
   });
 }
+function refreshAll() {
+  loadData();
+  // Block 2 layers: re-fetch so the 5 layers update every 5 min.
+  // BUG (Dat, 2026-11-12): the Block 2 JSONs were only loaded once on
+  // page load, so the countdown counted down but the 5 layers never
+  // changed. The typeof guards cover a script block failing to load.
+  if (typeof loadVNChart === 'function') loadVNChart();
+  if (typeof loadPctChart === 'function') {
+    loadPctChart('pct_ema50.json', 'ema50info', 'ema50chart', 'MidStrong', 'MidWeak');
+    loadPctChart('pct_ema200.json', 'ema200info', 'ema200chart', 'LongStrong', 'LongWeak');
+  }
+  if (typeof loadTMA === 'function') loadTMA();
+}
 loadData();
-setInterval(loadData, 30000);
+setInterval(refreshAll, 30000);
 function nextRefreshDate(now) {
   const day = now.getDay();
   if (day === 0 || day === 6) return null;
