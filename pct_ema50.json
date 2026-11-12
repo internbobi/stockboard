@@ -1,1060 +1,2010 @@
 {
- "universe": "All stocks trading over 10 ty today (Block 1 basket, 132 symbols; DKKL() dropped)",
- "from": "2026-05-11",
+ "universe": "Full market HSX/HNX/UPCOM, DKKL() filter (1482 symbols with data)",
+ "from": "2025-11-11",
  "to": "2026-11-11",
- "source": "vnstock 4.x KBS (daily history, EMA50 span=50)",
- "updated_at": "2026-11-11T23:31:02+07:00",
- "count_symbols": 132,
- "failed_symbols": [],
- "count_shown": 130,
+ "source": "vnstock 4.x KBS (daily history, EMA50 span=50, DKKL)",
+ "updated_at": "2026-11-12T08:00:47+07:00",
+ "count_shown": 249,
  "items": [
   {
-   "date": "2026-05-11",
-   "total": 130,
-   "above": 49,
-   "below": 81,
+   "date": "2025-11-11",
+   "total": 834,
+   "above": 235,
+   "below": 599,
+   "pct_above": 28.18,
+   "pct_below": 71.82
+  },
+  {
+   "date": "2025-11-12",
+   "total": 836,
+   "above": 280,
+   "below": 556,
+   "pct_above": 33.49,
+   "pct_below": 66.51
+  },
+  {
+   "date": "2025-11-13",
+   "total": 839,
+   "above": 294,
+   "below": 545,
+   "pct_above": 35.04,
+   "pct_below": 64.96
+  },
+  {
+   "date": "2025-11-14",
+   "total": 911,
+   "above": 336,
+   "below": 575,
+   "pct_above": 36.88,
+   "pct_below": 63.12
+  },
+  {
+   "date": "2025-11-17",
+   "total": 852,
+   "above": 339,
+   "below": 513,
+   "pct_above": 39.79,
+   "pct_below": 60.21
+  },
+  {
+   "date": "2025-11-18",
+   "total": 850,
+   "above": 356,
+   "below": 494,
+   "pct_above": 41.88,
+   "pct_below": 58.12
+  },
+  {
+   "date": "2025-11-19",
+   "total": 849,
+   "above": 330,
+   "below": 519,
+   "pct_above": 38.87,
+   "pct_below": 61.13
+  },
+  {
+   "date": "2025-11-20",
+   "total": 848,
+   "above": 337,
+   "below": 511,
+   "pct_above": 39.74,
+   "pct_below": 60.26
+  },
+  {
+   "date": "2025-11-21",
+   "total": 872,
+   "above": 314,
+   "below": 558,
+   "pct_above": 36.01,
+   "pct_below": 63.99
+  },
+  {
+   "date": "2025-11-24",
+   "total": 842,
+   "above": 300,
+   "below": 542,
+   "pct_above": 35.63,
+   "pct_below": 64.37
+  },
+  {
+   "date": "2025-11-25",
+   "total": 853,
+   "above": 289,
+   "below": 564,
+   "pct_above": 33.88,
+   "pct_below": 66.12
+  },
+  {
+   "date": "2025-11-26",
+   "total": 849,
+   "above": 320,
+   "below": 529,
    "pct_above": 37.69,
    "pct_below": 62.31
   },
   {
-   "date": "2026-05-12",
-   "total": 130,
-   "above": 56,
-   "below": 74,
-   "pct_above": 43.08,
-   "pct_below": 56.92
+   "date": "2025-11-27",
+   "total": 847,
+   "above": 342,
+   "below": 505,
+   "pct_above": 40.38,
+   "pct_below": 59.62
   },
   {
-   "date": "2026-05-13",
-   "total": 130,
-   "above": 55,
-   "below": 75,
-   "pct_above": 42.31,
-   "pct_below": 57.69
+   "date": "2025-11-28",
+   "total": 911,
+   "above": 325,
+   "below": 586,
+   "pct_above": 35.68,
+   "pct_below": 64.32
   },
   {
-   "date": "2026-05-14",
-   "total": 130,
-   "above": 58,
-   "below": 72,
-   "pct_above": 44.62,
-   "pct_below": 55.38
+   "date": "2025-12-01",
+   "total": 845,
+   "above": 296,
+   "below": 549,
+   "pct_above": 35.03,
+   "pct_below": 64.97
   },
   {
-   "date": "2026-05-15",
-   "total": 130,
-   "above": 59,
-   "below": 71,
-   "pct_above": 45.38,
-   "pct_below": 54.62
+   "date": "2025-12-02",
+   "total": 844,
+   "above": 310,
+   "below": 534,
+   "pct_above": 36.73,
+   "pct_below": 63.27
   },
   {
-   "date": "2026-05-18",
-   "total": 130,
-   "above": 60,
-   "below": 70,
-   "pct_above": 46.15,
-   "pct_below": 53.85
+   "date": "2025-12-03",
+   "total": 857,
+   "above": 368,
+   "below": 489,
+   "pct_above": 42.94,
+   "pct_below": 57.06
   },
   {
-   "date": "2026-05-19",
-   "total": 130,
-   "above": 55,
-   "below": 75,
-   "pct_above": 42.31,
-   "pct_below": 57.69
+   "date": "2025-12-04",
+   "total": 852,
+   "above": 396,
+   "below": 456,
+   "pct_above": 46.48,
+   "pct_below": 53.52
   },
   {
-   "date": "2026-05-20",
-   "total": 130,
-   "above": 43,
-   "below": 87,
-   "pct_above": 33.08,
-   "pct_below": 66.92
+   "date": "2025-12-05",
+   "total": 917,
+   "above": 372,
+   "below": 545,
+   "pct_above": 40.57,
+   "pct_below": 59.43
   },
   {
-   "date": "2026-05-21",
-   "total": 130,
-   "above": 42,
-   "below": 88,
-   "pct_above": 32.31,
-   "pct_below": 67.69
+   "date": "2025-12-08",
+   "total": 853,
+   "above": 342,
+   "below": 511,
+   "pct_above": 40.09,
+   "pct_below": 59.91
   },
   {
-   "date": "2026-05-22",
-   "total": 130,
-   "above": 38,
-   "below": 92,
-   "pct_above": 29.23,
-   "pct_below": 70.77
+   "date": "2025-12-09",
+   "total": 860,
+   "above": 326,
+   "below": 534,
+   "pct_above": 37.91,
+   "pct_below": 62.09
   },
   {
-   "date": "2026-05-25",
-   "total": 130,
-   "above": 45,
-   "below": 85,
-   "pct_above": 34.62,
-   "pct_below": 65.38
+   "date": "2025-12-10",
+   "total": 856,
+   "above": 314,
+   "below": 542,
+   "pct_above": 36.68,
+   "pct_below": 63.32
   },
   {
-   "date": "2026-05-26",
-   "total": 130,
-   "above": 50,
-   "below": 80,
-   "pct_above": 38.46,
-   "pct_below": 61.54
+   "date": "2025-12-11",
+   "total": 861,
+   "above": 304,
+   "below": 557,
+   "pct_above": 35.31,
+   "pct_below": 64.69
   },
   {
-   "date": "2026-05-27",
-   "total": 130,
-   "above": 53,
-   "below": 77,
-   "pct_above": 40.77,
-   "pct_below": 59.23
+   "date": "2025-12-12",
+   "total": 927,
+   "above": 254,
+   "below": 673,
+   "pct_above": 27.4,
+   "pct_below": 72.6
   },
   {
-   "date": "2026-05-28",
-   "total": 130,
-   "above": 39,
-   "below": 91,
-   "pct_above": 30.0,
-   "pct_below": 70.0
+   "date": "2025-12-15",
+   "total": 837,
+   "above": 240,
+   "below": 597,
+   "pct_above": 28.67,
+   "pct_below": 71.33
   },
   {
-   "date": "2026-05-29",
-   "total": 130,
-   "above": 35,
-   "below": 95,
-   "pct_above": 26.92,
-   "pct_below": 73.08
+   "date": "2025-12-16",
+   "total": 842,
+   "above": 274,
+   "below": 568,
+   "pct_above": 32.54,
+   "pct_below": 67.46
   },
   {
-   "date": "2026-06-01",
-   "total": 130,
-   "above": 36,
-   "below": 94,
-   "pct_above": 27.69,
-   "pct_below": 72.31
+   "date": "2025-12-17",
+   "total": 841,
+   "above": 261,
+   "below": 580,
+   "pct_above": 31.03,
+   "pct_below": 68.97
   },
   {
-   "date": "2026-06-02",
-   "total": 130,
-   "above": 26,
-   "below": 104,
-   "pct_above": 20.0,
-   "pct_below": 80.0
+   "date": "2025-12-18",
+   "total": 828,
+   "above": 261,
+   "below": 567,
+   "pct_above": 31.52,
+   "pct_below": 68.48
   },
   {
-   "date": "2026-06-03",
-   "total": 130,
-   "above": 30,
-   "below": 100,
-   "pct_above": 23.08,
-   "pct_below": 76.92
+   "date": "2025-12-19",
+   "total": 914,
+   "above": 301,
+   "below": 613,
+   "pct_above": 32.93,
+   "pct_below": 67.07
   },
   {
-   "date": "2026-06-04",
-   "total": 130,
-   "above": 38,
-   "below": 92,
-   "pct_above": 29.23,
-   "pct_below": 70.77
+   "date": "2025-12-22",
+   "total": 863,
+   "above": 302,
+   "below": 561,
+   "pct_above": 34.99,
+   "pct_below": 65.01
   },
   {
-   "date": "2026-06-05",
-   "total": 130,
-   "above": 33,
-   "below": 97,
-   "pct_above": 25.38,
-   "pct_below": 74.62
+   "date": "2025-12-23",
+   "total": 862,
+   "above": 301,
+   "below": 561,
+   "pct_above": 34.92,
+   "pct_below": 65.08
   },
   {
-   "date": "2026-06-08",
-   "total": 130,
-   "above": 26,
-   "below": 104,
-   "pct_above": 20.0,
-   "pct_below": 80.0
+   "date": "2025-12-24",
+   "total": 850,
+   "above": 308,
+   "below": 542,
+   "pct_above": 36.24,
+   "pct_below": 63.76
   },
   {
-   "date": "2026-06-09",
-   "total": 130,
-   "above": 27,
-   "below": 103,
-   "pct_above": 20.77,
-   "pct_below": 79.23
+   "date": "2025-12-25",
+   "total": 840,
+   "above": 263,
+   "below": 577,
+   "pct_above": 31.31,
+   "pct_below": 68.69
   },
   {
-   "date": "2026-06-10",
-   "total": 130,
-   "above": 32,
-   "below": 98,
-   "pct_above": 24.62,
-   "pct_below": 75.38
+   "date": "2025-12-26",
+   "total": 907,
+   "above": 275,
+   "below": 632,
+   "pct_above": 30.32,
+   "pct_below": 69.68
   },
   {
-   "date": "2026-06-11",
-   "total": 130,
-   "above": 31,
-   "below": 99,
-   "pct_above": 23.85,
-   "pct_below": 76.15
+   "date": "2025-12-29",
+   "total": 847,
+   "above": 301,
+   "below": 546,
+   "pct_above": 35.54,
+   "pct_below": 64.46
   },
   {
-   "date": "2026-06-12",
-   "total": 130,
-   "above": 29,
-   "below": 101,
-   "pct_above": 22.31,
-   "pct_below": 77.69
-  },
-  {
-   "date": "2026-06-15",
-   "total": 130,
-   "above": 38,
-   "below": 92,
-   "pct_above": 29.23,
-   "pct_below": 70.77
-  },
-  {
-   "date": "2026-06-16",
-   "total": 130,
-   "above": 55,
-   "below": 75,
-   "pct_above": 42.31,
-   "pct_below": 57.69
-  },
-  {
-   "date": "2026-06-17",
-   "total": 130,
-   "above": 54,
-   "below": 76,
-   "pct_above": 41.54,
-   "pct_below": 58.46
-  },
-  {
-   "date": "2026-06-18",
-   "total": 130,
-   "above": 50,
-   "below": 80,
-   "pct_above": 38.46,
-   "pct_below": 61.54
-  },
-  {
-   "date": "2026-06-19",
-   "total": 130,
-   "above": 47,
-   "below": 83,
-   "pct_above": 36.15,
-   "pct_below": 63.85
-  },
-  {
-   "date": "2026-06-22",
-   "total": 129,
-   "above": 47,
-   "below": 82,
-   "pct_above": 36.43,
-   "pct_below": 63.57
-  },
-  {
-   "date": "2026-06-23",
-   "total": 129,
-   "above": 41,
-   "below": 88,
-   "pct_above": 31.78,
-   "pct_below": 68.22
-  },
-  {
-   "date": "2026-06-24",
-   "total": 129,
-   "above": 39,
-   "below": 90,
-   "pct_above": 30.23,
-   "pct_below": 69.77
-  },
-  {
-   "date": "2026-06-25",
-   "total": 129,
-   "above": 40,
-   "below": 89,
-   "pct_above": 31.01,
-   "pct_below": 68.99
-  },
-  {
-   "date": "2026-06-26",
-   "total": 129,
-   "above": 41,
-   "below": 88,
-   "pct_above": 31.78,
-   "pct_below": 68.22
-  },
-  {
-   "date": "2026-06-29",
-   "total": 129,
-   "above": 46,
-   "below": 83,
+   "date": "2025-12-30",
+   "total": 847,
+   "above": 302,
+   "below": 545,
    "pct_above": 35.66,
    "pct_below": 64.34
   },
   {
+   "date": "2025-12-31",
+   "total": 856,
+   "above": 317,
+   "below": 539,
+   "pct_above": 37.03,
+   "pct_below": 62.97
+  },
+  {
+   "date": "2026-01-05",
+   "total": 839,
+   "above": 279,
+   "below": 560,
+   "pct_above": 33.25,
+   "pct_below": 66.75
+  },
+  {
+   "date": "2026-01-06",
+   "total": 843,
+   "above": 287,
+   "below": 556,
+   "pct_above": 34.05,
+   "pct_below": 65.95
+  },
+  {
+   "date": "2026-01-07",
+   "total": 874,
+   "above": 370,
+   "below": 504,
+   "pct_above": 42.33,
+   "pct_below": 57.67
+  },
+  {
+   "date": "2026-01-08",
+   "total": 889,
+   "above": 364,
+   "below": 525,
+   "pct_above": 40.94,
+   "pct_below": 59.06
+  },
+  {
+   "date": "2026-01-09",
+   "total": 867,
+   "above": 342,
+   "below": 525,
+   "pct_above": 39.45,
+   "pct_below": 60.55
+  },
+  {
+   "date": "2026-01-12",
+   "total": 887,
+   "above": 407,
+   "below": 480,
+   "pct_above": 45.89,
+   "pct_below": 54.11
+  },
+  {
+   "date": "2026-01-13",
+   "total": 895,
+   "above": 427,
+   "below": 468,
+   "pct_above": 47.71,
+   "pct_below": 52.29
+  },
+  {
+   "date": "2026-01-14",
+   "total": 918,
+   "above": 468,
+   "below": 450,
+   "pct_above": 50.98,
+   "pct_below": 49.02
+  },
+  {
+   "date": "2026-01-15",
+   "total": 908,
+   "above": 473,
+   "below": 435,
+   "pct_above": 52.09,
+   "pct_below": 47.91
+  },
+  {
+   "date": "2026-01-16",
+   "total": 988,
+   "above": 518,
+   "below": 470,
+   "pct_above": 52.43,
+   "pct_below": 47.57
+  },
+  {
+   "date": "2026-01-19",
+   "total": 910,
+   "above": 508,
+   "below": 402,
+   "pct_above": 55.82,
+   "pct_below": 44.18
+  },
+  {
+   "date": "2026-01-20",
+   "total": 924,
+   "above": 485,
+   "below": 439,
+   "pct_above": 52.49,
+   "pct_below": 47.51
+  },
+  {
+   "date": "2026-01-21",
+   "total": 886,
+   "above": 417,
+   "below": 469,
+   "pct_above": 47.07,
+   "pct_below": 52.93
+  },
+  {
+   "date": "2026-01-22",
+   "total": 913,
+   "above": 480,
+   "below": 433,
+   "pct_above": 52.57,
+   "pct_below": 47.43
+  },
+  {
+   "date": "2026-01-23",
+   "total": 962,
+   "above": 466,
+   "below": 496,
+   "pct_above": 48.44,
+   "pct_below": 51.56
+  },
+  {
+   "date": "2026-01-26",
+   "total": 895,
+   "above": 361,
+   "below": 534,
+   "pct_above": 40.34,
+   "pct_below": 59.66
+  },
+  {
+   "date": "2026-01-27",
+   "total": 890,
+   "above": 366,
+   "below": 524,
+   "pct_above": 41.12,
+   "pct_below": 58.88
+  },
+  {
+   "date": "2026-01-28",
+   "total": 874,
+   "above": 352,
+   "below": 522,
+   "pct_above": 40.27,
+   "pct_below": 59.73
+  },
+  {
+   "date": "2026-01-29",
+   "total": 864,
+   "above": 378,
+   "below": 486,
+   "pct_above": 43.75,
+   "pct_below": 56.25
+  },
+  {
+   "date": "2026-01-30",
+   "total": 945,
+   "above": 423,
+   "below": 522,
+   "pct_above": 44.76,
+   "pct_below": 55.24
+  },
+  {
+   "date": "2026-02-02",
+   "total": 892,
+   "above": 383,
+   "below": 509,
+   "pct_above": 42.94,
+   "pct_below": 57.06
+  },
+  {
+   "date": "2026-02-03",
+   "total": 891,
+   "above": 425,
+   "below": 466,
+   "pct_above": 47.7,
+   "pct_below": 52.3
+  },
+  {
+   "date": "2026-02-04",
+   "total": 881,
+   "above": 423,
+   "below": 458,
+   "pct_above": 48.01,
+   "pct_below": 51.99
+  },
+  {
+   "date": "2026-02-05",
+   "total": 880,
+   "above": 398,
+   "below": 482,
+   "pct_above": 45.23,
+   "pct_below": 54.77
+  },
+  {
+   "date": "2026-02-06",
+   "total": 944,
+   "above": 335,
+   "below": 609,
+   "pct_above": 35.49,
+   "pct_below": 64.51
+  },
+  {
+   "date": "2026-02-09",
+   "total": 854,
+   "above": 302,
+   "below": 552,
+   "pct_above": 35.36,
+   "pct_below": 64.64
+  },
+  {
+   "date": "2026-02-10",
+   "total": 851,
+   "above": 279,
+   "below": 572,
+   "pct_above": 32.78,
+   "pct_below": 67.22
+  },
+  {
+   "date": "2026-02-11",
+   "total": 877,
+   "above": 337,
+   "below": 540,
+   "pct_above": 38.43,
+   "pct_below": 61.57
+  },
+  {
+   "date": "2026-02-12",
+   "total": 843,
+   "above": 345,
+   "below": 498,
+   "pct_above": 40.93,
+   "pct_below": 59.07
+  },
+  {
+   "date": "2026-02-13",
+   "total": 908,
+   "above": 397,
+   "below": 511,
+   "pct_above": 43.72,
+   "pct_below": 56.28
+  },
+  {
+   "date": "2026-02-23",
+   "total": 888,
+   "above": 467,
+   "below": 421,
+   "pct_above": 52.59,
+   "pct_below": 47.41
+  },
+  {
+   "date": "2026-02-24",
+   "total": 886,
+   "above": 443,
+   "below": 443,
+   "pct_above": 50.0,
+   "pct_below": 50.0
+  },
+  {
+   "date": "2026-02-25",
+   "total": 872,
+   "above": 453,
+   "below": 419,
+   "pct_above": 51.95,
+   "pct_below": 48.05
+  },
+  {
+   "date": "2026-02-26",
+   "total": 877,
+   "above": 456,
+   "below": 421,
+   "pct_above": 52.0,
+   "pct_below": 48.0
+  },
+  {
+   "date": "2026-02-27",
+   "total": 958,
+   "above": 469,
+   "below": 489,
+   "pct_above": 48.96,
+   "pct_below": 51.04
+  },
+  {
+   "date": "2026-03-02",
+   "total": 928,
+   "above": 411,
+   "below": 517,
+   "pct_above": 44.29,
+   "pct_below": 55.71
+  },
+  {
+   "date": "2026-03-03",
+   "total": 912,
+   "above": 405,
+   "below": 507,
+   "pct_above": 44.41,
+   "pct_below": 55.59
+  },
+  {
+   "date": "2026-03-04",
+   "total": 934,
+   "above": 384,
+   "below": 550,
+   "pct_above": 41.11,
+   "pct_below": 58.89
+  },
+  {
+   "date": "2026-03-05",
+   "total": 903,
+   "above": 368,
+   "below": 535,
+   "pct_above": 40.75,
+   "pct_below": 59.25
+  },
+  {
+   "date": "2026-03-06",
+   "total": 912,
+   "above": 337,
+   "below": 575,
+   "pct_above": 36.95,
+   "pct_below": 63.05
+  },
+  {
+   "date": "2026-03-09",
+   "total": 940,
+   "above": 178,
+   "below": 762,
+   "pct_above": 18.94,
+   "pct_below": 81.06
+  },
+  {
+   "date": "2026-03-10",
+   "total": 895,
+   "above": 229,
+   "below": 666,
+   "pct_above": 25.59,
+   "pct_below": 74.41
+  },
+  {
+   "date": "2026-03-11",
+   "total": 883,
+   "above": 278,
+   "below": 605,
+   "pct_above": 31.48,
+   "pct_below": 68.52
+  },
+  {
+   "date": "2026-03-12",
+   "total": 872,
+   "above": 264,
+   "below": 608,
+   "pct_above": 30.28,
+   "pct_below": 69.72
+  },
+  {
+   "date": "2026-03-13",
+   "total": 929,
+   "above": 287,
+   "below": 642,
+   "pct_above": 30.89,
+   "pct_below": 69.11
+  },
+  {
+   "date": "2026-03-16",
+   "total": 871,
+   "above": 278,
+   "below": 593,
+   "pct_above": 31.92,
+   "pct_below": 68.08
+  },
+  {
+   "date": "2026-03-17",
+   "total": 847,
+   "above": 263,
+   "below": 584,
+   "pct_above": 31.05,
+   "pct_below": 68.95
+  },
+  {
+   "date": "2026-03-18",
+   "total": 869,
+   "above": 287,
+   "below": 582,
+   "pct_above": 33.03,
+   "pct_below": 66.97
+  },
+  {
+   "date": "2026-03-19",
+   "total": 849,
+   "above": 254,
+   "below": 595,
+   "pct_above": 29.92,
+   "pct_below": 70.08
+  },
+  {
+   "date": "2026-03-20",
+   "total": 913,
+   "above": 260,
+   "below": 653,
+   "pct_above": 28.48,
+   "pct_below": 71.52
+  },
+  {
+   "date": "2026-03-23",
+   "total": 869,
+   "above": 179,
+   "below": 690,
+   "pct_above": 20.6,
+   "pct_below": 79.4
+  },
+  {
+   "date": "2026-03-24",
+   "total": 852,
+   "above": 217,
+   "below": 635,
+   "pct_above": 25.47,
+   "pct_below": 74.53
+  },
+  {
+   "date": "2026-03-25",
+   "total": 875,
+   "above": 281,
+   "below": 594,
+   "pct_above": 32.11,
+   "pct_below": 67.89
+  },
+  {
+   "date": "2026-03-26",
+   "total": 833,
+   "above": 245,
+   "below": 588,
+   "pct_above": 29.41,
+   "pct_below": 70.59
+  },
+  {
+   "date": "2026-03-27",
+   "total": 938,
+   "above": 315,
+   "below": 623,
+   "pct_above": 33.58,
+   "pct_below": 66.42
+  },
+  {
+   "date": "2026-03-30",
+   "total": 870,
+   "above": 302,
+   "below": 568,
+   "pct_above": 34.71,
+   "pct_below": 65.29
+  },
+  {
+   "date": "2026-03-31",
+   "total": 881,
+   "above": 324,
+   "below": 557,
+   "pct_above": 36.78,
+   "pct_below": 63.22
+  },
+  {
+   "date": "2026-04-01",
+   "total": 911,
+   "above": 329,
+   "below": 582,
+   "pct_above": 36.11,
+   "pct_below": 63.89
+  },
+  {
+   "date": "2026-04-02",
+   "total": 855,
+   "above": 301,
+   "below": 554,
+   "pct_above": 35.2,
+   "pct_below": 64.8
+  },
+  {
+   "date": "2026-04-03",
+   "total": 920,
+   "above": 274,
+   "below": 646,
+   "pct_above": 29.78,
+   "pct_below": 70.22
+  },
+  {
+   "date": "2026-04-06",
+   "total": 847,
+   "above": 235,
+   "below": 612,
+   "pct_above": 27.74,
+   "pct_below": 72.26
+  },
+  {
+   "date": "2026-04-07",
+   "total": 828,
+   "above": 228,
+   "below": 600,
+   "pct_above": 27.54,
+   "pct_below": 72.46
+  },
+  {
+   "date": "2026-04-08",
+   "total": 887,
+   "above": 374,
+   "below": 513,
+   "pct_above": 42.16,
+   "pct_below": 57.84
+  },
+  {
+   "date": "2026-04-09",
+   "total": 870,
+   "above": 343,
+   "below": 527,
+   "pct_above": 39.43,
+   "pct_below": 60.57
+  },
+  {
+   "date": "2026-04-10",
+   "total": 928,
+   "above": 364,
+   "below": 564,
+   "pct_above": 39.22,
+   "pct_below": 60.78
+  },
+  {
+   "date": "2026-04-13",
+   "total": 848,
+   "above": 331,
+   "below": 517,
+   "pct_above": 39.03,
+   "pct_below": 60.97
+  },
+  {
+   "date": "2026-04-14",
+   "total": 849,
+   "above": 348,
+   "below": 501,
+   "pct_above": 40.99,
+   "pct_below": 59.01
+  },
+  {
+   "date": "2026-04-15",
+   "total": 857,
+   "above": 339,
+   "below": 518,
+   "pct_above": 39.56,
+   "pct_below": 60.44
+  },
+  {
+   "date": "2026-04-16",
+   "total": 832,
+   "above": 304,
+   "below": 528,
+   "pct_above": 36.54,
+   "pct_below": 63.46
+  },
+  {
+   "date": "2026-04-17",
+   "total": 927,
+   "above": 347,
+   "below": 580,
+   "pct_above": 37.43,
+   "pct_below": 62.57
+  },
+  {
+   "date": "2026-04-20",
+   "total": 852,
+   "above": 341,
+   "below": 511,
+   "pct_above": 40.02,
+   "pct_below": 59.98
+  },
+  {
+   "date": "2026-04-21",
+   "total": 865,
+   "above": 316,
+   "below": 549,
+   "pct_above": 36.53,
+   "pct_below": 63.47
+  },
+  {
+   "date": "2026-04-22",
+   "total": 820,
+   "above": 294,
+   "below": 526,
+   "pct_above": 35.85,
+   "pct_below": 64.15
+  },
+  {
+   "date": "2026-04-23",
+   "total": 826,
+   "above": 283,
+   "below": 543,
+   "pct_above": 34.26,
+   "pct_below": 65.74
+  },
+  {
+   "date": "2026-04-24",
+   "total": 897,
+   "above": 304,
+   "below": 593,
+   "pct_above": 33.89,
+   "pct_below": 66.11
+  },
+  {
+   "date": "2026-04-28",
+   "total": 840,
+   "above": 277,
+   "below": 563,
+   "pct_above": 32.98,
+   "pct_below": 67.02
+  },
+  {
+   "date": "2026-04-29",
+   "total": 830,
+   "above": 295,
+   "below": 535,
+   "pct_above": 35.54,
+   "pct_below": 64.46
+  },
+  {
+   "date": "2026-05-04",
+   "total": 832,
+   "above": 289,
+   "below": 543,
+   "pct_above": 34.74,
+   "pct_below": 65.26
+  },
+  {
+   "date": "2026-05-05",
+   "total": 834,
+   "above": 279,
+   "below": 555,
+   "pct_above": 33.45,
+   "pct_below": 66.55
+  },
+  {
+   "date": "2026-05-06",
+   "total": 871,
+   "above": 318,
+   "below": 553,
+   "pct_above": 36.51,
+   "pct_below": 63.49
+  },
+  {
+   "date": "2026-05-07",
+   "total": 830,
+   "above": 288,
+   "below": 542,
+   "pct_above": 34.7,
+   "pct_below": 65.3
+  },
+  {
+   "date": "2026-05-08",
+   "total": 830,
+   "above": 275,
+   "below": 555,
+   "pct_above": 33.13,
+   "pct_below": 66.87
+  },
+  {
+   "date": "2026-05-11",
+   "total": 833,
+   "above": 261,
+   "below": 572,
+   "pct_above": 31.33,
+   "pct_below": 68.67
+  },
+  {
+   "date": "2026-05-12",
+   "total": 822,
+   "above": 277,
+   "below": 545,
+   "pct_above": 33.7,
+   "pct_below": 66.3
+  },
+  {
+   "date": "2026-05-13",
+   "total": 839,
+   "above": 278,
+   "below": 561,
+   "pct_above": 33.13,
+   "pct_below": 66.87
+  },
+  {
+   "date": "2026-05-14",
+   "total": 825,
+   "above": 289,
+   "below": 536,
+   "pct_above": 35.03,
+   "pct_below": 64.97
+  },
+  {
+   "date": "2026-05-15",
+   "total": 876,
+   "above": 293,
+   "below": 583,
+   "pct_above": 33.45,
+   "pct_below": 66.55
+  },
+  {
+   "date": "2026-05-18",
+   "total": 838,
+   "above": 294,
+   "below": 544,
+   "pct_above": 35.08,
+   "pct_below": 64.92
+  },
+  {
+   "date": "2026-05-19",
+   "total": 837,
+   "above": 265,
+   "below": 572,
+   "pct_above": 31.66,
+   "pct_below": 68.34
+  },
+  {
+   "date": "2026-05-20",
+   "total": 812,
+   "above": 223,
+   "below": 589,
+   "pct_above": 27.46,
+   "pct_below": 72.54
+  },
+  {
+   "date": "2026-05-21",
+   "total": 794,
+   "above": 237,
+   "below": 557,
+   "pct_above": 29.85,
+   "pct_below": 70.15
+  },
+  {
+   "date": "2026-05-22",
+   "total": 874,
+   "above": 257,
+   "below": 617,
+   "pct_above": 29.41,
+   "pct_below": 70.59
+  },
+  {
+   "date": "2026-05-25",
+   "total": 816,
+   "above": 254,
+   "below": 562,
+   "pct_above": 31.13,
+   "pct_below": 68.87
+  },
+  {
+   "date": "2026-05-26",
+   "total": 796,
+   "above": 265,
+   "below": 531,
+   "pct_above": 33.29,
+   "pct_below": 66.71
+  },
+  {
+   "date": "2026-05-27",
+   "total": 813,
+   "above": 276,
+   "below": 537,
+   "pct_above": 33.95,
+   "pct_below": 66.05
+  },
+  {
+   "date": "2026-05-28",
+   "total": 789,
+   "above": 253,
+   "below": 536,
+   "pct_above": 32.07,
+   "pct_below": 67.93
+  },
+  {
+   "date": "2026-05-29",
+   "total": 856,
+   "above": 256,
+   "below": 600,
+   "pct_above": 29.91,
+   "pct_below": 70.09
+  },
+  {
+   "date": "2026-06-01",
+   "total": 791,
+   "above": 253,
+   "below": 538,
+   "pct_above": 31.98,
+   "pct_below": 68.02
+  },
+  {
+   "date": "2026-06-02",
+   "total": 802,
+   "above": 254,
+   "below": 548,
+   "pct_above": 31.67,
+   "pct_below": 68.33
+  },
+  {
+   "date": "2026-06-03",
+   "total": 797,
+   "above": 272,
+   "below": 525,
+   "pct_above": 34.13,
+   "pct_below": 65.87
+  },
+  {
+   "date": "2026-06-04",
+   "total": 790,
+   "above": 258,
+   "below": 532,
+   "pct_above": 32.66,
+   "pct_below": 67.34
+  },
+  {
+   "date": "2026-06-05",
+   "total": 845,
+   "above": 259,
+   "below": 586,
+   "pct_above": 30.65,
+   "pct_below": 69.35
+  },
+  {
+   "date": "2026-06-08",
+   "total": 817,
+   "above": 224,
+   "below": 593,
+   "pct_above": 27.42,
+   "pct_below": 72.58
+  },
+  {
+   "date": "2026-06-09",
+   "total": 794,
+   "above": 219,
+   "below": 575,
+   "pct_above": 27.58,
+   "pct_below": 72.42
+  },
+  {
+   "date": "2026-06-10",
+   "total": 802,
+   "above": 240,
+   "below": 562,
+   "pct_above": 29.93,
+   "pct_below": 70.07
+  },
+  {
+   "date": "2026-06-11",
+   "total": 803,
+   "above": 244,
+   "below": 559,
+   "pct_above": 30.39,
+   "pct_below": 69.61
+  },
+  {
+   "date": "2026-06-12",
+   "total": 848,
+   "above": 241,
+   "below": 607,
+   "pct_above": 28.42,
+   "pct_below": 71.58
+  },
+  {
+   "date": "2026-06-15",
+   "total": 823,
+   "above": 261,
+   "below": 562,
+   "pct_above": 31.71,
+   "pct_below": 68.29
+  },
+  {
+   "date": "2026-06-16",
+   "total": 834,
+   "above": 304,
+   "below": 530,
+   "pct_above": 36.45,
+   "pct_below": 63.55
+  },
+  {
+   "date": "2026-06-17",
+   "total": 824,
+   "above": 307,
+   "below": 517,
+   "pct_above": 37.26,
+   "pct_below": 62.74
+  },
+  {
+   "date": "2026-06-18",
+   "total": 806,
+   "above": 292,
+   "below": 514,
+   "pct_above": 36.23,
+   "pct_below": 63.77
+  },
+  {
+   "date": "2026-06-19",
+   "total": 839,
+   "above": 281,
+   "below": 558,
+   "pct_above": 33.49,
+   "pct_below": 66.51
+  },
+  {
+   "date": "2026-06-22",
+   "total": 800,
+   "above": 266,
+   "below": 534,
+   "pct_above": 33.25,
+   "pct_below": 66.75
+  },
+  {
+   "date": "2026-06-23",
+   "total": 796,
+   "above": 274,
+   "below": 522,
+   "pct_above": 34.42,
+   "pct_below": 65.58
+  },
+  {
+   "date": "2026-06-24",
+   "total": 775,
+   "above": 239,
+   "below": 536,
+   "pct_above": 30.84,
+   "pct_below": 69.16
+  },
+  {
+   "date": "2026-06-25",
+   "total": 800,
+   "above": 245,
+   "below": 555,
+   "pct_above": 30.63,
+   "pct_below": 69.37
+  },
+  {
+   "date": "2026-06-26",
+   "total": 843,
+   "above": 262,
+   "below": 581,
+   "pct_above": 31.08,
+   "pct_below": 68.92
+  },
+  {
+   "date": "2026-06-29",
+   "total": 814,
+   "above": 287,
+   "below": 527,
+   "pct_above": 35.26,
+   "pct_below": 64.74
+  },
+  {
    "date": "2026-06-30",
-   "total": 129,
-   "above": 53,
-   "below": 76,
-   "pct_above": 41.09,
-   "pct_below": 58.91
+   "total": 809,
+   "above": 298,
+   "below": 511,
+   "pct_above": 36.84,
+   "pct_below": 63.16
   },
   {
    "date": "2026-07-01",
-   "total": 129,
-   "above": 56,
-   "below": 73,
-   "pct_above": 43.41,
-   "pct_below": 56.59
-  },
-  {
-   "date": "2026-07-02",
-   "total": 130,
-   "above": 57,
-   "below": 73,
-   "pct_above": 43.85,
-   "pct_below": 56.15
-  },
-  {
-   "date": "2026-07-03",
-   "total": 130,
-   "above": 55,
-   "below": 75,
-   "pct_above": 42.31,
-   "pct_below": 57.69
-  },
-  {
-   "date": "2026-07-06",
-   "total": 130,
-   "above": 42,
-   "below": 88,
-   "pct_above": 32.31,
-   "pct_below": 67.69
-  },
-  {
-   "date": "2026-07-07",
-   "total": 130,
-   "above": 44,
-   "below": 86,
-   "pct_above": 33.85,
-   "pct_below": 66.15
-  },
-  {
-   "date": "2026-07-08",
-   "total": 130,
-   "above": 48,
-   "below": 82,
-   "pct_above": 36.92,
-   "pct_below": 63.08
-  },
-  {
-   "date": "2026-07-09",
-   "total": 130,
-   "above": 48,
-   "below": 82,
-   "pct_above": 36.92,
-   "pct_below": 63.08
-  },
-  {
-   "date": "2026-07-10",
-   "total": 130,
-   "above": 38,
-   "below": 92,
-   "pct_above": 29.23,
-   "pct_below": 70.77
-  },
-  {
-   "date": "2026-07-13",
-   "total": 130,
-   "above": 29,
-   "below": 101,
-   "pct_above": 22.31,
-   "pct_below": 77.69
-  },
-  {
-   "date": "2026-07-14",
-   "total": 130,
-   "above": 33,
-   "below": 97,
-   "pct_above": 25.38,
-   "pct_below": 74.62
-  },
-  {
-   "date": "2026-07-15",
-   "total": 130,
-   "above": 25,
-   "below": 105,
-   "pct_above": 19.23,
-   "pct_below": 80.77
-  },
-  {
-   "date": "2026-07-16",
-   "total": 130,
-   "above": 30,
-   "below": 100,
-   "pct_above": 23.08,
-   "pct_below": 76.92
-  },
-  {
-   "date": "2026-07-17",
-   "total": 130,
-   "above": 27,
-   "below": 103,
-   "pct_above": 20.77,
-   "pct_below": 79.23
-  },
-  {
-   "date": "2026-07-20",
-   "total": 130,
-   "above": 17,
-   "below": 113,
-   "pct_above": 13.08,
-   "pct_below": 86.92
-  },
-  {
-   "date": "2026-07-21",
-   "total": 130,
-   "above": 15,
-   "below": 115,
-   "pct_above": 11.54,
-   "pct_below": 88.46
-  },
-  {
-   "date": "2026-07-22",
-   "total": 130,
-   "above": 10,
-   "below": 120,
-   "pct_above": 7.69,
-   "pct_below": 92.31
-  },
-  {
-   "date": "2026-07-23",
-   "total": 130,
-   "above": 13,
-   "below": 117,
-   "pct_above": 10.0,
-   "pct_below": 90.0
-  },
-  {
-   "date": "2026-07-24",
-   "total": 130,
-   "above": 13,
-   "below": 117,
-   "pct_above": 10.0,
-   "pct_below": 90.0
-  },
-  {
-   "date": "2026-07-27",
-   "total": 130,
-   "above": 14,
-   "below": 116,
-   "pct_above": 10.77,
-   "pct_below": 89.23
-  },
-  {
-   "date": "2026-07-28",
-   "total": 130,
-   "above": 14,
-   "below": 116,
-   "pct_above": 10.77,
-   "pct_below": 89.23
-  },
-  {
-   "date": "2026-07-29",
-   "total": 130,
-   "above": 17,
-   "below": 113,
-   "pct_above": 13.08,
-   "pct_below": 86.92
-  },
-  {
-   "date": "2026-07-30",
-   "total": 130,
-   "above": 25,
-   "below": 105,
-   "pct_above": 19.23,
-   "pct_below": 80.77
-  },
-  {
-   "date": "2026-07-31",
-   "total": 130,
-   "above": 23,
-   "below": 107,
-   "pct_above": 17.69,
-   "pct_below": 82.31
-  },
-  {
-   "date": "2026-08-03",
-   "total": 130,
-   "above": 36,
-   "below": 94,
-   "pct_above": 27.69,
-   "pct_below": 72.31
-  },
-  {
-   "date": "2026-08-04",
-   "total": 130,
-   "above": 41,
-   "below": 89,
-   "pct_above": 31.54,
-   "pct_below": 68.46
-  },
-  {
-   "date": "2026-08-05",
-   "total": 130,
-   "above": 36,
-   "below": 94,
-   "pct_above": 27.69,
-   "pct_below": 72.31
-  },
-  {
-   "date": "2026-08-06",
-   "total": 130,
-   "above": 30,
-   "below": 100,
-   "pct_above": 23.08,
-   "pct_below": 76.92
-  },
-  {
-   "date": "2026-08-07",
-   "total": 130,
-   "above": 38,
-   "below": 92,
-   "pct_above": 29.23,
-   "pct_below": 70.77
-  },
-  {
-   "date": "2026-08-10",
-   "total": 130,
-   "above": 49,
-   "below": 81,
-   "pct_above": 37.69,
-   "pct_below": 62.31
-  },
-  {
-   "date": "2026-08-11",
-   "total": 130,
-   "above": 46,
-   "below": 84,
-   "pct_above": 35.38,
-   "pct_below": 64.62
-  },
-  {
-   "date": "2026-08-12",
-   "total": 130,
-   "above": 45,
-   "below": 85,
-   "pct_above": 34.62,
-   "pct_below": 65.38
-  },
-  {
-   "date": "2026-08-13",
-   "total": 130,
-   "above": 42,
-   "below": 88,
-   "pct_above": 32.31,
-   "pct_below": 67.69
-  },
-  {
-   "date": "2026-08-14",
-   "total": 130,
-   "above": 34,
-   "below": 96,
-   "pct_above": 26.15,
-   "pct_below": 73.85
-  },
-  {
-   "date": "2026-08-17",
-   "total": 130,
-   "above": 33,
-   "below": 97,
-   "pct_above": 25.38,
-   "pct_below": 74.62
-  },
-  {
-   "date": "2026-08-18",
-   "total": 131,
-   "above": 34,
-   "below": 97,
-   "pct_above": 25.95,
-   "pct_below": 74.05
-  },
-  {
-   "date": "2026-08-19",
-   "total": 131,
-   "above": 32,
-   "below": 99,
-   "pct_above": 24.43,
-   "pct_below": 75.57
-  },
-  {
-   "date": "2026-08-20",
-   "total": 131,
-   "above": 34,
-   "below": 97,
-   "pct_above": 25.95,
-   "pct_below": 74.05
-  },
-  {
-   "date": "2026-08-21",
-   "total": 131,
-   "above": 56,
-   "below": 75,
-   "pct_above": 42.75,
-   "pct_below": 57.25
-  },
-  {
-   "date": "2026-08-24",
-   "total": 131,
-   "above": 62,
-   "below": 69,
-   "pct_above": 47.33,
-   "pct_below": 52.67
-  },
-  {
-   "date": "2026-08-25",
-   "total": 131,
-   "above": 59,
-   "below": 72,
-   "pct_above": 45.04,
-   "pct_below": 54.96
-  },
-  {
-   "date": "2026-08-26",
-   "total": 131,
-   "above": 69,
-   "below": 62,
-   "pct_above": 52.67,
-   "pct_below": 47.33
-  },
-  {
-   "date": "2026-08-27",
-   "total": 131,
-   "above": 65,
-   "below": 66,
-   "pct_above": 49.62,
-   "pct_below": 50.38
-  },
-  {
-   "date": "2026-08-28",
-   "total": 131,
-   "above": 63,
-   "below": 68,
-   "pct_above": 48.09,
-   "pct_below": 51.91
-  },
-  {
-   "date": "2026-09-03",
-   "total": 131,
-   "above": 54,
-   "below": 77,
-   "pct_above": 41.22,
-   "pct_below": 58.78
-  },
-  {
-   "date": "2026-09-04",
-   "total": 131,
-   "above": 53,
-   "below": 78,
-   "pct_above": 40.46,
-   "pct_below": 59.54
-  },
-  {
-   "date": "2026-09-07",
-   "total": 131,
-   "above": 45,
-   "below": 86,
-   "pct_above": 34.35,
-   "pct_below": 65.65
-  },
-  {
-   "date": "2026-09-08",
-   "total": 131,
-   "above": 47,
-   "below": 84,
-   "pct_above": 35.88,
-   "pct_below": 64.12
-  },
-  {
-   "date": "2026-09-09",
-   "total": 131,
-   "above": 46,
-   "below": 85,
-   "pct_above": 35.11,
-   "pct_below": 64.89
-  },
-  {
-   "date": "2026-09-10",
-   "total": 131,
-   "above": 45,
-   "below": 86,
-   "pct_above": 34.35,
-   "pct_below": 65.65
-  },
-  {
-   "date": "2026-09-11",
-   "total": 131,
-   "above": 35,
-   "below": 96,
-   "pct_above": 26.72,
-   "pct_below": 73.28
-  },
-  {
-   "date": "2026-09-14",
-   "total": 131,
-   "above": 28,
-   "below": 103,
-   "pct_above": 21.37,
-   "pct_below": 78.63
-  },
-  {
-   "date": "2026-09-15",
-   "total": 131,
-   "above": 39,
-   "below": 92,
-   "pct_above": 29.77,
-   "pct_below": 70.23
-  },
-  {
-   "date": "2026-09-16",
-   "total": 131,
-   "above": 40,
-   "below": 91,
-   "pct_above": 30.53,
-   "pct_below": 69.47
-  },
-  {
-   "date": "2026-09-17",
-   "total": 131,
-   "above": 45,
-   "below": 86,
-   "pct_above": 34.35,
-   "pct_below": 65.65
-  },
-  {
-   "date": "2026-09-18",
-   "total": 131,
-   "above": 45,
-   "below": 86,
-   "pct_above": 34.35,
-   "pct_below": 65.65
-  },
-  {
-   "date": "2026-09-21",
-   "total": 131,
-   "above": 44,
-   "below": 87,
-   "pct_above": 33.59,
-   "pct_below": 66.41
-  },
-  {
-   "date": "2026-09-22",
-   "total": 130,
-   "above": 49,
-   "below": 81,
-   "pct_above": 37.69,
-   "pct_below": 62.31
-  },
-  {
-   "date": "2026-09-23",
-   "total": 131,
-   "above": 52,
-   "below": 79,
-   "pct_above": 39.69,
-   "pct_below": 60.31
-  },
-  {
-   "date": "2026-09-24",
-   "total": 131,
-   "above": 47,
-   "below": 84,
-   "pct_above": 35.88,
-   "pct_below": 64.12
-  },
-  {
-   "date": "2026-09-25",
-   "total": 131,
-   "above": 44,
-   "below": 87,
-   "pct_above": 33.59,
-   "pct_below": 66.41
-  },
-  {
-   "date": "2026-09-28",
-   "total": 131,
-   "above": 38,
-   "below": 93,
-   "pct_above": 29.01,
-   "pct_below": 70.99
-  },
-  {
-   "date": "2026-09-29",
-   "total": 131,
-   "above": 44,
-   "below": 87,
-   "pct_above": 33.59,
-   "pct_below": 66.41
-  },
-  {
-   "date": "2026-09-30",
-   "total": 131,
-   "above": 41,
-   "below": 90,
-   "pct_above": 31.3,
-   "pct_below": 68.7
-  },
-  {
-   "date": "2026-10-01",
-   "total": 131,
-   "above": 37,
-   "below": 94,
-   "pct_above": 28.24,
-   "pct_below": 71.76
-  },
-  {
-   "date": "2026-10-02",
-   "total": 131,
-   "above": 32,
-   "below": 99,
-   "pct_above": 24.43,
-   "pct_below": 75.57
-  },
-  {
-   "date": "2026-10-05",
-   "total": 131,
-   "above": 37,
-   "below": 94,
-   "pct_above": 28.24,
-   "pct_below": 71.76
-  },
-  {
-   "date": "2026-10-06",
-   "total": 131,
-   "above": 39,
-   "below": 92,
-   "pct_above": 29.77,
-   "pct_below": 70.23
-  },
-  {
-   "date": "2026-10-07",
-   "total": 131,
-   "above": 40,
-   "below": 91,
-   "pct_above": 30.53,
-   "pct_below": 69.47
-  },
-  {
-   "date": "2026-10-08",
-   "total": 131,
-   "above": 41,
-   "below": 90,
-   "pct_above": 31.3,
-   "pct_below": 68.7
-  },
-  {
-   "date": "2026-10-09",
-   "total": 131,
-   "above": 43,
-   "below": 88,
-   "pct_above": 32.82,
-   "pct_below": 67.18
-  },
-  {
-   "date": "2026-10-12",
-   "total": 131,
-   "above": 39,
-   "below": 92,
-   "pct_above": 29.77,
-   "pct_below": 70.23
-  },
-  {
-   "date": "2026-10-13",
-   "total": 131,
-   "above": 34,
-   "below": 97,
-   "pct_above": 25.95,
-   "pct_below": 74.05
-  },
-  {
-   "date": "2026-10-14",
-   "total": 131,
-   "above": 37,
-   "below": 94,
-   "pct_above": 28.24,
-   "pct_below": 71.76
-  },
-  {
-   "date": "2026-10-15",
-   "total": 131,
-   "above": 38,
-   "below": 93,
-   "pct_above": 29.01,
-   "pct_below": 70.99
-  },
-  {
-   "date": "2026-10-16",
-   "total": 131,
-   "above": 38,
-   "below": 93,
-   "pct_above": 29.01,
-   "pct_below": 70.99
-  },
-  {
-   "date": "2026-10-19",
-   "total": 131,
-   "above": 36,
-   "below": 95,
-   "pct_above": 27.48,
-   "pct_below": 72.52
-  },
-  {
-   "date": "2026-10-20",
-   "total": 131,
-   "above": 40,
-   "below": 91,
-   "pct_above": 30.53,
-   "pct_below": 69.47
-  },
-  {
-   "date": "2026-10-21",
-   "total": 131,
-   "above": 66,
-   "below": 65,
-   "pct_above": 50.38,
-   "pct_below": 49.62
-  },
-  {
-   "date": "2026-10-22",
-   "total": 131,
-   "above": 67,
-   "below": 64,
-   "pct_above": 51.15,
-   "pct_below": 48.85
-  },
-  {
-   "date": "2026-10-23",
-   "total": 131,
-   "above": 73,
-   "below": 58,
-   "pct_above": 55.73,
-   "pct_below": 44.27
-  },
-  {
-   "date": "2026-10-26",
-   "total": 131,
-   "above": 65,
-   "below": 66,
-   "pct_above": 49.62,
-   "pct_below": 50.38
-  },
-  {
-   "date": "2026-10-27",
-   "total": 131,
-   "above": 58,
-   "below": 73,
-   "pct_above": 44.27,
-   "pct_below": 55.73
-  },
-  {
-   "date": "2026-10-28",
-   "total": 131,
-   "above": 61,
-   "below": 70,
-   "pct_above": 46.56,
-   "pct_below": 53.44
-  },
-  {
-   "date": "2026-10-29",
-   "total": 131,
-   "above": 48,
-   "below": 83,
+   "total": 786,
+   "above": 288,
+   "below": 498,
    "pct_above": 36.64,
    "pct_below": 63.36
   },
   {
+   "date": "2026-07-02",
+   "total": 790,
+   "above": 298,
+   "below": 492,
+   "pct_above": 37.72,
+   "pct_below": 62.28
+  },
+  {
+   "date": "2026-07-03",
+   "total": 835,
+   "above": 297,
+   "below": 538,
+   "pct_above": 35.57,
+   "pct_below": 64.43
+  },
+  {
+   "date": "2026-07-06",
+   "total": 829,
+   "above": 265,
+   "below": 564,
+   "pct_above": 31.97,
+   "pct_below": 68.03
+  },
+  {
+   "date": "2026-07-07",
+   "total": 789,
+   "above": 259,
+   "below": 530,
+   "pct_above": 32.83,
+   "pct_below": 67.17
+  },
+  {
+   "date": "2026-07-08",
+   "total": 803,
+   "above": 274,
+   "below": 529,
+   "pct_above": 34.12,
+   "pct_below": 65.88
+  },
+  {
+   "date": "2026-07-09",
+   "total": 762,
+   "above": 249,
+   "below": 513,
+   "pct_above": 32.68,
+   "pct_below": 67.32
+  },
+  {
+   "date": "2026-07-10",
+   "total": 817,
+   "above": 240,
+   "below": 577,
+   "pct_above": 29.38,
+   "pct_below": 70.62
+  },
+  {
+   "date": "2026-07-13",
+   "total": 800,
+   "above": 196,
+   "below": 604,
+   "pct_above": 24.5,
+   "pct_below": 75.5
+  },
+  {
+   "date": "2026-07-14",
+   "total": 764,
+   "above": 206,
+   "below": 558,
+   "pct_above": 26.96,
+   "pct_below": 73.04
+  },
+  {
+   "date": "2026-07-15",
+   "total": 768,
+   "above": 181,
+   "below": 587,
+   "pct_above": 23.57,
+   "pct_below": 76.43
+  },
+  {
+   "date": "2026-07-16",
+   "total": 786,
+   "above": 192,
+   "below": 594,
+   "pct_above": 24.43,
+   "pct_below": 75.57
+  },
+  {
+   "date": "2026-07-17",
+   "total": 813,
+   "above": 193,
+   "below": 620,
+   "pct_above": 23.74,
+   "pct_below": 76.26
+  },
+  {
+   "date": "2026-07-20",
+   "total": 801,
+   "above": 160,
+   "below": 641,
+   "pct_above": 19.98,
+   "pct_below": 80.02
+  },
+  {
+   "date": "2026-07-21",
+   "total": 787,
+   "above": 149,
+   "below": 638,
+   "pct_above": 18.93,
+   "pct_below": 81.07
+  },
+  {
+   "date": "2026-07-22",
+   "total": 808,
+   "above": 143,
+   "below": 665,
+   "pct_above": 17.7,
+   "pct_below": 82.3
+  },
+  {
+   "date": "2026-07-23",
+   "total": 817,
+   "above": 163,
+   "below": 654,
+   "pct_above": 19.95,
+   "pct_below": 80.05
+  },
+  {
+   "date": "2026-07-24",
+   "total": 834,
+   "above": 152,
+   "below": 682,
+   "pct_above": 18.23,
+   "pct_below": 81.77
+  },
+  {
+   "date": "2026-07-27",
+   "total": 800,
+   "above": 151,
+   "below": 649,
+   "pct_above": 18.88,
+   "pct_below": 81.12
+  },
+  {
+   "date": "2026-07-28",
+   "total": 799,
+   "above": 160,
+   "below": 639,
+   "pct_above": 20.03,
+   "pct_below": 79.97
+  },
+  {
+   "date": "2026-07-29",
+   "total": 772,
+   "above": 143,
+   "below": 629,
+   "pct_above": 18.52,
+   "pct_below": 81.48
+  },
+  {
+   "date": "2026-07-30",
+   "total": 797,
+   "above": 188,
+   "below": 609,
+   "pct_above": 23.59,
+   "pct_below": 76.41
+  },
+  {
+   "date": "2026-07-31",
+   "total": 838,
+   "above": 197,
+   "below": 641,
+   "pct_above": 23.51,
+   "pct_below": 76.49
+  },
+  {
+   "date": "2026-08-03",
+   "total": 830,
+   "above": 231,
+   "below": 599,
+   "pct_above": 27.83,
+   "pct_below": 72.17
+  },
+  {
+   "date": "2026-08-04",
+   "total": 795,
+   "above": 239,
+   "below": 556,
+   "pct_above": 30.06,
+   "pct_below": 69.94
+  },
+  {
+   "date": "2026-08-05",
+   "total": 802,
+   "above": 241,
+   "below": 561,
+   "pct_above": 30.05,
+   "pct_below": 69.95
+  },
+  {
+   "date": "2026-08-06",
+   "total": 799,
+   "above": 229,
+   "below": 570,
+   "pct_above": 28.66,
+   "pct_below": 71.34
+  },
+  {
+   "date": "2026-08-07",
+   "total": 844,
+   "above": 242,
+   "below": 602,
+   "pct_above": 28.67,
+   "pct_below": 71.33
+  },
+  {
+   "date": "2026-08-10",
+   "total": 824,
+   "above": 286,
+   "below": 538,
+   "pct_above": 34.71,
+   "pct_below": 65.29
+  },
+  {
+   "date": "2026-08-11",
+   "total": 816,
+   "above": 287,
+   "below": 529,
+   "pct_above": 35.17,
+   "pct_below": 64.83
+  },
+  {
+   "date": "2026-08-12",
+   "total": 811,
+   "above": 275,
+   "below": 536,
+   "pct_above": 33.91,
+   "pct_below": 66.09
+  },
+  {
+   "date": "2026-08-13",
+   "total": 794,
+   "above": 255,
+   "below": 539,
+   "pct_above": 32.12,
+   "pct_below": 67.88
+  },
+  {
+   "date": "2026-08-14",
+   "total": 853,
+   "above": 248,
+   "below": 605,
+   "pct_above": 29.07,
+   "pct_below": 70.93
+  },
+  {
+   "date": "2026-08-17",
+   "total": 785,
+   "above": 227,
+   "below": 558,
+   "pct_above": 28.92,
+   "pct_below": 71.08
+  },
+  {
+   "date": "2026-08-18",
+   "total": 803,
+   "above": 243,
+   "below": 560,
+   "pct_above": 30.26,
+   "pct_below": 69.74
+  },
+  {
+   "date": "2026-08-19",
+   "total": 766,
+   "above": 212,
+   "below": 554,
+   "pct_above": 27.68,
+   "pct_below": 72.32
+  },
+  {
+   "date": "2026-08-20",
+   "total": 772,
+   "above": 234,
+   "below": 538,
+   "pct_above": 30.31,
+   "pct_below": 69.69
+  },
+  {
+   "date": "2026-08-21",
+   "total": 858,
+   "above": 290,
+   "below": 568,
+   "pct_above": 33.8,
+   "pct_below": 66.2
+  },
+  {
+   "date": "2026-08-24",
+   "total": 820,
+   "above": 293,
+   "below": 527,
+   "pct_above": 35.73,
+   "pct_below": 64.27
+  },
+  {
+   "date": "2026-08-25",
+   "total": 823,
+   "above": 272,
+   "below": 551,
+   "pct_above": 33.05,
+   "pct_below": 66.95
+  },
+  {
+   "date": "2026-08-26",
+   "total": 809,
+   "above": 300,
+   "below": 509,
+   "pct_above": 37.08,
+   "pct_below": 62.92
+  },
+  {
+   "date": "2026-08-27",
+   "total": 787,
+   "above": 283,
+   "below": 504,
+   "pct_above": 35.96,
+   "pct_below": 64.04
+  },
+  {
+   "date": "2026-08-28",
+   "total": 857,
+   "above": 290,
+   "below": 567,
+   "pct_above": 33.84,
+   "pct_below": 66.16
+  },
+  {
+   "date": "2026-09-03",
+   "total": 811,
+   "above": 264,
+   "below": 547,
+   "pct_above": 32.55,
+   "pct_below": 67.45
+  },
+  {
+   "date": "2026-09-04",
+   "total": 865,
+   "above": 271,
+   "below": 594,
+   "pct_above": 31.33,
+   "pct_below": 68.67
+  },
+  {
+   "date": "2026-09-07",
+   "total": 808,
+   "above": 242,
+   "below": 566,
+   "pct_above": 29.95,
+   "pct_below": 70.05
+  },
+  {
+   "date": "2026-09-08",
+   "total": 797,
+   "above": 267,
+   "below": 530,
+   "pct_above": 33.5,
+   "pct_below": 66.5
+  },
+  {
+   "date": "2026-09-09",
+   "total": 779,
+   "above": 229,
+   "below": 550,
+   "pct_above": 29.4,
+   "pct_below": 70.6
+  },
+  {
+   "date": "2026-09-10",
+   "total": 767,
+   "above": 236,
+   "below": 531,
+   "pct_above": 30.77,
+   "pct_below": 69.23
+  },
+  {
+   "date": "2026-09-11",
+   "total": 849,
+   "above": 219,
+   "below": 630,
+   "pct_above": 25.8,
+   "pct_below": 74.2
+  },
+  {
+   "date": "2026-09-14",
+   "total": 790,
+   "above": 199,
+   "below": 591,
+   "pct_above": 25.19,
+   "pct_below": 74.81
+  },
+  {
+   "date": "2026-09-15",
+   "total": 788,
+   "above": 238,
+   "below": 550,
+   "pct_above": 30.2,
+   "pct_below": 69.8
+  },
+  {
+   "date": "2026-09-16",
+   "total": 800,
+   "above": 232,
+   "below": 568,
+   "pct_above": 29.0,
+   "pct_below": 71.0
+  },
+  {
+   "date": "2026-09-17",
+   "total": 799,
+   "above": 237,
+   "below": 562,
+   "pct_above": 29.66,
+   "pct_below": 70.34
+  },
+  {
+   "date": "2026-09-18",
+   "total": 850,
+   "above": 276,
+   "below": 574,
+   "pct_above": 32.47,
+   "pct_below": 67.53
+  },
+  {
+   "date": "2026-09-21",
+   "total": 792,
+   "above": 249,
+   "below": 543,
+   "pct_above": 31.44,
+   "pct_below": 68.56
+  },
+  {
+   "date": "2026-09-22",
+   "total": 764,
+   "above": 239,
+   "below": 525,
+   "pct_above": 31.28,
+   "pct_below": 68.72
+  },
+  {
+   "date": "2026-09-23",
+   "total": 802,
+   "above": 257,
+   "below": 545,
+   "pct_above": 32.04,
+   "pct_below": 67.96
+  },
+  {
+   "date": "2026-09-24",
+   "total": 776,
+   "above": 225,
+   "below": 551,
+   "pct_above": 28.99,
+   "pct_below": 71.01
+  },
+  {
+   "date": "2026-09-25",
+   "total": 822,
+   "above": 229,
+   "below": 593,
+   "pct_above": 27.86,
+   "pct_below": 72.14
+  },
+  {
+   "date": "2026-09-28",
+   "total": 800,
+   "above": 212,
+   "below": 588,
+   "pct_above": 26.5,
+   "pct_below": 73.5
+  },
+  {
+   "date": "2026-09-29",
+   "total": 798,
+   "above": 244,
+   "below": 554,
+   "pct_above": 30.58,
+   "pct_below": 69.42
+  },
+  {
+   "date": "2026-09-30",
+   "total": 780,
+   "above": 234,
+   "below": 546,
+   "pct_above": 30.0,
+   "pct_below": 70.0
+  },
+  {
+   "date": "2026-10-01",
+   "total": 782,
+   "above": 218,
+   "below": 564,
+   "pct_above": 27.88,
+   "pct_below": 72.12
+  },
+  {
+   "date": "2026-10-02",
+   "total": 820,
+   "above": 209,
+   "below": 611,
+   "pct_above": 25.49,
+   "pct_below": 74.51
+  },
+  {
+   "date": "2026-10-05",
+   "total": 789,
+   "above": 222,
+   "below": 567,
+   "pct_above": 28.14,
+   "pct_below": 71.86
+  },
+  {
+   "date": "2026-10-06",
+   "total": 800,
+   "above": 229,
+   "below": 571,
+   "pct_above": 28.62,
+   "pct_below": 71.38
+  },
+  {
+   "date": "2026-10-07",
+   "total": 793,
+   "above": 241,
+   "below": 552,
+   "pct_above": 30.39,
+   "pct_below": 69.61
+  },
+  {
+   "date": "2026-10-08",
+   "total": 775,
+   "above": 234,
+   "below": 541,
+   "pct_above": 30.19,
+   "pct_below": 69.81
+  },
+  {
+   "date": "2026-10-09",
+   "total": 823,
+   "above": 244,
+   "below": 579,
+   "pct_above": 29.65,
+   "pct_below": 70.35
+  },
+  {
+   "date": "2026-10-12",
+   "total": 806,
+   "above": 243,
+   "below": 563,
+   "pct_above": 30.15,
+   "pct_below": 69.85
+  },
+  {
+   "date": "2026-10-13",
+   "total": 775,
+   "above": 205,
+   "below": 570,
+   "pct_above": 26.45,
+   "pct_below": 73.55
+  },
+  {
+   "date": "2026-10-14",
+   "total": 771,
+   "above": 238,
+   "below": 533,
+   "pct_above": 30.87,
+   "pct_below": 69.13
+  },
+  {
+   "date": "2026-10-15",
+   "total": 782,
+   "above": 232,
+   "below": 550,
+   "pct_above": 29.67,
+   "pct_below": 70.33
+  },
+  {
+   "date": "2026-10-16",
+   "total": 799,
+   "above": 237,
+   "below": 562,
+   "pct_above": 29.66,
+   "pct_below": 70.34
+  },
+  {
+   "date": "2026-10-19",
+   "total": 782,
+   "above": 251,
+   "below": 531,
+   "pct_above": 32.1,
+   "pct_below": 67.9
+  },
+  {
+   "date": "2026-10-20",
+   "total": 761,
+   "above": 263,
+   "below": 498,
+   "pct_above": 34.56,
+   "pct_below": 65.44
+  },
+  {
+   "date": "2026-10-21",
+   "total": 813,
+   "above": 318,
+   "below": 495,
+   "pct_above": 39.11,
+   "pct_below": 60.89
+  },
+  {
+   "date": "2026-10-22",
+   "total": 807,
+   "above": 323,
+   "below": 484,
+   "pct_above": 40.02,
+   "pct_below": 59.98
+  },
+  {
+   "date": "2026-10-23",
+   "total": 850,
+   "above": 331,
+   "below": 519,
+   "pct_above": 38.94,
+   "pct_below": 61.06
+  },
+  {
+   "date": "2026-10-26",
+   "total": 799,
+   "above": 309,
+   "below": 490,
+   "pct_above": 38.67,
+   "pct_below": 61.33
+  },
+  {
+   "date": "2026-10-27",
+   "total": 808,
+   "above": 302,
+   "below": 506,
+   "pct_above": 37.38,
+   "pct_below": 62.62
+  },
+  {
+   "date": "2026-10-28",
+   "total": 799,
+   "above": 292,
+   "below": 507,
+   "pct_above": 36.55,
+   "pct_below": 63.45
+  },
+  {
+   "date": "2026-10-29",
+   "total": 793,
+   "above": 274,
+   "below": 519,
+   "pct_above": 34.55,
+   "pct_below": 65.45
+  },
+  {
    "date": "2026-10-30",
-   "total": 131,
-   "above": 30,
-   "below": 101,
-   "pct_above": 22.9,
-   "pct_below": 77.1
+   "total": 853,
+   "above": 233,
+   "below": 620,
+   "pct_above": 27.32,
+   "pct_below": 72.68
   },
   {
    "date": "2026-11-02",
-   "total": 131,
-   "above": 27,
-   "below": 104,
-   "pct_above": 20.61,
-   "pct_below": 79.39
+   "total": 806,
+   "above": 180,
+   "below": 626,
+   "pct_above": 22.33,
+   "pct_below": 77.67
   },
   {
    "date": "2026-11-03",
-   "total": 131,
-   "above": 34,
-   "below": 97,
+   "total": 790,
+   "above": 205,
+   "below": 585,
    "pct_above": 25.95,
    "pct_below": 74.05
   },
   {
    "date": "2026-11-04",
-   "total": 131,
-   "above": 58,
-   "below": 73,
-   "pct_above": 44.27,
-   "pct_below": 55.73
+   "total": 804,
+   "above": 257,
+   "below": 547,
+   "pct_above": 31.97,
+   "pct_below": 68.03
   },
   {
    "date": "2026-11-05",
-   "total": 131,
-   "above": 60,
-   "below": 71,
-   "pct_above": 45.8,
-   "pct_below": 54.2
+   "total": 817,
+   "above": 259,
+   "below": 558,
+   "pct_above": 31.7,
+   "pct_below": 68.3
   },
   {
    "date": "2026-11-06",
-   "total": 131,
-   "above": 61,
-   "below": 70,
-   "pct_above": 46.56,
-   "pct_below": 53.44
+   "total": 848,
+   "above": 265,
+   "below": 583,
+   "pct_above": 31.25,
+   "pct_below": 68.75
   },
   {
    "date": "2026-11-09",
-   "total": 132,
-   "above": 54,
-   "below": 78,
-   "pct_above": 40.91,
-   "pct_below": 59.09
+   "total": 790,
+   "above": 253,
+   "below": 537,
+   "pct_above": 32.03,
+   "pct_below": 67.97
   },
   {
    "date": "2026-11-10",
-   "total": 132,
-   "above": 71,
-   "below": 61,
-   "pct_above": 53.79,
-   "pct_below": 46.21
+   "total": 788,
+   "above": 272,
+   "below": 516,
+   "pct_above": 34.52,
+   "pct_below": 65.48
   },
   {
    "date": "2026-11-11",
-   "total": 132,
-   "above": 76,
-   "below": 56,
-   "pct_above": 57.58,
-   "pct_below": 42.42
+   "total": 751,
+   "above": 276,
+   "below": 475,
+   "pct_above": 36.75,
+   "pct_below": 63.25
   }
  ],
  "latest": {
   "date": "2026-11-11",
-  "total": 132,
-  "above": 76,
-  "below": 56,
-  "pct_above": 57.58,
-  "pct_below": 42.42
+  "total": 751,
+  "above": 276,
+  "below": 475,
+  "pct_above": 36.75,
+  "pct_below": 63.25
  }
 }
