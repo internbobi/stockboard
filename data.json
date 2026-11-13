@@ -1,31 +1,51 @@
 {
  "date": "2026-11-13",
  "source": "vnstock 4.x KBS (live price board)",
- "count_filtered": 2,
+ "count_filtered": 4,
  "count_total_symbols": 1517,
  "failed_symbols": 652,
  "items": [
   {
    "symbol": "VJC",
    "exchange": "HOSE",
-   "close": 136.0,
+   "close": 135.7,
    "prev_close": 136.5,
-   "change": -0.5,
-   "pct": -0.4,
-   "volume": 99000,
-   "value_billion": 13.51
+   "change": -0.8,
+   "pct": -0.6,
+   "volume": 113100,
+   "value_billion": 15.43
   },
   {
    "symbol": "HDB",
    "exchange": "HOSE",
-   "close": 22.5,
+   "close": 22.4,
    "prev_close": 22.5,
+   "change": -0.1,
+   "pct": -0.4,
+   "volume": 524300,
+   "value_billion": 11.79
+  },
+  {
+   "symbol": "HPG",
+   "exchange": "HOSE",
+   "close": 21.05,
+   "prev_close": 21.05,
    "change": 0.0,
    "pct": 0.0,
-   "volume": 475500,
-   "value_billion": 10.7
+   "volume": 531500,
+   "value_billion": 11.18
+  },
+  {
+   "symbol": "FPT",
+   "exchange": "HOSE",
+   "close": 49.8,
+   "prev_close": 49.55,
+   "change": 0.25,
+   "pct": 0.5,
+   "volume": 209200,
+   "value_billion": 10.36
   }
  ],
  "sort_by": "value_billion_desc",
- "updated_at": "2026-11-13T09:15:04+07:00"
+ "updated_at": "2026-11-13T09:17:37+07:00"
 }
