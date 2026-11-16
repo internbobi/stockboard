@@ -409,9 +409,9 @@ function drawPctChart(cv, data) {
   items.forEach((it, i) => {
     const x = X(i);
     ctx.fillStyle = '#00FF22';
-    ctx.beginPath(); ctx.arc(x, Y(it.pct_above), 2, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(x, Y(it.pct_above), 1.2, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = '#C40000';
-    ctx.beginPath(); ctx.arc(x, Y(it.pct_below), 2, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(x, Y(it.pct_below), 1.2, 0, Math.PI * 2); ctx.fill();
   });
   items.forEach((it, i) => {
     if (i === 0) return;
