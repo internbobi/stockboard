@@ -1,21 +1,71 @@
 {
  "date": "2026-11-17",
  "source": "vnstock 4.x KBS (live price board)",
- "count_filtered": 1,
+ "count_filtered": 6,
  "count_total_symbols": 1517,
  "failed_symbols": 652,
  "items": [
   {
+   "symbol": "VCB",
+   "exchange": "HOSE",
+   "close": 52.8,
+   "prev_close": 53.2,
+   "change": -0.4,
+   "pct": -0.8,
+   "volume": 619800,
+   "value_billion": 32.78
+  },
+  {
+   "symbol": "HDB",
+   "exchange": "HOSE",
+   "close": 22.15,
+   "prev_close": 22.3,
+   "change": -0.15,
+   "pct": -0.7,
+   "volume": 1463400,
+   "value_billion": 32.4
+  },
+  {
    "symbol": "VJC",
    "exchange": "HOSE",
-   "close": 137.0,
+   "close": 137.4,
    "prev_close": 138.5,
-   "change": -1.5,
-   "pct": -1.1,
-   "volume": 95400,
-   "value_billion": 13.07
+   "change": -1.1,
+   "pct": -0.8,
+   "volume": 119500,
+   "value_billion": 16.37
+  },
+  {
+   "symbol": "FPT",
+   "exchange": "HOSE",
+   "close": 49.6,
+   "prev_close": 49.4,
+   "change": 0.2,
+   "pct": 0.4,
+   "volume": 252900,
+   "value_billion": 12.51
+  },
+  {
+   "symbol": "VIX",
+   "exchange": "HOSE",
+   "close": 12.8,
+   "prev_close": 12.8,
+   "change": 0.0,
+   "pct": 0.0,
+   "volume": 851700,
+   "value_billion": 10.85
+  },
+  {
+   "symbol": "TCB",
+   "exchange": "HOSE",
+   "close": 21.25,
+   "prev_close": 21.3,
+   "change": -0.05,
+   "pct": -0.2,
+   "volume": 506600,
+   "value_billion": 10.73
   }
  ],
  "sort_by": "value_billion_desc",
- "updated_at": "2026-11-17T09:15:04+07:00"
+ "updated_at": "2026-11-17T09:20:08+07:00"
 }
