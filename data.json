@@ -1,21 +1,41 @@
 {
  "date": "2026-11-18",
  "source": "vnstock 4.x KBS (live price board)",
- "count_filtered": 1,
+ "count_filtered": 3,
  "count_total_symbols": 1517,
  "failed_symbols": 652,
  "items": [
   {
+   "symbol": "FPT",
+   "exchange": "HOSE",
+   "close": 48.2,
+   "prev_close": 48.5,
+   "change": -0.3,
+   "pct": -0.6,
+   "volume": 294500,
+   "value_billion": 14.2
+  },
+  {
    "symbol": "MSR",
    "exchange": "UPCOM",
-   "close": 52.5,
+   "close": 53.0,
    "prev_close": 55.1,
-   "change": -2.6,
-   "pct": -4.7,
-   "volume": 208300,
-   "value_billion": 10.94
+   "change": -2.1,
+   "pct": -3.8,
+   "volume": 223700,
+   "value_billion": 11.75
+  },
+  {
+   "symbol": "VJC",
+   "exchange": "HOSE",
+   "close": 138.7,
+   "prev_close": 138.8,
+   "change": -0.1,
+   "pct": -0.1,
+   "volume": 79600,
+   "value_billion": 11.05
   }
  ],
  "sort_by": "value_billion_desc",
- "updated_at": "2026-11-18T09:10:05+07:00"
+ "updated_at": "2026-11-18T09:15:07+07:00"
 }
