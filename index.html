@@ -34,7 +34,9 @@
      1518-symbol list never stretches Block 1 / Block 2. */
   .setup { width: 33.33%; height: 100vh; container-type: inline-size; padding: 1.5cqw 1.2cqw; display: flex; flex-direction: column; }
   .setup-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 0.5cqw; overflow-y: auto; flex: 1; padding-bottom: 36px; align-content: start; grid-auto-rows: min-content; }
-  .setup-cell { border: 1px solid #fff; border-radius: 4px; background: #BEBEBE; color: #000; font-weight: bold; font-size: 1.9cqw; text-align: center; height: 2.3vh; padding: 0 0.2cqw; display: flex; align-items: center; justify-content: center; gap: 2px; line-height: 1.15; white-space: nowrap; overflow: hidden; }
+  .setup-cell { border: 1px solid #fff; border-radius: 4px; background: #BEBEBE; color: #000; font-weight: bold; font-size: 1.9cqw; text-align: center; height: 2.3vh; padding: 0 0.2cqw; display: flex; align-items: center; justify-content: center; line-height: 1.15; white-space: nowrap; overflow: hidden; }
+  .setup-cell .sym-wrap { position: relative; }
+  .setup-cell .star { position: absolute; right: 100%; margin-right: 2px; top: 50%; transform: translateY(-50%); font-size: 1.6cqw; line-height: 1; }
 </style>
 </head>
 <body>
@@ -138,7 +140,10 @@ function loadSetup() {
       d.className = 'setup-cell';
       d.style.background = SETUP_COLORS[it.group];
       if (it.star) {
-        d.innerHTML = '<span style="color:' + STAR_COLORS[it.group] + '">★</span><span>' + it.symbol + '</span>';
+        // Star is absolutely positioned left of the symbol (inside .sym-wrap),
+        // so the symbol text itself stays centered in the cell — the star
+        // never pushes the text off-center.
+        d.innerHTML = '<span class="sym-wrap"><span class="star" style="color:' + STAR_COLORS[it.group] + '">★</span>' + it.symbol + '</span>';
       } else {
         d.textContent = it.symbol;
       }
