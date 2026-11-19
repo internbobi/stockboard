@@ -95,6 +95,7 @@ function loadData() {
 }
 function refreshAll() {
   loadData();
+  loadSetup();
   // Block 2 layers: re-fetch so the 5 layers update every 5 min.
   // BUG (Dat, 2026-11-12): the Block 2 JSONs were only loaded once on
   // page load, so the countdown counted down but the 5 layers never
@@ -108,15 +109,19 @@ function refreshAll() {
 }
 loadData();
 setInterval(refreshAll, 30000);
-// ---- Block 3 (Setup 1): all symbols, one cell each, alphabetical ----
-// Loaded once on page load (not in refreshAll): the list is static, and
-// re-rendering it every 30s would reset the panel's scroll position.
+// move), but only re-rendered when the list actually changes, so the
+// panel's scroll position is not reset on every refresh.
+let setupSyms = null;
 function loadSetup() {
-  fetch('all_symbols.json?t=' + Date.now()).then(r => {
-    if (!r.ok) throw new Error('Không tải được all_symbols.json');
+  fetch('dkkl_symbols.json?t=' + Date.now()).then(r => {
+    if (!r.ok) throw new Error('Không tải được dkkl_symbols.json');
     return r.json();
   }).then(data => {
+    const key = data.symbols.join(',');
+    if (key === setupSyms) return; // unchanged — keep scroll position
+    setupSyms = key;
     const grid = document.getElementById('setupGrid');
+    const st = grid.scrollTop;
     grid.innerHTML = '';
     data.symbols.forEach(sym => {
       const d = document.createElement('div');
@@ -124,6 +129,7 @@ function loadSetup() {
       d.textContent = sym;
       grid.appendChild(d);
     });
+    grid.scrollTop = st;
   }).catch(e => {
     document.getElementById('setupGrid').textContent = 'Chưa có dữ liệu: ' + e.message;
   });
