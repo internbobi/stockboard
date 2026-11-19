@@ -137,7 +137,7 @@ function refreshAll() {
 loadData();
 setInterval(refreshAll, 30000);
 // ---- Block 3 (Setup 1): Top 10/20/30 groups ----
-// setup1.json: ranked list with group labels (rank order = RS descending).
+// setup1.json: ranked list with group labels (rank order = score descending).
 // Only the top 30% is shown, colored by group: Top 10% magenta (V3T color
 // in Block 2), Top 20% green (up-price color in Block 1), Top 30% yellow
 // (flat-price color in Block 1). Reloaded every 30s; re-rendered only when
@@ -329,7 +329,7 @@ function drawVNChart() {
     });
     ctx.stroke();
   });
-  // MA10: color changes along the line per Dat's AFL logic, applied to SMA10
+  // MA10: color changes along the line, applied to SMA10
   // (C > SMA10: pale green #98FB98, C < SMA10: red #FF0000, C == SMA10: yellow #FFFF00)
   ctx.lineWidth = 1.5;
   for (let i = 1; i < n; i++) {
@@ -430,9 +430,9 @@ window.addEventListener('resize', () => {
 });
 </script>
 <script>
-// ---- Feature 2, Layers 2-5: % of stocks above/below an EMA (line + dots) ----
-// One generic drawer/loader for all % layers: Layer 2 = EMA50
-// (MidStrong/MidWeak), Layer 3 = EMA200 (LongStrong/LongWeak), ...
+// ---- Feature 2, Layers 2-5: % of stocks above/below a moving average (line + dots) ----
+// One generic drawer/loader for all % layers: Layer 2
+// (MidStrong/MidWeak), Layer 3 (LongStrong/LongWeak), ...
 // All % layers share the time axis with Layer 1 (L=6, R=62, same dates, 1 year)
 // and the same height (.pct-chart, 120px).
 const pctLayers = {}; // canvasId -> data (redrawn on resize)
@@ -583,10 +583,10 @@ loadPctChart('pct_ema50.json', 'ema50info', 'ema50chart', 'MidStrong', 'MidWeak'
 loadPctChart('pct_ema200.json', 'ema200info', 'ema200chart', 'LongStrong', 'LongWeak');
 </script>
 <script>
-// ---- Feature 2, Layers 4 & 5: TMA 6-phase counts (shared foundation) ----
+// ---- Feature 2, Layers 4 & 5: phase counts (shared foundation) ----
 // One fetch (tma_counts.json) feeds both layers. Layer 4 reuses drawPctChart
 // (PctVT/PctVG as pct_above/pct_below). Layer 5 draws the V3T/V3G counts.
-// Colors (Dat's AFL colorCustom12 / colorCustom11): V3T magenta #FF00FF,
+// Colors: V3T magenta #FF00FF,
 // V3G cyan #00FFFF; 3-month new-high circles bright green #00FF22.
 let tma5Data = null;
 function drawTMA5Chart(cv, data) {
@@ -667,7 +667,7 @@ function drawTMA5Chart(cv, data) {
     ctx.stroke();
     ctx.setLineDash([]);
   });
-  // V3T / V3G count lines (magenta / cyan), no dots (AFL styleLine).
+  // V3T / V3G count lines (magenta / cyan), no dots.
   const countLines = [['v3t', '#FF00FF'], ['v3g', '#00FFFF']];
   countLines.forEach(([key, col]) => {
     ctx.strokeStyle = col;
