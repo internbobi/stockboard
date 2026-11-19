@@ -33,7 +33,7 @@
      Panel is exactly viewport height and scrolls internally, so the long
      1518-symbol list never stretches Block 1 / Block 2. */
   .setup { width: 33.33%; height: 100vh; container-type: inline-size; padding: 1.5cqw 1.2cqw; display: flex; flex-direction: column; }
-  .setup-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 0.5cqw; overflow-y: auto; flex: 1; padding-bottom: 36px; }
+  .setup-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 0.5cqw; overflow-y: auto; flex: 1; padding-bottom: 36px; align-content: start; grid-auto-rows: min-content; }
   .setup-cell { border: 1px solid #fff; border-radius: 4px; background: #BEBEBE; color: #000; font-weight: bold; font-size: 1.9cqw; text-align: center; padding: 0.1cqw 0.2cqw; line-height: 1.15; white-space: nowrap; overflow: hidden; }
 </style>
 </head>
