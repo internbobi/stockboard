@@ -29,6 +29,12 @@
      as ".market canvas.pct-chart" (0,2,1) — a bare ".pct-chart" (0,1,0)
      loses and the % layers silently stay 320px (caught 2026-11-11). */
   .market canvas.pct-chart { height: 120px; }
+  /* Block 3 (Setup 1, Dat 2026-11-19): all symbols, one small cell each.
+     Panel is exactly viewport height and scrolls internally, so the long
+     1518-symbol list never stretches Block 1 / Block 2. */
+  .setup { width: 33.33%; height: 100vh; container-type: inline-size; padding: 1.5cqw 1.2cqw; display: flex; flex-direction: column; }
+  .setup-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(7cqw, 1fr)); gap: 0.5cqw; overflow-y: auto; flex: 1; padding-bottom: 36px; }
+  .setup-cell { border: 1px solid #fff; border-radius: 4px; background: #BEBEBE; color: #000; font-weight: bold; font-size: 1.9cqw; text-align: center; padding: 0.4cqw 0.2cqw; line-height: 1.2; white-space: nowrap; overflow: hidden; }
 </style>
 </head>
 <body>
@@ -51,6 +57,10 @@
 <div id="tma5info" class="vninfo">Đang tải dữ liệu…</div>
 <canvas id="tma5chart" class="pct-chart"></canvas>
 </div>
+<div class="setup">
+<h1 id="setupTitle">Setup 1</h1>
+<div class="setup-grid" id="setupGrid"></div>
+</div>
 <div id="countdown"></div>
 <script>
 function fmtDate(iso) {
@@ -62,6 +72,7 @@ function fmtPricePct(close, pct) {
 }
 function renderBoard(data) {
   document.getElementById('title').textContent = 'TTCKVN Ngày ' + fmtDate(data.date);
+  document.getElementById('setupTitle').textContent = 'Setup 1 - Ngày ' + fmtDate(data.date);
   document.getElementById('status').textContent = '';
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
@@ -97,6 +108,27 @@ function refreshAll() {
 }
 loadData();
 setInterval(refreshAll, 30000);
+// ---- Block 3 (Setup 1): all symbols, one cell each, alphabetical ----
+// Loaded once on page load (not in refreshAll): the list is static, and
+// re-rendering it every 30s would reset the panel's scroll position.
+function loadSetup() {
+  fetch('all_symbols.json?t=' + Date.now()).then(r => {
+    if (!r.ok) throw new Error('Không tải được all_symbols.json');
+    return r.json();
+  }).then(data => {
+    const grid = document.getElementById('setupGrid');
+    grid.innerHTML = '';
+    data.symbols.forEach(sym => {
+      const d = document.createElement('div');
+      d.className = 'setup-cell';
+      d.textContent = sym;
+      grid.appendChild(d);
+    });
+  }).catch(e => {
+    document.getElementById('setupGrid').textContent = 'Chưa có dữ liệu: ' + e.message;
+  });
+}
+loadSetup();
 function nextRefreshDate(now) {
   const day = now.getDay();
   if (day === 0 || day === 6) return null;
