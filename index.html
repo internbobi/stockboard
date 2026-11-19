@@ -54,6 +54,12 @@
   .setup-cell { border: 1px solid #fff; border-radius: 4px; background: #BEBEBE; color: #000; font-weight: bold; font-size: 1.9cqw; text-align: center; height: 2.3vh; padding: 0 0.2cqw; display: flex; align-items: center; justify-content: center; line-height: 1.15; white-space: nowrap; overflow: hidden; }
   .setup-cell .sym-wrap { position: relative; }
   .setup-cell .star { position: absolute; right: 100%; margin-right: 2px; top: 50%; transform: translateY(-50%); font-size: 1.9cqw; line-height: 1; }
+  /* All / 10B toggle (Dat 2026-11-19): switches the same panel between the
+     full Top 30% ("All") and the 10B subset (same cells, colors, stars —
+     only fewer symbols). */
+  .setup-toggle { display: flex; gap: 6px; justify-content: center; margin: 2px 0 6px; }
+  .setup-toggle button { background: #333; color: #fff; border: 1px solid #666; border-radius: 6px; font-size: 12px; font-weight: bold; padding: 3px 12px; cursor: pointer; }
+  .setup-toggle button.on { background: #fff; color: #000; border-color: #fff; }
 </style>
 </head>
 <body>
@@ -78,6 +84,7 @@
 </div>
 <div class="setup">
 <h1 id="setupTitle">Setup 1</h1>
+<div class="setup-toggle"><button id="setupBtnAll" class="on">All</button><button id="setupBtn10B">10B</button></div>
 <div class="setup-grid" id="setupGrid"></div>
 </div>
 <div id="countdown"></div>
@@ -135,39 +142,63 @@ setInterval(refreshAll, 30000);
 // in Block 2), Top 20% green (up-price color in Block 1), Top 30% yellow
 // (flat-price color in Block 1). Reloaded every 30s; re-rendered only when
 // the list actually changes, so the panel's scroll position is not reset.
+// All / 10B toggle (Dat 2026-11-19): "All" shows the full Top 30%; "10B"
+// shows only the grouped symbols flagged for the 10B view. Cells, group
+// colors and stars are identical in both views — 10B only shows fewer
+// symbols. The toggle state survives the
+// 30s reloads (renderSetup reads setupView, not the fetch).
+let setupData = null;
 let setupSyms = null;
+let setupView = 'all'; // 'all' or '10b'
 const SETUP_COLORS = {'Top 10%': '#FF00FF', 'Top 20%': '#00FF22', 'Top 30%': '#FFCC00'};
 // Star colors (Dat 2026-11-19): shown left of the symbol when it is a NEW
 // entrant to its group (was not in that group in the previous session).
 // Top 10% yellow (flat-price color), Top 20% dark blue, Top 30% dark purple.
 const STAR_COLORS = {'Top 10%': '#FFCC00', 'Top 20%': '#00008B', 'Top 30%': '#522081'};
+function renderSetup() {
+  if (!setupData) return;
+  const all = setupData.items.filter(it => it.group);
+  const shown = setupView === '10b' ? all.filter(it => it.v10b) : all;
+  // Button labels carry the live counts so the filter is visible at a glance.
+  document.getElementById('setupBtnAll').textContent = 'All (' + all.length + ')';
+  document.getElementById('setupBtn10B').textContent = '10B (' + all.filter(it => it.v10b).length + ')';
+  const key = setupView + '|' + shown.map(it => it.symbol + ':' + it.group + ':' + (it.star ? '1' : '0')).join(',');
+  if (key === setupSyms) return; // unchanged — keep scroll position
+  setupSyms = key;
+  const grid = document.getElementById('setupGrid');
+  const st = grid.scrollTop;
+  grid.innerHTML = '';
+  shown.forEach(it => {
+    const d = document.createElement('div');
+    d.className = 'setup-cell';
+    d.style.background = SETUP_COLORS[it.group];
+    if (it.star) {
+      // Star is absolutely positioned left of the symbol (inside .sym-wrap),
+      // so the symbol text itself stays centered in the cell — the star
+      // never pushes the text off-center.
+      d.innerHTML = '<span class="sym-wrap"><span class="star" style="color:' + STAR_COLORS[it.group] + '">★</span>' + it.symbol + '</span>';
+    } else {
+      d.textContent = it.symbol;
+    }
+    grid.appendChild(d);
+  });
+  grid.scrollTop = st;
+}
+function setSetupView(v) {
+  setupView = v;
+  document.getElementById('setupBtnAll').classList.toggle('on', v === 'all');
+  document.getElementById('setupBtn10B').classList.toggle('on', v === '10b');
+  renderSetup();
+}
+document.getElementById('setupBtnAll').onclick = () => setSetupView('all');
+document.getElementById('setupBtn10B').onclick = () => setSetupView('10b');
 function loadSetup() {
   fetch('setup1.json?t=' + Date.now()).then(r => {
     if (!r.ok) throw new Error('Không tải được setup1.json');
     return r.json();
   }).then(data => {
-    const shown = data.items.filter(it => it.group);
-    const key = shown.map(it => it.symbol + ':' + it.group + ':' + (it.star ? '1' : '0')).join(',');
-    if (key === setupSyms) return; // unchanged — keep scroll position
-    setupSyms = key;
-    const grid = document.getElementById('setupGrid');
-    const st = grid.scrollTop;
-    grid.innerHTML = '';
-    shown.forEach(it => {
-      const d = document.createElement('div');
-      d.className = 'setup-cell';
-      d.style.background = SETUP_COLORS[it.group];
-      if (it.star) {
-        // Star is absolutely positioned left of the symbol (inside .sym-wrap),
-        // so the symbol text itself stays centered in the cell — the star
-        // never pushes the text off-center.
-        d.innerHTML = '<span class="sym-wrap"><span class="star" style="color:' + STAR_COLORS[it.group] + '">★</span>' + it.symbol + '</span>';
-      } else {
-        d.textContent = it.symbol;
-      }
-      grid.appendChild(d);
-    });
-    grid.scrollTop = st;
+    setupData = data;
+    renderSetup();
   }).catch(e => {
     document.getElementById('setupGrid').textContent = 'Chưa có dữ liệu: ' + e.message;
   });
