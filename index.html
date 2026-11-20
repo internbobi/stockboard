@@ -295,11 +295,20 @@ function drawVNChart() {
   }
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
+  // Month labels: same Nov/Dec overlap fix as the stock chart (Dat 2026-11-20)
+  // — skip the first partial month when it has < 10 bars, and skip any label
+  // that would overlap the previously drawn one.
+  let prevLx = null, prevW = 0;
   for (let i = 0; i < n; i++) {
     const d = items[i].date;
     const m = parseInt(d.slice(5, 7), 10);
     const prevM = i > 0 ? parseInt(items[i - 1].date.slice(5, 7), 10) : null;
     if (m !== prevM) {
+      if (i === 0) {
+        let cnt = 0;
+        for (let j = 0; j < n && items[j].date.slice(0, 7) === d.slice(0, 7); j++) cnt++;
+        if (cnt < 10) continue;
+      }
       const x = X(i);
       ctx.strokeStyle = '#222';
       ctx.lineWidth = 1;
@@ -307,7 +316,10 @@ function drawVNChart() {
       ctx.fillStyle = '#aaa';
       const label = (m === 1) ? d.slice(0, 4) : VN_MONTHS[m - 1];
       const lx = Math.max(14, Math.min(cssW - R - 14, x));
+      const w = ctx.measureText(label).width;
+      if (prevLx !== null && lx - prevLx < (prevW + w) / 2 + 4) continue;
       ctx.fillText(label, lx, T + plotH + 6);
+      prevLx = lx; prevW = w;
     }
   }
   // SMA lines, SMA only on this chart (Dat, 2026-11-11).
@@ -483,11 +495,20 @@ function drawPctChart(cv, data) {
   ctx.setLineDash([]);
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
+  // Month labels: same Nov/Dec overlap fix as the stock chart (Dat 2026-11-20)
+  // — skip the first partial month when it has < 10 bars, and skip any label
+  // that would overlap the previously drawn one.
+  let prevLx = null, prevW = 0;
   for (let i = 0; i < n; i++) {
     const d = items[i].date;
     const m = parseInt(d.slice(5, 7), 10);
     const prevM = i > 0 ? parseInt(items[i - 1].date.slice(5, 7), 10) : null;
     if (m !== prevM) {
+      if (i === 0) {
+        let cnt = 0;
+        for (let j = 0; j < n && items[j].date.slice(0, 7) === d.slice(0, 7); j++) cnt++;
+        if (cnt < 10) continue;
+      }
       const x = X(i);
       ctx.strokeStyle = '#222';
       ctx.lineWidth = 1;
@@ -495,7 +516,10 @@ function drawPctChart(cv, data) {
       ctx.fillStyle = '#aaa';
       const label = (m === 1) ? d.slice(0, 4) : VN_MONTHS[m - 1];
       const lx = Math.max(14, Math.min(cssW - R - 14, x));
+      const w = ctx.measureText(label).width;
+      if (prevLx !== null && lx - prevLx < (prevW + w) / 2 + 4) continue;
       ctx.fillText(label, lx, T + plotH + 6);
+      prevLx = lx; prevW = w;
     }
   }
   // Lines through the points (above green, below red), dots on top.
@@ -634,11 +658,20 @@ function drawTMA5Chart(cv, data) {
   }
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
+  // Month labels: same Nov/Dec overlap fix as the stock chart (Dat 2026-11-20)
+  // — skip the first partial month when it has < 10 bars, and skip any label
+  // that would overlap the previously drawn one.
+  let prevLx = null, prevW = 0;
   for (let i = 0; i < n; i++) {
     const d = show[i].date;
     const m = parseInt(d.slice(5, 7), 10);
     const prevM = i > 0 ? parseInt(show[i - 1].date.slice(5, 7), 10) : null;
     if (m !== prevM) {
+      if (i === 0) {
+        let cnt = 0;
+        for (let j = 0; j < n && show[j].date.slice(0, 7) === d.slice(0, 7); j++) cnt++;
+        if (cnt < 10) continue;
+      }
       const x = X(i);
       ctx.strokeStyle = '#222';
       ctx.lineWidth = 1;
@@ -646,7 +679,10 @@ function drawTMA5Chart(cv, data) {
       ctx.fillStyle = '#aaa';
       const label = (m === 1) ? d.slice(0, 4) : VN_MONTHS[m - 1];
       const lx = Math.max(14, Math.min(cssW - R - 14, x));
+      const w = ctx.measureText(label).width;
+      if (prevLx !== null && lx - prevLx < (prevW + w) / 2 + 4) continue;
       ctx.fillText(label, lx, T + plotH + 6);
+      prevLx = lx; prevW = w;
     }
   }
   // 52-week-high dashed lines (magenta V3T, cyan V3G).
