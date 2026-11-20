@@ -843,15 +843,29 @@ function drawStockChart() {
   const L = 6, R = 62, T = 8, B = 26;
   const X = (cv, i) => L + (i + 0.5) * (cv.clientWidth - L - R) / (n + PAD_BARS);
   // Shared month labels (drawn on price + RSI canvases).
+  // FIX (Dat 2026-11-20): Nov/Dec 2025 overlapped because the 1-year window
+  // starts mid-November (250 bars back from today), so November has only
+  // ~2 bars in the window and its label sits a few pixels from December's.
+  // Two guards: (1) skip the label for the first (partial) month when it
+  // has fewer than 10 bars in the window; (2) skip any label that would
+  // overlap the previously drawn one (centered labels need half-widths
+  // plus a gap apart).
   function monthLabels(ctx, cv, plotH) {
     ctx.font = '11px Arial';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
+    let prevLx = null, prevW = 0;
     for (let i = 0; i < n; i++) {
       const d = bars[i].date;
       const m = parseInt(d.slice(5, 7), 10);
       const prevM = i > 0 ? parseInt(bars[i - 1].date.slice(5, 7), 10) : null;
       if (m !== prevM) {
+        // Guard 1: first (partial) month with < 10 bars — skip its label.
+        if (i === 0) {
+          let cnt = 0;
+          for (let j = 0; j < n && bars[j].date.slice(0, 7) === d.slice(0, 7); j++) cnt++;
+          if (cnt < 10) continue;
+        }
         const x = X(cv, i);
         ctx.strokeStyle = '#222';
         ctx.lineWidth = 1;
@@ -859,7 +873,11 @@ function drawStockChart() {
         ctx.fillStyle = '#aaa';
         const label = (m === 1) ? d.slice(0, 4) : VN_MONTHS[m - 1];
         const lx = Math.max(14, Math.min(cv.clientWidth - R - 14, x));
+        const w = ctx.measureText(label).width;
+        // Guard 2: skip if it would overlap the previously drawn label.
+        if (prevLx !== null && lx - prevLx < (prevW + w) / 2 + 4) continue;
         ctx.fillText(label, lx, T + plotH + 6);
+        prevLx = lx; prevW = w;
       }
     }
   }
