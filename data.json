@@ -1,7 +1,7 @@
 {
  "date": "2026-11-20",
  "source": "vnstock 4.x KBS (live price board)",
- "count_filtered": 111,
+ "count_filtered": 112,
  "count_total_symbols": 1517,
  "failed_symbols": 652,
  "items": [
@@ -476,6 +476,16 @@
    "value_billion": 64.5
   },
   {
+   "symbol": "MSR",
+   "exchange": "UPCOM",
+   "close": 49.3,
+   "prev_close": 51.3,
+   "change": -2.0,
+   "pct": -3.9,
+   "volume": 1189100,
+   "value_billion": 58.89
+  },
+  {
    "symbol": "LPB",
    "exchange": "HOSE",
    "close": 34.25,
@@ -514,16 +524,6 @@
    "pct": 0.0,
    "volume": 3483100,
    "value_billion": 53.41
-  },
-  {
-   "symbol": "MSR",
-   "exchange": "UPCOM",
-   "close": 49.4,
-   "prev_close": 51.3,
-   "change": -1.9,
-   "pct": -3.7,
-   "volume": 1070700,
-   "value_billion": 53.05
   },
   {
    "symbol": "VCG",
@@ -722,8 +722,8 @@
    "prev_close": 37.7,
    "change": -1.2,
    "pct": -3.2,
-   "volume": 836500,
-   "value_billion": 30.66
+   "volume": 845900,
+   "value_billion": 31.0
   },
   {
    "symbol": "VC3",
@@ -922,8 +922,8 @@
    "prev_close": 44.7,
    "change": 0.7,
    "pct": 1.6,
-   "volume": 397300,
-   "value_billion": 17.97
+   "volume": 400000,
+   "value_billion": 18.09
   },
   {
    "symbol": "OIL",
@@ -932,8 +932,8 @@
    "prev_close": 11.8,
    "change": 0.0,
    "pct": 0.0,
-   "volume": 1510000,
-   "value_billion": 17.96
+   "volume": 1518400,
+   "value_billion": 18.05
   },
   {
    "symbol": "KBC",
@@ -1007,5 +1007,5 @@
   }
  ],
  "sort_by": "value_billion_desc",
- "updated_at": "2026-11-20T14:55:03+07:00"
+ "updated_at": "2026-11-20T15:00:04+07:00"
 }
