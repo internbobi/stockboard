@@ -27,14 +27,26 @@
   #hitCounter [data-ltf-hits] [data-count] { font-size: 13px !important; }
   #hitCounter [data-ltf-hits] > div:first-of-type > span:last-child { font-size: 9px !important; }
   .market { width: 33.33%; min-height: 100vh; container-type: inline-size; padding: 1.5cqw 1.2cqw; }
-  .market canvas { width: 100%; height: 320px; display: block; background: #000; }
+  /* Chart heights in vh (Dat 2026-11-20): the old fixed 320px/120px made
+     Block 1 ~997px tall, which fits a clean 1920x1080 viewport (998px)
+     with only ~30px to spare — any display scaling (Windows 125% is
+     common), bookmarks bar or extra browser chrome tipped it over the
+     edge and cut off Layer 5. vh heights auto-scale to the actual
+     viewport: Layer 1 30vh + 4 x 10.5vh = 72vh of canvas, plus ~20vh of
+     title/info/padding = ~92vh, so all 5 layers fit on any 16:9 screen.
+     On a taller screen (2.4K) the charts grow and use the extra space.
+     The draw code sizes canvases from clientHeight, so it follows the
+     CSS height on the next redraw (30s refresh or resize handler). */
+  .market canvas { width: 100%; height: 30vh; display: block; background: #000; }
   .vninfo { text-align: center; color: #bbb; font-size: 1.6cqw; margin: 0.5cqw 0 1cqw; line-height: 1.5; }
   /* % layers (Tang 2, 3, 4, 5) all share the same height, so the panel still
      fits Layers 4 & 5 below. Layer 1 stays taller as the main chart.
+     Heights are vh (see above) so the panel auto-scales to the viewport.
      NOTE: the selector must beat ".market canvas" (0,1,1), so it is written
      as ".market canvas.pct-chart" (0,2,1) — a bare ".pct-chart" (0,1,0)
-     loses and the % layers silently stay 320px (caught 2026-11-11). */
-  .market canvas.pct-chart { height: 120px; }
+     loses and the % layers silently stay 30vh (caught 2026-11-11, when
+     they were 320px). */
+  .market canvas.pct-chart { height: 10.5vh; }
   /* Block 3 (Setup 1, Dat 2026-11-19): all symbols, one small cell each.
      Panel is exactly viewport height and scrolls internally, so the long
      1518-symbol list never stretches Block 1 / Block 2. */
@@ -52,11 +64,13 @@
   .setup-toggle button.on { background: #fff; color: #000; border-color: #fff; }
   /* Block 3 (new, Dat 2026-11-20): per-symbol chart for the symbol clicked
      in Block 2 (Setup 1). Layer 1 = price bars (same frame as the VNINDEX
-     chart, 320px), Layer 2 = matched volume, Layer 3 = RSI(14). All three
-     share the same 1-year time axis. */
+     chart, 30vh), Layer 2 = matched volume, Layer 3 = RSI(14). All three
+     share the same 1-year time axis. Heights are vh like Block 1, so the
+     panel auto-scales to the viewport and Layer 1 always matches the
+     VNINDEX frame height on any screen. */
   .stock { width: 33.33%; min-height: 100vh; container-type: inline-size; padding: 1.5cqw 1.2cqw; }
-  .stock canvas { width: 100%; height: 320px; display: block; background: #000; }
-  .stock canvas.stock-sub { height: 120px; }
+  .stock canvas { width: 100%; height: 30vh; display: block; background: #000; }
+  .stock canvas.stock-sub { height: 10.5vh; }
   .stockinfo { text-align: center; color: #bbb; font-size: 1.6cqw; margin: 0.5cqw 0 1cqw; line-height: 1.5; }
 </style>
 </head>
@@ -442,6 +456,11 @@ window.addEventListener('resize', () => {
     if (typeof tma5Data !== 'undefined' && tma5Data) {
       drawTMA5Chart(document.getElementById('tma5chart'), tma5Data);
     }
+    // Block 3 stock chart too (Dat 2026-11-20): its canvas heights are vh
+    // like Block 1, so a viewport resize changes its size and it must
+    // redraw from the cached OHLC data (no re-fetch). Guarded: the stock
+    // script block loads after this one, so check it exists first.
+    if (typeof drawStockChart === 'function') drawStockChart();
   }, 150);
 });
 </script>
@@ -450,7 +469,7 @@ window.addEventListener('resize', () => {
 // One generic drawer/loader for all % layers: Layer 2
 // (MidStrong/MidWeak), Layer 3 (LongStrong/LongWeak), ...
 // All % layers share the time axis with Layer 1 (L=6, R=62, same dates, 1 year)
-// and the same height (.pct-chart, 120px).
+// and the same height (.pct-chart, 10.5vh).
 const pctLayers = {}; // canvasId -> data (redrawn on resize)
 function drawArrow(ctx, x, y, up, col) {
   ctx.fillStyle = col;
@@ -827,7 +846,7 @@ loadTMA();
 // ---- Block 3 (new, Dat 2026-11-20): per-symbol chart ----
 // Click a symbol in Block 2 (Setup 1) -> its 1-year chart here.
 // Layer 1: price bars (same frame + color rules as the VNINDEX chart,
-// 320px). Layer 2: daily matched volume. Layer 3: RSI(14), white line.
+// 30vh). Layer 2: daily matched volume. Layer 3: RSI(14), white line.
 // All three share the same 1-year time axis (same X mapping, same bars).
 let stockOHLC = null;   // stock_ohlc.json: {symbol: {dates, opens, highs, lows, closes, volumes}}
 let selectedStock = null;
@@ -936,7 +955,7 @@ function drawStockChart() {
     ctx.clearRect(0, 0, cssW, cssH);
     return { cv, ctx, cssW, cssH };
   }
-  // ---- Layer 1: price bars (same frame as VNINDEX, 320px) ----
+  // ---- Layer 1: price bars (same frame as VNINDEX, 30vh) ----
   const p = setupCanvas('stockchart');
   if (p) {
     const plotW = p.cssW - L - R, plotH = p.cssH - T - B;
