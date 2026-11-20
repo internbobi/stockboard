@@ -7,17 +7,7 @@
 <style>
   * { box-sizing: border-box; }
   body { background: #000; color: #fff; font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; display: flex; }
-  .board { width: 33.33%; min-height: 100vh; container-type: inline-size; padding: 1.5cqw 1.2cqw; display: flex; flex-direction: column; }
   h1 { text-align: center; font-size: 2.6cqw; margin: 0.8cqw 0 1.4cqw; line-height: 1.2; }
-  .grid { display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(17, 1fr); gap: 0.9cqw; flex: 1; }
-  .cell { border: 1px solid #fff; border-radius: 0.9cqw; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.1cqw; padding: 0.3cqw 0.5cqw; text-align: center; line-height: 1.1; overflow: hidden; min-height: 0; }
-  .cell.up { background: #00FF22; color: #000; }
-  .cell.down { background: #C40000; color: #fff; }
-  .cell.flat { background: #FFCC00; color: #000; }
-  .sym { font-weight: bold; font-size: 2cqw; }
-  .price { font-size: 1.9cqw; }
-  .val { font-size: 1.9cqw; }
-  .foot { text-align: center; color: #888; font-size: 1.05cqw; margin-top: 1.6cqw; line-height: 1.5; }
   #countdown { position: fixed; right: 14px; bottom: 12px; background: rgba(255,255,255,0.14); color: #fff; font-size: 12px; padding: 6px 10px; border-radius: 8px; z-index: 10; }
   #counters { position: fixed; left: 14px; bottom: 12px; z-index: 10; display: flex; gap: 8px; align-items: center; }
   /* Hide FeedPulse's credit + owner links under the badges (both widgets
@@ -36,7 +26,6 @@
   /* Shrink the hit counter's digits/label to the visitor badge's size. */
   #hitCounter [data-ltf-hits] [data-count] { font-size: 13px !important; }
   #hitCounter [data-ltf-hits] > div:first-of-type > span:last-child { font-size: 9px !important; }
-  #status { text-align: center; color: #bbb; font-size: 1.1cqw; }
   .market { width: 33.33%; min-height: 100vh; container-type: inline-size; padding: 1.5cqw 1.2cqw; }
   .market canvas { width: 100%; height: 320px; display: block; background: #000; }
   .vninfo { text-align: center; color: #bbb; font-size: 1.6cqw; margin: 0.5cqw 0 1cqw; line-height: 1.5; }
@@ -51,7 +40,8 @@
      1518-symbol list never stretches Block 1 / Block 2. */
   .setup { width: 33.33%; height: 100vh; container-type: inline-size; padding: 1.5cqw 1.2cqw; display: flex; flex-direction: column; }
   .setup-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 0.5cqw; overflow-y: auto; flex: 1; padding-bottom: 36px; align-content: start; grid-auto-rows: min-content; }
-  .setup-cell { border: 1px solid #fff; border-radius: 4px; background: #BEBEBE; color: #000; font-weight: bold; font-size: 1.9cqw; text-align: center; height: 2.3vh; padding: 0 0.2cqw; display: flex; align-items: center; justify-content: center; line-height: 1.15; white-space: nowrap; overflow: hidden; }
+  .setup-cell { border: 1px solid #fff; border-radius: 4px; background: #BEBEBE; color: #000; font-weight: bold; font-size: 1.9cqw; text-align: center; height: 2.3vh; padding: 0 0.2cqw; display: flex; align-items: center; justify-content: center; line-height: 1.15; white-space: nowrap; overflow: hidden; cursor: pointer; }
+  .setup-cell.selected { outline: 2px solid #fff; outline-offset: -2px; }
   .setup-cell .sym-wrap { position: relative; }
   .setup-cell .star { position: absolute; right: 100%; margin-right: 2px; top: 50%; transform: translateY(-50%); font-size: 1.9cqw; line-height: 1; }
   /* All / 10B toggle (Dat 2026-11-19): switches the same panel between the
@@ -60,15 +50,17 @@
   .setup-toggle { display: flex; gap: 6px; justify-content: center; margin: 2px 0 6px; }
   .setup-toggle button { background: #333; color: #fff; border: 1px solid #666; border-radius: 6px; font-size: 12px; font-weight: bold; padding: 3px 12px; cursor: pointer; }
   .setup-toggle button.on { background: #fff; color: #000; border-color: #fff; }
+  /* Block 3 (new, Dat 2026-11-20): per-symbol chart for the symbol clicked
+     in Block 2 (Setup 1). Layer 1 = price bars (same frame as the VNINDEX
+     chart, 320px), Layer 2 = matched volume, Layer 3 = RSI(14). All three
+     share the same 1-year time axis. */
+  .stock { width: 33.33%; min-height: 100vh; container-type: inline-size; padding: 1.5cqw 1.2cqw; }
+  .stock canvas { width: 100%; height: 320px; display: block; background: #000; }
+  .stock canvas.stock-sub { height: 120px; }
+  .stockinfo { text-align: center; color: #bbb; font-size: 1.6cqw; margin: 0.5cqw 0 1cqw; line-height: 1.5; }
 </style>
 </head>
 <body>
-<div class="board">
-<h1 id="title">TTCKVN</h1>
-<div class="grid" id="grid"></div>
-<p id="status">Đang tải dữ liệu…</p>
-<p class="foot">Đây chỉ là bảng hiển thị dữ liệu, không phải khuyến nghị đầu tư.</p>
-</div>
 <div class="market">
 <h1>Trạng thái TTCKVN</h1>
 <div id="vninfo" class="vninfo">Đang tải dữ liệu…</div>
@@ -87,6 +79,13 @@
 <div class="setup-toggle"><button id="setupBtnAll" class="on">All</button><button id="setupBtn10B">10B</button></div>
 <div class="setup-grid" id="setupGrid"></div>
 </div>
+<div class="stock">
+<h1 id="stockTitle">Chọn mã ở Block 2</h1>
+<div id="stockinfo" class="stockinfo">Bấm vào một mã trong danh sách Setup 1 để xem chart.</div>
+<canvas id="stockchart"></canvas>
+<canvas id="stockvolchart" class="stock-sub"></canvas>
+<canvas id="stockrsichart" class="stock-sub"></canvas>
+</div>
 <div id="countdown"></div>
 <div id="counters"><div id="visitorCounter"><script async src="https://feed-pulse.com/api/embed/online-visitors.js?site_id=f705a8f4-2acf-43fd-89f0-cd7d7ffd9bd6&theme=obsidian&sz=micro"></script></div><div id="hitCounter"><script async src="https://feed-pulse.com/api/embed/hit-counter.js?site_id=f705a8f4-2acf-43fd-89f0-cd7d7ffd9bd6&theme=obsidian&style=card&base=0&reset_at=0&reset_to=0&digits=7"></script></div></div>
 <script>
@@ -98,26 +97,18 @@ function fmtPricePct(close, pct) {
   return close.toFixed(2) + ' (' + (pct > 0 ? '+' : '') + pct.toFixed(1) + '%)';
 }
 function renderBoard(data) {
-  document.getElementById('title').textContent = 'TTCKVN Ngày ' + fmtDate(data.date);
+  // Block 1 (the TTCKVN board) was removed 2026-11-20 (Dat) — the page no
+  // longer renders the board, but data.json is still fetched for the date
+  // (Setup 1 title) and the cron still updates it. Keep this as a date
+  // setter only; the board grid is gone.
   document.getElementById('setupTitle').textContent = 'Setup 1 - Ngày ' + fmtDate(data.date);
-  document.getElementById('status').textContent = '';
-  const grid = document.getElementById('grid');
-  grid.innerHTML = '';
-  data.items.forEach(it => {
-    const d = document.createElement('div');
-    d.className = 'cell ' + (it.change > 0 ? 'up' : (it.change < 0 ? 'down' : 'flat'));
-    d.innerHTML = '<div class="sym">' + it.symbol + '</div>'
-      + '<div class="price">' + fmtPricePct(it.close, it.pct) + '</div>'
-      + '<div class="val">' + it.value_billion.toFixed(2) + ' tỷ</div>';
-    grid.appendChild(d);
-  });
 }
 function loadData() {
   fetch('data.json?t=' + Date.now()).then(r => {
     if (!r.ok) throw new Error('Không tải được data.json');
     return r.json();
   }).then(renderBoard).catch(e => {
-    document.getElementById('status').textContent = 'Chưa có dữ liệu: ' + e.message;
+    document.getElementById('setupTitle').textContent = 'Setup 1 (chưa có dữ liệu)';
   });
 }
 function refreshAll() {
@@ -170,7 +161,7 @@ function renderSetup() {
   grid.innerHTML = '';
   shown.forEach(it => {
     const d = document.createElement('div');
-    d.className = 'setup-cell';
+    d.className = 'setup-cell' + (it.symbol === selectedStock ? ' selected' : '');
     d.style.background = SETUP_COLORS[it.group];
     if (it.star) {
       // Star is absolutely positioned left of the symbol (inside .sym-wrap),
@@ -180,6 +171,8 @@ function renderSetup() {
     } else {
       d.textContent = it.symbol;
     }
+    // Click a symbol -> show its chart in Block 3 (new, Dat 2026-11-20).
+    d.onclick = () => selectStock(it.symbol);
     grid.appendChild(d);
   });
   grid.scrollTop = st;
@@ -782,6 +775,261 @@ function loadTMA() {
   });
 }
 loadTMA();
+</script>
+<script>
+// ---- Block 3 (new, Dat 2026-11-20): per-symbol chart ----
+// Click a symbol in Block 2 (Setup 1) -> its 1-year chart here.
+// Layer 1: price bars (same frame + color rules as the VNINDEX chart,
+// 320px). Layer 2: daily matched volume. Layer 3: RSI(14), white line.
+// All three share the same 1-year time axis (same X mapping, same bars).
+let stockOHLC = null;   // stock_ohlc.json: {symbol: {dates, opens, highs, lows, closes, volumes}}
+let selectedStock = null;
+const STOCK_BARS = 250; // ~1 year of trading days, same window as VNINDEX
+function stockBarColor(close, prev) {
+  // Same AFL rules as the VNINDEX bars (fetch_vnindex.py bar_color).
+  if (prev == null || close === prev) return '#FFCC00';
+  if (close > prev) return (close / prev - 1) >= 0.05 ? '#FF00FF' : '#00FF22';
+  return (prev / close - 1) >= 0.05 ? '#00FFFF' : '#C40000';
+}
+function computeRSI(closes, period) {
+  // Wilder's RSI: first value = simple avg gain/loss over `period`,
+  // then smoothed (prev*13 + current)/14. Returns array same length as
+  // closes, with null for the first `period` bars (no RSI yet).
+  const n = closes.length;
+  const rsi = new Array(n).fill(null);
+  if (n <= period) return rsi;
+  let gain = 0, loss = 0;
+  for (let i = 1; i <= period; i++) {
+    const ch = closes[i] - closes[i - 1];
+    if (ch > 0) gain += ch; else loss -= ch;
+  }
+  let avgG = gain / period, avgL = loss / period;
+  rsi[period] = avgL === 0 ? 100 : (avgG === 0 ? 0 : 100 - 100 / (1 + avgG / avgL));
+  for (let i = period + 1; i < n; i++) {
+    const ch = closes[i] - closes[i - 1];
+    const g = ch > 0 ? ch : 0, l = ch < 0 ? -ch : 0;
+    avgG = (avgG * (period - 1) + g) / period;
+    avgL = (avgL * (period - 1) + l) / period;
+    rsi[i] = avgL === 0 ? 100 : (avgG === 0 ? 0 : 100 - 100 / (1 + avgG / avgL));
+  }
+  return rsi;
+}
+function stockDisplayBars(h) {
+  // Last STOCK_BARS bars (1 year). RSI is computed over the FULL history
+  // first, so the displayed RSI values are properly warmed up.
+  const n = h.dates.length;
+  const start = Math.max(0, n - STOCK_BARS);
+  const rsi = computeRSI(h.closes, 14);
+  const bars = [];
+  for (let i = start; i < n; i++) {
+    bars.push({ date: h.dates[i], open: h.opens[i], high: h.highs[i],
+                low: h.lows[i], close: h.closes[i], volume: h.volumes[i],
+                rsi: rsi[i],
+                color: stockBarColor(h.closes[i], i > 0 ? h.closes[i - 1] : null) });
+  }
+  return bars;
+}
+function drawStockChart() {
+  if (!stockOHLC || !selectedStock) return;
+  const h = stockOHLC[selectedStock];
+  if (!h) return;
+  const bars = stockDisplayBars(h);
+  const n = bars.length;
+  if (!n) return;
+  const L = 6, R = 62, T = 8, B = 26;
+  const X = (cv, i) => L + (i + 0.5) * (cv.clientWidth - L - R) / (n + PAD_BARS);
+  // Shared month labels (drawn on price + RSI canvases).
+  function monthLabels(ctx, cv, plotH) {
+    ctx.font = '11px Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    for (let i = 0; i < n; i++) {
+      const d = bars[i].date;
+      const m = parseInt(d.slice(5, 7), 10);
+      const prevM = i > 0 ? parseInt(bars[i - 1].date.slice(5, 7), 10) : null;
+      if (m !== prevM) {
+        const x = X(cv, i);
+        ctx.strokeStyle = '#222';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(x, T); ctx.lineTo(x, T + plotH); ctx.stroke();
+        ctx.fillStyle = '#aaa';
+        const label = (m === 1) ? d.slice(0, 4) : VN_MONTHS[m - 1];
+        const lx = Math.max(14, Math.min(cv.clientWidth - R - 14, x));
+        ctx.fillText(label, lx, T + plotH + 6);
+      }
+    }
+  }
+  function setupCanvas(id) {
+    const cv = document.getElementById(id);
+    const cssW = cv.clientWidth, cssH = cv.clientHeight;
+    if (!cssW || !cssH) return null;
+    const dpr = window.devicePixelRatio || 1;
+    cv.width = Math.round(cssW * dpr);
+    cv.height = Math.round(cssH * dpr);
+    const ctx = cv.getContext('2d');
+    ctx.scale(dpr, dpr);
+    ctx.clearRect(0, 0, cssW, cssH);
+    return { cv, ctx, cssW, cssH };
+  }
+  // ---- Layer 1: price bars (same frame as VNINDEX, 320px) ----
+  const p = setupCanvas('stockchart');
+  if (p) {
+    const plotW = p.cssW - L - R, plotH = p.cssH - T - B;
+    let mn = Infinity, mx = -Infinity;
+    bars.forEach(b => { mn = Math.min(mn, b.low); mx = Math.max(mx, b.high); });
+    const pad = (mx - mn) * 0.03; mn -= pad; mx += pad;
+    const Y = v => T + (mx - v) / (mx - mn) * plotH;
+    const range = mx - mn;
+    const step = range > 400 ? 100 : range > 200 ? 50 : range > 100 ? 25 : range > 20 ? 10 : range > 5 ? 2 : 1;
+    p.ctx.font = '11px Arial';
+    p.ctx.textBaseline = 'middle';
+    for (let v = Math.ceil(mn / step) * step; v <= mx; v += step) {
+      const y = Y(v);
+      p.ctx.strokeStyle = '#222';
+      p.ctx.lineWidth = 1;
+      p.ctx.beginPath(); p.ctx.moveTo(L, y); p.ctx.lineTo(p.cssW - R, y); p.ctx.stroke();
+      p.ctx.fillStyle = '#aaa';
+      p.ctx.textAlign = 'left';
+      p.ctx.fillText(fmtNum(v, 0), p.cssW - R + 6, y);
+    }
+    monthLabels(p.ctx, p.cv, plotH);
+    const bw = Math.max(1, plotW / (n + PAD_BARS) * 0.6);
+    bars.forEach((b, i) => {
+      const x = X(p.cv, i);
+      p.ctx.strokeStyle = b.color;
+      p.ctx.lineWidth = 1.5;
+      p.ctx.beginPath();
+      p.ctx.moveTo(x, Y(b.high));
+      p.ctx.lineTo(x, Y(b.low));
+      p.ctx.moveTo(x - bw / 2, Y(b.close));
+      p.ctx.lineTo(x + bw / 2, Y(b.close));
+      p.ctx.stroke();
+    });
+    // Latest close label (white bg, black text) on the right axis.
+    const last = bars[n - 1];
+    const ly = Y(last.close);
+    p.ctx.font = 'bold 10px Arial';
+    p.ctx.textBaseline = 'middle';
+    const txt = fmtNum(last.close, 2);
+    const w = Math.min(R - 4, p.ctx.measureText(txt).width + 8);
+    p.ctx.fillStyle = '#FFFFFF';
+    p.ctx.fillRect(p.cssW - R + 2, ly - 7.5, w, 15);
+    p.ctx.fillStyle = '#000';
+    p.ctx.textAlign = 'center';
+    p.ctx.fillText(txt, p.cssW - R + 2 + w / 2, ly + 0.5);
+  }
+  // ---- Layer 2: daily matched volume (same time axis) ----
+  const v = setupCanvas('stockvolchart');
+  if (v) {
+    const plotW = v.cssW - L - R, plotH = v.cssH - T - B;
+    let mx = 0;
+    bars.forEach(b => { mx = Math.max(mx, b.volume || 0); });
+    if (mx <= 0) mx = 1;
+    const Y = val => T + (1 - val / mx) * plotH;
+    const bw = Math.max(1, plotW / (n + PAD_BARS) * 0.7);
+    bars.forEach((b, i) => {
+      const x = X(v.cv, i);
+      // Volume bars follow the price direction (same colors as the bars).
+      v.ctx.fillStyle = b.color;
+      const y0 = Y(b.volume || 0);
+      v.ctx.fillRect(x - bw / 2, y0, bw, T + plotH - y0);
+    });
+    // Max-volume label on the right axis.
+    v.ctx.font = '11px Arial';
+    v.ctx.textBaseline = 'middle';
+    v.ctx.fillStyle = '#aaa';
+    v.ctx.textAlign = 'left';
+    v.ctx.fillText(fmtNum(mx, 0), v.cssW - R + 6, T + 5);
+  }
+  // ---- Layer 3: RSI(14), white line, 0-100 ----
+  const r = setupCanvas('stockrsichart');
+  if (r) {
+    const plotW = r.cssW - L - R, plotH = r.cssH - T - B;
+    const Y = val => T + (1 - val / 100) * plotH;
+    // 30 / 70 reference lines (dashed grey).
+    r.ctx.strokeStyle = '#444';
+    r.ctx.lineWidth = 1;
+    r.ctx.setLineDash([4, 4]);
+    [30, 70].forEach(lv => {
+      const y = Y(lv);
+      r.ctx.beginPath(); r.ctx.moveTo(L, y); r.ctx.lineTo(r.cssW - R, y); r.ctx.stroke();
+    });
+    r.ctx.setLineDash([]);
+    // Axis labels 0 / 30 / 50 / 70 / 100.
+    r.ctx.font = '11px Arial';
+    r.ctx.textBaseline = 'middle';
+    r.ctx.fillStyle = '#aaa';
+    r.ctx.textAlign = 'left';
+    [0, 30, 50, 70, 100].forEach(lv => {
+      r.ctx.fillText(String(lv), r.cssW - R + 6, Y(lv));
+    });
+    monthLabels(r.ctx, r.cv, plotH);
+    // RSI line (white).
+    r.ctx.strokeStyle = '#FFFFFF';
+    r.ctx.lineWidth = 1.5;
+    r.ctx.beginPath();
+    let started = false;
+    bars.forEach((b, i) => {
+      if (b.rsi == null) return;
+      if (!started) { r.ctx.moveTo(X(r.cv, i), Y(b.rsi)); started = true; }
+      else r.ctx.lineTo(X(r.cv, i), Y(b.rsi));
+    });
+    r.ctx.stroke();
+    // Latest RSI label (white bg, black text).
+    const last = bars[n - 1];
+    if (last.rsi != null) {
+      const ly = Y(last.rsi);
+      r.ctx.font = 'bold 10px Arial';
+      r.ctx.textBaseline = 'middle';
+      const txt = last.rsi.toFixed(1);
+      const w = Math.min(R - 4, r.ctx.measureText(txt).width + 8);
+      r.ctx.fillStyle = '#FFFFFF';
+      r.ctx.fillRect(r.cssW - R + 2, ly - 7.5, w, 15);
+      r.ctx.fillStyle = '#000';
+      r.ctx.textAlign = 'center';
+      r.ctx.fillText(txt, r.cssW - R + 2 + w / 2, ly + 0.5);
+    }
+  }
+  // Info line: symbol + latest OHLC + change.
+  const last = bars[n - 1];
+  const prev = n > 1 ? bars[n - 2] : null;
+  const chg = prev ? (last.close / prev.close - 1) * 100 : 0;
+  const dstr = last.date.split('-').reverse().join('/');
+  document.getElementById('stockinfo').textContent =
+    selectedStock + ' ' + dstr +
+    ' | O ' + fmtNum(last.open, 2) + ', H ' + fmtNum(last.high, 2) +
+    ', L ' + fmtNum(last.low, 2) + ', C ' + fmtNum(last.close, 2) +
+    ' (' + (chg >= 0 ? '+' : '') + chg.toFixed(2) + '%)' +
+    ' | Vol ' + fmtNum(last.volume, 0) +
+    (last.rsi != null ? ' | RSI(14) ' + last.rsi.toFixed(1) : '');
+}
+function selectStock(sym) {
+  selectedStock = sym;
+  document.getElementById('stockTitle').textContent = sym;
+  if (stockOHLC) drawStockChart();
+  if (typeof renderSetup === 'function') renderSetup();
+}
+function loadStockData() {
+  fetch('stock_ohlc.json?t=' + Date.now()).then(r => {
+    if (!r.ok) throw new Error('Không tải được stock_ohlc.json');
+    return r.json();
+  }).then(data => {
+    stockOHLC = data;
+    // Default: show the top-ranked symbol if nothing is selected yet.
+    if (!selectedStock && setupData && setupData.items && setupData.items.length) {
+      const top = setupData.items.filter(it => it.group)
+        .sort((a, b) => a.rank - b.rank)[0];
+      if (top) selectedStock = top.symbol;
+    }
+    if (selectedStock) {
+      document.getElementById('stockTitle').textContent = selectedStock;
+      drawStockChart();
+    }
+  }).catch(e => {
+    document.getElementById('stockinfo').textContent = 'Chưa có dữ liệu chart: ' + e.message;
+  });
+}
+loadStockData();
 </script>
 </body>
 </html>
