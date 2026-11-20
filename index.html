@@ -984,6 +984,9 @@ function drawStockChart() {
     bars.forEach(b => { mx = Math.max(mx, b.volume || 0); });
     if (mx <= 0) mx = 1;
     const Y = val => T + (1 - val / mx) * plotH;
+    // Time axis (Dat 2026-11-20): month labels + grid lines, same as the
+    // price and RSI layers, so all three layers share the time axis.
+    monthLabels(v.ctx, v.cv, plotH);
     const bw = Math.max(1, plotW / (n + PAD_BARS) * 0.7);
     bars.forEach((b, i) => {
       const x = X(v.cv, i);
