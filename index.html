@@ -192,6 +192,10 @@ function loadSetup() {
   }).then(data => {
     setupData = data;
     renderSetup();
+    // Default the stock chart to the top-ranked symbol once both the
+    // Setup 1 list and the OHLC data are in (fixes a race: loadStockData
+    // alone cannot pick a default when setupData has not arrived yet).
+    if (typeof selectDefaultStock === 'function') selectDefaultStock();
   }).catch(e => {
     document.getElementById('setupGrid').textContent = 'Chưa có dữ liệu: ' + e.message;
   });
@@ -1009,22 +1013,23 @@ function selectStock(sym) {
   if (stockOHLC) drawStockChart();
   if (typeof renderSetup === 'function') renderSetup();
 }
+function selectDefaultStock() {
+  // Show the top-ranked symbol by default once both the Setup 1 list and
+  // the OHLC data are loaded. Never overrides a symbol the user clicked.
+  if (selectedStock) return;
+  if (!stockOHLC || !setupData || !setupData.items || !setupData.items.length) return;
+  const top = setupData.items.filter(it => it.group)
+    .sort((a, b) => a.rank - b.rank)[0];
+  if (top && stockOHLC[top.symbol]) selectStock(top.symbol);
+}
 function loadStockData() {
   fetch('stock_ohlc.json?t=' + Date.now()).then(r => {
     if (!r.ok) throw new Error('Không tải được stock_ohlc.json');
     return r.json();
   }).then(data => {
     stockOHLC = data;
-    // Default: show the top-ranked symbol if nothing is selected yet.
-    if (!selectedStock && setupData && setupData.items && setupData.items.length) {
-      const top = setupData.items.filter(it => it.group)
-        .sort((a, b) => a.rank - b.rank)[0];
-      if (top) selectedStock = top.symbol;
-    }
-    if (selectedStock) {
-      document.getElementById('stockTitle').textContent = selectedStock;
-      drawStockChart();
-    }
+    selectDefaultStock();
+    if (selectedStock) drawStockChart();
   }).catch(e => {
     document.getElementById('stockinfo').textContent = 'Chưa có dữ liệu chart: ' + e.message;
   });
