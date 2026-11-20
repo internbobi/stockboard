@@ -89,6 +89,13 @@
 <div id="countdown"></div>
 <div id="counters"><div id="visitorCounter"><script async src="https://feed-pulse.com/api/embed/online-visitors.js?site_id=f705a8f4-2acf-43fd-89f0-cd7d7ffd9bd6&theme=obsidian&sz=micro"></script></div><div id="hitCounter"><script async src="https://feed-pulse.com/api/embed/hit-counter.js?site_id=f705a8f4-2acf-43fd-89f0-cd7d7ffd9bd6&theme=obsidian&style=card&base=0&reset_at=0&reset_to=0&digits=7"></script></div></div>
 <script>
+// Disable right-click (context menu) everywhere on the page (Dat 2026-11-20).
+// This is the overlay that blocks right-clicks at any point on the screen:
+// it intercepts the contextmenu event (mouse right-click, Menu key,
+// Shift+F10) and cancels it, so no context menu ever appears. Left-click
+// still works normally (clicking symbols, toggles, etc.). A transparent
+// overlay div would also block left-clicks, so it is NOT used here.
+document.addEventListener('contextmenu', e => e.preventDefault());
 function fmtDate(iso) {
   const p = iso.split('-');
   return p[2] + '/' + p[1] + '/' + p[0];
