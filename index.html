@@ -7,7 +7,7 @@
 <style>
   * { box-sizing: border-box; }
   body { background: #000; color: #fff; font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; display: flex; }
-  h1 { text-align: center; font-size: 2.6cqw; margin: 0.8cqw 0 1.4cqw; line-height: 1.2; }
+  h1 { text-align: center; font-size: 3.9cqw; margin: 0.8cqw 0 1.4cqw; line-height: 1.2; font-weight: bold; text-transform: uppercase; white-space: nowrap; }
   #countdown { position: fixed; right: 14px; bottom: 12px; background: rgba(255,255,255,0.14); color: #fff; font-size: 12px; padding: 6px 10px; border-radius: 8px; z-index: 10; }
   #counters { position: fixed; left: 14px; bottom: 12px; z-index: 10; display: flex; gap: 8px; align-items: center; }
   /* Hide FeedPulse's credit + owner links under the badges (both widgets
@@ -60,7 +60,7 @@
      full Top 30% ("All") and the 10B subset (same cells, colors, stars —
      only fewer symbols). */
   .setup-toggle, .tab-toggle { display: flex; gap: 6px; justify-content: center; margin: 2px 0 6px; }
-  .setup-toggle button, .tab-toggle button { background: #333; color: #fff; border: 1px solid #666; border-radius: 6px; font-size: 12px; font-weight: bold; padding: 3px 12px; cursor: pointer; }
+  .setup-toggle button, .tab-toggle button { background: #333; color: #fff; border: 1px solid #666; border-radius: 6px; font-size: 2.6cqw; font-weight: bold; padding: 3px 12px; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
   .setup-toggle button.on, .tab-toggle button.on { background: #fff; color: #000; border-color: #fff; }
   /* Block 3 (new, Dat 2026-11-20): per-symbol chart for the symbol clicked
      in Block 2 (Setup 1). Layer 1 = price bars (same frame as the VNINDEX
@@ -155,7 +155,7 @@ function renderBoard(data) {
   // longer renders the board, but data.json is still fetched for the date
   // (Setup 1 title) and the cron still updates it. Keep this as a date
   // setter only; the board grid is gone.
-  document.getElementById('setupTitle').textContent = 'Setup 1 - Ngày ' + fmtDate(data.date);
+  document.getElementById('setupTitle').textContent = 'Setup 1 - ' + fmtDate(data.date);
 }
 function loadData() {
   fetch('data.json?t=' + Date.now()).then(r => {
