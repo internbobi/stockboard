@@ -97,9 +97,14 @@
 <h1 id="stockTitle">Chọn mã ở Block 2</h1>
 <div id="stockinfo" class="stockinfo">Bấm vào một mã trong danh sách Setup 1 để xem chart.</div>
 <canvas id="stockchart"></canvas>
+<div id="stockvolinfo" class="stockinfo">Đang tải dữ liệu…</div>
 <canvas id="stockvolchart" class="stock-sub"></canvas>
+<div id="stockrsiinfo" class="stockinfo">Đang tải dữ liệu…</div>
 <canvas id="stockrsichart" class="stock-sub"></canvas>
+<div id="stockscoreinfo" class="stockinfo">Đang tải dữ liệu…</div>
 <canvas id="stockscorechart" class="stock-sub"></canvas>
+<div id="stockscorelonginfo" class="stockinfo">Đang tải dữ liệu…</div>
+<canvas id="stockscorelongchart" class="stock-sub"></canvas>
 </div>
 <div id="countdown"></div>
 <div id="counters"><div id="visitorCounter"><script async src="https://feed-pulse.com/api/embed/online-visitors.js?site_id=f705a8f4-2acf-43fd-89f0-cd7d7ffd9bd6&theme=obsidian&sz=micro"></script></div><div id="hitCounter"><script async src="https://feed-pulse.com/api/embed/hit-counter.js?site_id=f705a8f4-2acf-43fd-89f0-cd7d7ffd9bd6&theme=obsidian&style=card&base=0&reset_at=0&reset_to=0&digits=7"></script></div></div>
@@ -849,9 +854,14 @@ loadTMA();
 // Layer 1: price bars (same frame + color rules as the VNINDEX chart,
 // 30vh). Layer 2: daily matched volume. Layer 3: RSI(14), white line.
 // Layer 4: Score line (Dat 2026-11-21), white thin line + group dots.
-// All four share the same 1-year time axis (same X mapping, same bars).
+// Layer 5: long Score line (Dat 2026-11-21), same as Layer 4.
+// All five share the same 1-year time axis (same X mapping, same bars).
+// Each layer has its own info line above it (same style/position as the
+// Block 1 layer titles), so the five Block 3 layers line up horizontally
+// with the five Block 1 layers.
 let stockOHLC = null;   // stock_ohlc.json: {symbol: {dates, opens, highs, lows, closes, volumes}}
 let scoreHistory = null; // score_history.json: {symbol: {dates, score, group}}
+let scoreLongHistory = null; // score_long_history.json: same structure
 let selectedStock = null;
 // Score dot colors (Dat 2026-11-21): the day's Setup 1 group. A day the
 // symbol was ranked but below the top 30% (group null) gets cyan.
@@ -1056,8 +1066,12 @@ function drawStockChart() {
     v.ctx.stroke();
     // Right-axis value labels (Dat 2026-11-21): the latest volume (chip
     // colored with that bar's color) and the latest MA(20) value (white
-    // chip). Larger value on top; never overlap (min 17px center spacing
-    // for 15px-tall labels, push down as needed, clamp inside the plot).
+    // chip). Larger value on top; never overlap — same placement as the
+    // VNINDEX right-axis labels in Block 1 (Dat 2026-11-21): sort by
+    // value top-to-bottom, push down only as needed, then shift the whole
+    // stack up/down if it would run off the plot. (A per-label clamp
+    // collapses two close values onto the same row at the bottom of the
+    // chart — that was the overlap bug.)
     const last = bars[n - 1];
     const chips = [];
     if (last.volume != null) {
@@ -1069,15 +1083,19 @@ function drawStockChart() {
                    bg: '#FFFFFF', fg: '#000000' });
     }
     chips.sort((a, b) => b.val - a.val);
-    let prevY = null;
-    const chipYs = [];
-    chips.forEach(c => {
-      let y = Y(c.val);
-      if (prevY !== null) y = Math.max(y, prevY + 17);
-      y = Math.max(T + 7.5, Math.min(T + plotH - 7.5, y));
-      chipYs.push(y);
-      prevY = y;
-    });
+    const LH = 15, GAP = LH + 2; // 2px gap: labels never touch or overlap
+    const chipYs = chips.map(c => Y(c.val)).sort((a, b) => a - b);
+    for (let i = 1; i < chipYs.length; i++) {
+      if (chipYs[i] - chipYs[i - 1] < GAP) chipYs[i] = chipYs[i - 1] + GAP;
+    }
+    if (chipYs.length && chipYs[chipYs.length - 1] + LH / 2 > T + plotH) {
+      const shift = chipYs[chipYs.length - 1] + LH / 2 - (T + plotH);
+      for (let i = 0; i < chipYs.length; i++) chipYs[i] -= shift;
+    }
+    if (chipYs.length && chipYs[0] - LH / 2 < T) {
+      const shift = T - (chipYs[0] - LH / 2);
+      for (let i = 0; i < chipYs.length; i++) chipYs[i] += shift;
+    }
     // Max-volume label (grey text) at the top, only if it does not touch
     // a chip label (the latest volume already shows the max when it is).
     const maxY = T + 5;
@@ -1158,73 +1176,79 @@ function drawStockChart() {
       r.ctx.fillText(txt, r.cssW - R + 2 + w / 2, ly + 0.5);
     }
   }
-  // ---- Layer 4: Score line (Dat 2026-11-21) ----
-  // (fill-in, Dat 2026-11-21), so the line is continuous across the whole
-  // window instead of a long empty stretch. White thin line; dots
-  // (radius 1.2, same as the Block 1 Layer 2 dots) colored by that day's
-  // group: Top 10% magenta, Top 20% green, Top 30% yellow, below the top
-  // 30% (including the fill-in days) cyan. Same 1-year time axis as
-  // Layers 1-3 (last 250 bars). The latest Score is the right-axis label.
-  const d = setupCanvas('stockscorechart');
-  const dh = scoreHistory ? scoreHistory[selectedStock] : null;
-  if (d && dh && dh.dates && dh.dates.length) {
-    const plotW = d.cssW - L - R, plotH = d.cssH - T - B;
+  // ---- Layers 4 & 5: Score lines (Dat 2026-11-21) ----
+  // The symbol's daily Score, white thin line; dots (radius 1.2, same
+  // as the Block 1 Layer 2 dots) colored by that day's group: Top 10%
+  // magenta, Top 20% green, Top 30% yellow, below the top 30% (including
+  // days the symbol was not ranked, which get a below-basket value) cyan.
+  // Same 1-year time axis as Layers 1-3 (last 250 bars). The latest Score
+  // is the right-axis label and is returned so the info line above the
+  // chart can show it. Layer 4 is the short Score, Layer 5 the long one
+  // — same drawing, different history file.
+  function drawScoreLayer(canvasId, hist) {
+    const c = setupCanvas(canvasId);
+    if (!c || !hist) return null;
+    const e = hist[selectedStock];
+    if (!e || !e.dates || !e.dates.length) return null;
+    const plotW = c.cssW - L - R, plotH = c.cssH - T - B;
     const byDate = {};
-    dh.dates.forEach((dt, k) => { byDate[dt] = { score: dh.score[k], group: dh.group[k] }; });
+    e.dates.forEach((dt, k) => { byDate[dt] = { score: e.score[k], group: e.group[k] }; });
     const pts = [];
     let mn = Infinity, mx = -Infinity;
     bars.forEach((b, i) => {
-      const e = byDate[b.date];
-      if (!e) return;
-      pts.push({ i, score: e.score, group: e.group });
-      mn = Math.min(mn, e.score);
-      mx = Math.max(mx, e.score);
+      const v = byDate[b.date];
+      if (!v) return;
+      pts.push({ i, score: v.score, group: v.group });
+      mn = Math.min(mn, v.score);
+      mx = Math.max(mx, v.score);
     });
-    if (pts.length) {
-      if (mx - mn < 1) { mx += 1; mn -= 1; }
-      const pad = (mx - mn) * 0.05; mn -= pad; mx += pad;
-      const Y = v => T + (mx - v) / (mx - mn) * plotH;
-      // Faint horizontal gridlines at round values (reference only).
-      const range = mx - mn;
-      const step = range > 200 ? 50 : range > 100 ? 25 : range > 50 ? 10 : 5;
-      d.ctx.strokeStyle = '#222';
-      d.ctx.lineWidth = 1;
-      for (let v = Math.ceil(mn / step) * step; v <= mx; v += step) {
-        const y = Y(v);
-        d.ctx.beginPath(); d.ctx.moveTo(L, y); d.ctx.lineTo(d.cssW - R, y); d.ctx.stroke();
-      }
-      monthLabels(d.ctx, d.cv, plotH);
-      // White thin line through the ranked days.
-      d.ctx.strokeStyle = '#FFFFFF';
-      d.ctx.lineWidth = 1;
-      d.ctx.beginPath();
-      let started = false;
-      pts.forEach(pt => {
-        if (!started) { d.ctx.moveTo(X(d.cv, pt.i), Y(pt.score)); started = true; }
-        else d.ctx.lineTo(X(d.cv, pt.i), Y(pt.score));
-      });
-      d.ctx.stroke();
-      // Dots, radius 1.2 (same as Block 1 Layer 2), colored by group.
-      pts.forEach(pt => {
-        d.ctx.fillStyle = SCORE_DOT_COLORS[pt.group] || SCORE_DOT_BELOW;
-        d.ctx.beginPath();
-        d.ctx.arc(X(d.cv, pt.i), Y(pt.score), 1.2, 0, Math.PI * 2);
-        d.ctx.fill();
-      });
-      // Latest Score label (white bg, black text) on the right axis.
-      const last = pts[pts.length - 1];
-      const ly = Y(last.score);
-      d.ctx.font = 'bold 10px Arial';
-      d.ctx.textBaseline = 'middle';
-      const txt = String(last.score);
-      const w = Math.min(R - 4, d.ctx.measureText(txt).width + 8);
-      d.ctx.fillStyle = '#FFFFFF';
-      d.ctx.fillRect(d.cssW - R + 2, ly - 7.5, w, 15);
-      d.ctx.fillStyle = '#000';
-      d.ctx.textAlign = 'center';
-      d.ctx.fillText(txt, d.cssW - R + 2 + w / 2, ly + 0.5);
+    if (!pts.length) return null;
+    if (mx - mn < 1) { mx += 1; mn -= 1; }
+    const pad = (mx - mn) * 0.05; mn -= pad; mx += pad;
+    const Y = v => T + (mx - v) / (mx - mn) * plotH;
+    // Faint horizontal gridlines at round values (reference only).
+    const range = mx - mn;
+    const step = range > 200 ? 50 : range > 100 ? 25 : range > 50 ? 10 : 5;
+    c.ctx.strokeStyle = '#222';
+    c.ctx.lineWidth = 1;
+    for (let v = Math.ceil(mn / step) * step; v <= mx; v += step) {
+      const y = Y(v);
+      c.ctx.beginPath(); c.ctx.moveTo(L, y); c.ctx.lineTo(c.cssW - R, y); c.ctx.stroke();
     }
+    monthLabels(c.ctx, c.cv, plotH);
+    // White thin line through the days.
+    c.ctx.strokeStyle = '#FFFFFF';
+    c.ctx.lineWidth = 1;
+    c.ctx.beginPath();
+    let started = false;
+    pts.forEach(pt => {
+      if (!started) { c.ctx.moveTo(X(c.cv, pt.i), Y(pt.score)); started = true; }
+      else c.ctx.lineTo(X(c.cv, pt.i), Y(pt.score));
+    });
+    c.ctx.stroke();
+    // Dots, radius 1.2 (same as Block 1 Layer 2), colored by group.
+    pts.forEach(pt => {
+      c.ctx.fillStyle = SCORE_DOT_COLORS[pt.group] || SCORE_DOT_BELOW;
+      c.ctx.beginPath();
+      c.ctx.arc(X(c.cv, pt.i), Y(pt.score), 1.2, 0, Math.PI * 2);
+      c.ctx.fill();
+    });
+    // Latest Score label (white bg, black text) on the right axis.
+    const lastPt = pts[pts.length - 1];
+    const ly = Y(lastPt.score);
+    c.ctx.font = 'bold 10px Arial';
+    c.ctx.textBaseline = 'middle';
+    const txt = String(lastPt.score);
+    const w = Math.min(R - 4, c.ctx.measureText(txt).width + 8);
+    c.ctx.fillStyle = '#FFFFFF';
+    c.ctx.fillRect(c.cssW - R + 2, ly - 7.5, w, 15);
+    c.ctx.fillStyle = '#000';
+    c.ctx.textAlign = 'center';
+    c.ctx.fillText(txt, c.cssW - R + 2 + w / 2, ly + 0.5);
+    return lastPt.score;
   }
+  const latestScore = drawScoreLayer('stockscorechart', scoreHistory);
+  const latestScoreLong = drawScoreLayer('stockscorelongchart', scoreLongHistory);
   // Info line: symbol + latest OHLC + change.
   const last = bars[n - 1];
   const prev = n > 1 ? bars[n - 2] : null;
@@ -1237,6 +1261,27 @@ function drawStockChart() {
     ' (' + (chg >= 0 ? '+' : '') + chg.toFixed(2) + '%)' +
     ' | Vol ' + fmtNum(last.volume, 0) +
     (last.rsi != null ? ' | RSI(14) ' + last.rsi.toFixed(1) : '');
+  // Info lines above each sub-layer (Dat 2026-11-21): same centered style
+  // and position as the Block 1 layer titles (MidStrong / LongStrong).
+  // These lines are also what makes the Block 3 layers line up
+  // horizontally with the Block 1 layers (one title line per layer).
+  const volInfo = document.getElementById('stockvolinfo');
+  if (volInfo) {
+    volInfo.textContent = 'Vol: ' + fmtNum(last.volume, 0) +
+      (last.ma20vol != null ? ' | MA(20): ' + fmtNum(last.ma20vol, 0) : '');
+  }
+  const rsiInfo = document.getElementById('stockrsiinfo');
+  if (rsiInfo && last.rsi != null) {
+    rsiInfo.textContent = 'RSI(14): ' + last.rsi.toFixed(1);
+  }
+  const scoreInfo = document.getElementById('stockscoreinfo');
+  if (scoreInfo && latestScore != null) {
+    scoreInfo.textContent = 'Score: ' + latestScore;
+  }
+  const scoreLongInfo = document.getElementById('stockscorelonginfo');
+  if (scoreLongInfo && latestScoreLong != null) {
+    scoreLongInfo.textContent = 'Score: ' + latestScoreLong;
+  }
 }
 function selectStock(sym) {
   selectedStock = sym;
@@ -1266,9 +1311,9 @@ function loadStockData() {
   });
 }
 loadStockData();
-// Score history (Layer 4). Loaded once on page load, like stock_ohlc.json
-// (NOT in the 30s refreshAll). If it fails, Layer 4 stays blank and the
-// other layers still work.
+// Score histories (Layers 4 & 5). Loaded once on page load, like
+// stock_ohlc.json (NOT in the 30s refreshAll). If one fails, its layer
+// stays blank and the other layers still work.
 function loadScoreData() {
   fetch('score_history.json?t=' + Date.now()).then(r => {
     if (!r.ok) throw new Error('Không tải được score_history.json');
@@ -1281,6 +1326,18 @@ function loadScoreData() {
   });
 }
 loadScoreData();
+function loadScoreLongData() {
+  fetch('score_long_history.json?t=' + Date.now()).then(r => {
+    if (!r.ok) throw new Error('Không tải được score_long_history.json');
+    return r.json();
+  }).then(data => {
+    scoreLongHistory = data;
+    if (selectedStock) drawStockChart();
+  }).catch(e => {
+    console.warn('Long Score history not loaded: ' + e.message);
+  });
+}
+loadScoreLongData();
 </script>
 </body>
 </html>
