@@ -64,7 +64,7 @@
   .setup-toggle button.on { background: #fff; color: #000; border-color: #fff; }
   /* Block 3 (new, Dat 2026-11-20): per-symbol chart for the symbol clicked
      in Block 2 (Setup 1). Layer 1 = price bars (same frame as the VNINDEX
-     chart, 30vh), Layer 2 = matched volume, Layer 3 = RSI(14). All three
+     chart, 30vh), Layer 2 = matched volume, Layer 3 = Momentum. All three
      share the same 1-year time axis. Heights are vh like Block 1, so the
      panel auto-scales to the viewport and Layer 1 always matches the
      VNINDEX frame height on any screen. */
@@ -852,7 +852,7 @@ loadTMA();
 // ---- Block 3 (new, Dat 2026-11-20): per-symbol chart ----
 // Click a symbol in Block 2 (Setup 1) -> its 1-year chart here.
 // Layer 1: price bars (same frame + color rules as the VNINDEX chart,
-// 30vh). Layer 2: daily matched volume. Layer 3: RSI(14), white line.
+// 30vh). Layer 2: daily matched volume. Layer 3: Momentum, white line.
 // Layer 4: Score line (Dat 2026-11-21), white thin line + group dots.
 // Layer 5: long Score line (Dat 2026-11-21), same as Layer 4.
 // All five share the same 1-year time axis (same X mapping, same bars).
@@ -1118,7 +1118,7 @@ function drawStockChart() {
       v.ctx.fillText(c.text, v.cssW - R + 2 + w / 2, y + 0.5);
     });
   }
-  // ---- Layer 3: RSI(14), white line, 0-100 ----
+  // ---- Layer 3: Momentum, white line, 0-100 ----
   const r = setupCanvas('stockrsichart');
   if (r) {
     const plotW = r.cssW - L - R, plotH = r.cssH - T - B;
@@ -1260,7 +1260,7 @@ function drawStockChart() {
     ', L ' + fmtNum(last.low, 2) + ', C ' + fmtNum(last.close, 2) +
     ' (' + (chg >= 0 ? '+' : '') + chg.toFixed(2) + '%)' +
     ' | Vol ' + fmtNum(last.volume, 0) +
-    (last.rsi != null ? ' | RSI(14) ' + last.rsi.toFixed(1) : '');
+    (last.rsi != null ? ' | Momentum ' + last.rsi.toFixed(1) : '');
   // Info lines above each sub-layer (Dat 2026-11-21): same centered style
   // and position as the Block 1 layer titles (MidStrong / LongStrong).
   // These lines are also what makes the Block 3 layers line up
@@ -1272,15 +1272,15 @@ function drawStockChart() {
   }
   const rsiInfo = document.getElementById('stockrsiinfo');
   if (rsiInfo && last.rsi != null) {
-    rsiInfo.textContent = 'RSI(14): ' + last.rsi.toFixed(1);
+    rsiInfo.textContent = 'Momentum: ' + last.rsi.toFixed(1);
   }
   const scoreInfo = document.getElementById('stockscoreinfo');
   if (scoreInfo && latestScore != null) {
-    scoreInfo.textContent = 'Score: ' + latestScore;
+    scoreInfo.textContent = 'S-Score: ' + latestScore;
   }
   const scoreLongInfo = document.getElementById('stockscorelonginfo');
   if (scoreLongInfo && latestScoreLong != null) {
-    scoreLongInfo.textContent = 'Score: ' + latestScoreLong;
+    scoreLongInfo.textContent = 'L-Score: ' + latestScoreLong;
   }
 }
 function selectStock(sym) {
