@@ -1105,12 +1105,12 @@ function drawStockChart() {
   if (r) {
     const plotW = r.cssW - L - R, plotH = r.cssH - T - B;
     const Y = val => T + (1 - val / 100) * plotH;
-    // Reference lines (Dat 2026-11-21): red dashed at 20 and 60, green
-    // dashed at 40 and 70, grey dashed at 30 (the old grey 70 line is now
-    // green, same position). All thin dashed, same dash as before.
+    // Reference lines (Dat 2026-11-21, corrected: green pair is 40/80):
+    // red dashed at 20 and 60, green dashed at 40 and 80, grey dashed
+    // at 30 and 70. All thin dashed, same dash as before.
     r.ctx.lineWidth = 1;
     r.ctx.setLineDash([4, 4]);
-    [['#FF0000', 20], ['#FF0000', 60], ['#00FF22', 40], ['#00FF22', 70], ['#444', 30]].forEach(([col, lv]) => {
+    [['#FF0000', 20], ['#FF0000', 60], ['#00FF22', 40], ['#00FF22', 80], ['#444', 30], ['#444', 70]].forEach(([col, lv]) => {
       r.ctx.strokeStyle = col;
       const y = Y(lv);
       r.ctx.beginPath(); r.ctx.moveTo(L, y); r.ctx.lineTo(r.cssW - R, y); r.ctx.stroke();
