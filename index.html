@@ -887,17 +887,31 @@ function computeRSI(closes, period) {
   }
   return rsi;
 }
+function computeMA(values, period) {
+  // Simple moving average over the FULL history (null until warmed up).
+  const out = new Array(values.length).fill(null);
+  let sum = 0;
+  for (let i = 0; i < values.length; i++) {
+    const v = values[i] || 0;
+    sum += v;
+    if (i >= period) sum -= (values[i - period] || 0);
+    if (i >= period - 1) out[i] = sum / period;
+  }
+  return out;
+}
 function stockDisplayBars(h) {
-  // Last STOCK_BARS bars (1 year). RSI is computed over the FULL history
-  // first, so the displayed RSI values are properly warmed up.
+  // Last STOCK_BARS bars (1 year). RSI and the volume MA(20) are computed
+  // over the FULL history first, so the displayed values are properly
+  // warmed up.
   const n = h.dates.length;
   const start = Math.max(0, n - STOCK_BARS);
   const rsi = computeRSI(h.closes, 14);
+  const ma20vol = computeMA(h.volumes, 20);
   const bars = [];
   for (let i = start; i < n; i++) {
     bars.push({ date: h.dates[i], open: h.opens[i], high: h.highs[i],
                 low: h.lows[i], close: h.closes[i], volume: h.volumes[i],
-                rsi: rsi[i],
+                rsi: rsi[i], ma20vol: ma20vol[i],
                 color: stockBarColor(h.closes[i], i > 0 ? h.closes[i - 1] : null) });
   }
   return bars;
@@ -1028,23 +1042,76 @@ function drawStockChart() {
       const y0 = Y(b.volume || 0);
       v.ctx.fillRect(x - bw / 2, y0, bw, T + plotH - y0);
     });
-    // Max-volume label on the right axis.
-    v.ctx.font = '11px Arial';
-    v.ctx.textBaseline = 'middle';
-    v.ctx.fillStyle = '#aaa';
-    v.ctx.textAlign = 'left';
-    v.ctx.fillText(fmtNum(mx, 0), v.cssW - R + 6, T + 5);
+    // MA(20) of volume (Dat 2026-11-21): white thin line, computed over
+    // the FULL history (warmed up like RSI), drawn over the bars.
+    v.ctx.strokeStyle = '#FFFFFF';
+    v.ctx.lineWidth = 1;
+    v.ctx.beginPath();
+    let started = false;
+    bars.forEach((b, i) => {
+      if (b.ma20vol == null) return;
+      if (!started) { v.ctx.moveTo(X(v.cv, i), Y(b.ma20vol)); started = true; }
+      else v.ctx.lineTo(X(v.cv, i), Y(b.ma20vol));
+    });
+    v.ctx.stroke();
+    // Right-axis value labels (Dat 2026-11-21): the latest volume (chip
+    // colored with that bar's color) and the latest MA(20) value (white
+    // chip). Larger value on top; never overlap (min 17px center spacing
+    // for 15px-tall labels, push down as needed, clamp inside the plot).
+    const last = bars[n - 1];
+    const chips = [];
+    if (last.volume != null) {
+      chips.push({ val: last.volume, text: fmtNum(last.volume, 0),
+                   bg: last.color, fg: last.color === '#C40000' ? '#FFFFFF' : '#000000' });
+    }
+    if (last.ma20vol != null) {
+      chips.push({ val: last.ma20vol, text: fmtNum(last.ma20vol, 0),
+                   bg: '#FFFFFF', fg: '#000000' });
+    }
+    chips.sort((a, b) => b.val - a.val);
+    let prevY = null;
+    const chipYs = [];
+    chips.forEach(c => {
+      let y = Y(c.val);
+      if (prevY !== null) y = Math.max(y, prevY + 17);
+      y = Math.max(T + 7.5, Math.min(T + plotH - 7.5, y));
+      chipYs.push(y);
+      prevY = y;
+    });
+    // Max-volume label (grey text) at the top, only if it does not touch
+    // a chip label (the latest volume already shows the max when it is).
+    const maxY = T + 5;
+    if (chipYs.every(y => Math.abs(y - maxY) >= 17)) {
+      v.ctx.font = '11px Arial';
+      v.ctx.textBaseline = 'middle';
+      v.ctx.fillStyle = '#aaa';
+      v.ctx.textAlign = 'left';
+      v.ctx.fillText(fmtNum(mx, 0), v.cssW - R + 6, maxY);
+    }
+    chips.forEach((c, k) => {
+      const y = chipYs[k];
+      v.ctx.font = 'bold 10px Arial';
+      v.ctx.textBaseline = 'middle';
+      const w = Math.min(R - 4, v.ctx.measureText(c.text).width + 8);
+      v.ctx.fillStyle = c.bg;
+      v.ctx.fillRect(v.cssW - R + 2, y - 7.5, w, 15);
+      v.ctx.fillStyle = c.fg;
+      v.ctx.textAlign = 'center';
+      v.ctx.fillText(c.text, v.cssW - R + 2 + w / 2, y + 0.5);
+    });
   }
   // ---- Layer 3: RSI(14), white line, 0-100 ----
   const r = setupCanvas('stockrsichart');
   if (r) {
     const plotW = r.cssW - L - R, plotH = r.cssH - T - B;
     const Y = val => T + (1 - val / 100) * plotH;
-    // 30 / 70 reference lines (dashed grey).
-    r.ctx.strokeStyle = '#444';
+    // Reference lines (Dat 2026-11-21): red dashed at 20 and 60, green
+    // dashed at 40 and 70, grey dashed at 30 (the old grey 70 line is now
+    // green, same position). All thin dashed, same dash as before.
     r.ctx.lineWidth = 1;
     r.ctx.setLineDash([4, 4]);
-    [30, 70].forEach(lv => {
+    [['#FF0000', 20], ['#FF0000', 60], ['#00FF22', 40], ['#00FF22', 70], ['#444', 30]].forEach(([col, lv]) => {
+      r.ctx.strokeStyle = col;
       const y = Y(lv);
       r.ctx.beginPath(); r.ctx.moveTo(L, y); r.ctx.lineTo(r.cssW - R, y); r.ctx.stroke();
     });
@@ -1058,17 +1125,24 @@ function drawStockChart() {
       r.ctx.fillText(String(lv), r.cssW - R + 6, Y(lv));
     });
     monthLabels(r.ctx, r.cv, plotH);
-    // RSI line (white).
-    r.ctx.strokeStyle = '#FFFFFF';
+    // RSI line: white, but green while RSI > 67 (Dat 2026-11-21). Each
+    // segment takes the color of its end point, so the green stretch runs
+    // from the first session above 67 until the session where RSI crosses
+    // back below 67. Round caps keep the joints smooth.
     r.ctx.lineWidth = 1.5;
-    r.ctx.beginPath();
-    let started = false;
+    r.ctx.lineCap = 'round';
+    let prev = null;
     bars.forEach((b, i) => {
-      if (b.rsi == null) return;
-      if (!started) { r.ctx.moveTo(X(r.cv, i), Y(b.rsi)); started = true; }
-      else r.ctx.lineTo(X(r.cv, i), Y(b.rsi));
+      if (b.rsi == null) { prev = null; return; }
+      if (prev) {
+        r.ctx.strokeStyle = b.rsi > 67 ? '#00FF22' : '#FFFFFF';
+        r.ctx.beginPath();
+        r.ctx.moveTo(X(r.cv, prev.i), Y(prev.rsi));
+        r.ctx.lineTo(X(r.cv, i), Y(b.rsi));
+        r.ctx.stroke();
+      }
+      prev = { i, rsi: b.rsi };
     });
-    r.ctx.stroke();
     // Latest RSI label (white bg, black text).
     const last = bars[n - 1];
     if (last.rsi != null) {
@@ -1085,11 +1159,12 @@ function drawStockChart() {
     }
   }
   // ---- Layer 4: Score line (Dat 2026-11-21) ----
+  // (fill-in, Dat 2026-11-21), so the line is continuous across the whole
+  // window instead of a long empty stretch. White thin line; dots
   // (radius 1.2, same as the Block 1 Layer 2 dots) colored by that day's
   // group: Top 10% magenta, Top 20% green, Top 30% yellow, below the top
-  // 30% cyan. Same 1-year time axis as Layers 1-3 (last 250 bars). The
-  // latest Score is the right-axis label. Days the symbol was not ranked
-  // have no point; the line bridges the gap (same as the RSI warm-up).
+  // 30% (including the fill-in days) cyan. Same 1-year time axis as
+  // Layers 1-3 (last 250 bars). The latest Score is the right-axis label.
   const d = setupCanvas('stockscorechart');
   const dh = scoreHistory ? scoreHistory[selectedStock] : null;
   if (d && dh && dh.dates && dh.dates.length) {
