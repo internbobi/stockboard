@@ -9,7 +9,7 @@
   body { background: #000; color: #fff; font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; display: flex; }
   h1 { text-align: center; font-size: 3.9cqw; margin: 0.8cqw 0 1.4cqw; line-height: 1.2; font-weight: bold; text-transform: uppercase; white-space: nowrap; }
   #countdown { position: fixed; right: 14px; bottom: 12px; background: rgba(255,255,255,0.14); color: #fff; font-size: 12px; padding: 6px 10px; border-radius: 8px; z-index: 10; }
-  #counters { position: fixed; left: 14px; bottom: 12px; z-index: 10; display: flex; gap: 8px; align-items: center; }
+  #counters { position: fixed; left: 50%; transform: translateX(-50%); bottom: 12px; z-index: 10; display: flex; gap: 8px; align-items: center; }
   /* Hide FeedPulse's credit + owner links under the badges (both widgets
      render inline DOM, not iframes, so CSS can hide them; the counts
      are fetched independently and keep working). */
