@@ -592,14 +592,18 @@ function drawGDNNVolume() {
     for (let i = 0; i < chipYs.length; i++) chipYs[i] += shift;
   }
   // Max-volume label (grey text) at the top, only if it does not touch
-  // a chip label.
+  // a chip label. Right-aligned to the panel edge: the VNINDEX max
+  // volume is a 12-digit number ("1,478,621,201") that does not fit in
+  // the 62px right margin, so a left-aligned label clips. Right-aligning
+  // keeps it whole; it extends a few px into the plot at the very top,
+  // where no recent bar reaches (recent bars are ~half the max height).
   const maxY = T + 5;
   if (chipYs.every(y => Math.abs(y - maxY) >= 17)) {
     ctx.font = '11px Arial';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = '#aaa';
-    ctx.textAlign = 'left';
-    ctx.fillText(fmtNum(mx, 0), cssW - R + 6, maxY);
+    ctx.textAlign = 'right';
+    ctx.fillText(fmtNum(mx, 0), cssW - 2, maxY);
   }
   chips.forEach((c, k) => {
     const y = chipYs[k];
@@ -1297,13 +1301,15 @@ function drawStockChart() {
     }
     // Max-volume label (grey text) at the top, only if it does not touch
     // a chip label (the latest volume already shows the max when it is).
+    // Right-aligned to the panel edge so a very large max (10+ digits)
+    // never clips at the panel edge (same fix as the GDNN volume layer).
     const maxY = T + 5;
     if (chipYs.every(y => Math.abs(y - maxY) >= 17)) {
       v.ctx.font = '11px Arial';
       v.ctx.textBaseline = 'middle';
       v.ctx.fillStyle = '#aaa';
-      v.ctx.textAlign = 'left';
-      v.ctx.fillText(fmtNum(mx, 0), v.cssW - R + 6, maxY);
+      v.ctx.textAlign = 'right';
+      v.ctx.fillText(fmtNum(mx, 0), v.cssW - 2, maxY);
     }
     chips.forEach((c, k) => {
       const y = chipYs[k];
