@@ -59,9 +59,9 @@
   /* All / 10B toggle (Dat 2026-11-19): switches the same panel between the
      full Top 30% ("All") and the 10B subset (same cells, colors, stars —
      only fewer symbols). */
-  .setup-toggle { display: flex; gap: 6px; justify-content: center; margin: 2px 0 6px; }
-  .setup-toggle button { background: #333; color: #fff; border: 1px solid #666; border-radius: 6px; font-size: 12px; font-weight: bold; padding: 3px 12px; cursor: pointer; }
-  .setup-toggle button.on { background: #fff; color: #000; border-color: #fff; }
+  .setup-toggle, .tab-toggle { display: flex; gap: 6px; justify-content: center; margin: 2px 0 6px; }
+  .setup-toggle button, .tab-toggle button { background: #333; color: #fff; border: 1px solid #666; border-radius: 6px; font-size: 12px; font-weight: bold; padding: 3px 12px; cursor: pointer; }
+  .setup-toggle button.on, .tab-toggle button.on { background: #fff; color: #000; border-color: #fff; }
   /* Block 3 (new, Dat 2026-11-20): per-symbol chart for the symbol clicked
      in Block 2 (Setup 1). Layer 1 = price bars (same frame as the VNINDEX
      chart, 30vh), Layer 2 = matched volume, Layer 3 = Momentum. All three
@@ -77,6 +77,8 @@
 <body>
 <div class="market">
 <h1>Trạng thái TTCKVN</h1>
+<div class="tab-toggle"><button id="b1TabTTCK" class="on">TTCK</button><button id="b1TabGDNN">GDNN</button><button id="b1TabVN30">VN30</button></div>
+<div id="b1-ttck">
 <div id="vninfo" class="vninfo">Đang tải dữ liệu…</div>
 <canvas id="vnchart"></canvas>
 <div id="ema50info" class="vninfo">Đang tải dữ liệu…</div>
@@ -88,6 +90,16 @@
 <div id="tma5info" class="vninfo">Đang tải dữ liệu…</div>
 <canvas id="tma5chart" class="pct-chart"></canvas>
 </div>
+<div id="b1-gdnn" style="display:none">
+<div id="gdnninfo" class="vninfo">Đang tải dữ liệu…</div>
+<canvas id="gdnnchart"></canvas>
+<div id="gdnnvolinfo" class="vninfo">Đang tải dữ liệu…</div>
+<canvas id="gdnnvolchart" class="pct-chart"></canvas>
+</div>
+<div id="b1-vn30" style="display:none">
+<div class="vninfo">Tab VN30 — đang chờ nội dung.</div>
+</div>
+</div>
 <div class="setup">
 <h1 id="setupTitle">Setup 1</h1>
 <div class="setup-toggle"><button id="setupBtnAll" class="on">All</button><button id="setupBtn10B">10B</button></div>
@@ -95,6 +107,8 @@
 </div>
 <div class="stock">
 <h1 id="stockTitle">Chọn mã ở Block 2</h1>
+<div class="tab-toggle"><button id="b3TabSucManh" class="on">Sức mạnh</button><button id="b3TabThanPhap">Thân pháp</button><button id="b3TabSinhKhi">Sinh khí</button><button id="b3TabNoiCong">Nội công</button></div>
+<div id="b3-sucmanh">
 <div id="stockinfo" class="stockinfo">Bấm vào một mã trong danh sách Setup 1 để xem chart.</div>
 <canvas id="stockchart"></canvas>
 <div id="stockvolinfo" class="stockinfo">Đang tải dữ liệu…</div>
@@ -105,6 +119,19 @@
 <canvas id="stockscorechart" class="stock-sub"></canvas>
 <div id="stockscorelonginfo" class="stockinfo">Đang tải dữ liệu…</div>
 <canvas id="stockscorelongchart" class="stock-sub"></canvas>
+</div>
+<div id="b3-thanphap" style="display:none">
+<div id="tpinfo" class="stockinfo">Đang tải dữ liệu…</div>
+<canvas id="tpchart"></canvas>
+<div id="tpvolinfo" class="stockinfo">Đang tải dữ liệu…</div>
+<canvas id="tpvolchart" class="stock-sub"></canvas>
+</div>
+<div id="b3-sinhkhi" style="display:none">
+<div class="stockinfo">Tab Sinh khí — đang chờ nội dung.</div>
+</div>
+<div id="b3-noicong" style="display:none">
+<div class="stockinfo">Tab Nội công — đang chờ nội dung.</div>
+</div>
 </div>
 <div id="countdown"></div>
 <div id="counters"><div id="visitorCounter"><script async src="https://feed-pulse.com/api/embed/online-visitors.js?site_id=f705a8f4-2acf-43fd-89f0-cd7d7ffd9bd6&theme=obsidian&sz=micro"></script></div><div id="hitCounter"><script async src="https://feed-pulse.com/api/embed/hit-counter.js?site_id=f705a8f4-2acf-43fd-89f0-cd7d7ffd9bd6&theme=obsidian&style=card&base=0&reset_at=0&reset_to=0&digits=7"></script></div></div>
@@ -284,9 +311,9 @@ const PAD_BARS = 15;
 function fmtNum(x, dec) {
   return x.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
 }
-function drawVNChart() {
+function drawVNChart(canvasId) {
   if (!vnData) return;
-  const cv = document.getElementById('vnchart');
+  const cv = document.getElementById(canvasId || 'vnchart');
   const cssW = cv.clientWidth, cssH = cv.clientHeight;
   if (!cssW || !cssH) return;
   const dpr = window.devicePixelRatio || 1;
@@ -443,16 +470,160 @@ function loadVNChart() {
       ', Low ' + fmtNum(l.low, 2) +
       ', Close ' + fmtNum(l.close, 2) +
       ' (' + (l.change_pct > 0 ? '+' : '') + l.change_pct.toFixed(2) + '%)';
+    // GDNN tab (Dat 2026-11-21): same VNINDEX price chart on its own
+    // canvas, with the same OHLC info line.
+    document.getElementById('gdnninfo').innerHTML =
+      document.getElementById('vninfo').innerHTML;
     drawVNChart();
+    if (typeof activeB1Tab !== 'undefined' && activeB1Tab === 'gdnn') {
+      drawVNChart('gdnnchart');
+      drawGDNNVolume();
+    }
   }).catch(e => {
     document.getElementById('vninfo').textContent = 'Chưa có dữ liệu: ' + e.message;
   });
 }
 loadVNChart();
-let vnResizeT = null;
-window.addEventListener('resize', () => {
-  clearTimeout(vnResizeT);
-  vnResizeT = setTimeout(() => {
+// ---- Block 1 tabs (Dat 2026-11-21): TTCK / GDNN / VN30. Tab buttons use
+// the same style as the All/10B toggle in Block 2. Only the active tab's
+// layers are drawn — a hidden canvas has 0 size, so a layer must be drawn
+// after its tab becomes visible (on switch, on resize, on data reload).
+let activeB1Tab = 'ttck';
+const B1_TABS = { ttck: 'b1TabTTCK', gdnn: 'b1TabGDNN', vn30: 'b1TabVN30' };
+// GDNN tab, Layer 2: VNINDEX daily volume. Bars are colored by that day's
+// VNINDEX bar color (same AFL rules as the price bars — flat yellow, up
+// >=5% magenta, up <5% green, down >=5% cyan, down <5% red — stored in
+// it.color). Same 1-year time axis as the price chart, MA(20) of volume
+// as a white thin line + latest-volume / MA(20) chips, same placement as
+// Block 3 Layer 2 (larger value on top, never overlap). Same height ratio
+// as the other sub-layers (10.5vh, class pct-chart).
+function drawGDNNVolume() {
+  if (!vnData) return;
+  const cv = document.getElementById('gdnnvolchart');
+  const cssW = cv.clientWidth, cssH = cv.clientHeight;
+  if (!cssW || !cssH) return;
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = Math.round(cssW * dpr);
+  cv.height = Math.round(cssH * dpr);
+  const ctx = cv.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, cssW, cssH);
+  const items = vnData.items, n = items.length;
+  const L = 6, R = 62, T = 8, B = 26;
+  const plotW = cssW - L - R, plotH = cssH - T - B;
+  let mx = 0;
+  items.forEach(it => { mx = Math.max(mx, it.volume || 0); });
+  if (mx <= 0) mx = 1;
+  const X = i => L + (i + 0.5) * plotW / (n + PAD_BARS);
+  const Y = val => T + (1 - val / mx) * plotH;
+  // Month labels: same as the VNINDEX price chart (skip the first partial
+  // month when it has < 10 bars, skip any label that would overlap).
+  ctx.font = '11px Arial';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  let prevLx = null, prevW = 0;
+  for (let i = 0; i < n; i++) {
+    const d = items[i].date;
+    const m = parseInt(d.slice(5, 7), 10);
+    const prevM = i > 0 ? parseInt(items[i - 1].date.slice(5, 7), 10) : null;
+    if (m !== prevM) {
+      if (i === 0) {
+        let cnt = 0;
+        for (let j = 0; j < n && items[j].date.slice(0, 7) === d.slice(0, 7); j++) cnt++;
+        if (cnt < 10) continue;
+      }
+      const x = X(i);
+      ctx.strokeStyle = '#222';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(x, T); ctx.lineTo(x, T + plotH); ctx.stroke();
+      ctx.fillStyle = '#aaa';
+      const label = (m === 1) ? d.slice(0, 4) : VN_MONTHS[m - 1];
+      const lx = Math.max(14, Math.min(cssW - R - 14, x));
+      const w = ctx.measureText(label).width;
+      if (prevLx !== null && lx - prevLx < (prevW + w) / 2 + 4) continue;
+      ctx.fillText(label, lx, T + plotH + 6);
+      prevLx = lx; prevW = w;
+    }
+  }
+  const bw = Math.max(1, plotW / (n + PAD_BARS) * 0.7);
+  items.forEach((it, i) => {
+    const x = X(i);
+    ctx.fillStyle = it.color;
+    const y0 = Y(it.volume || 0);
+    ctx.fillRect(x - bw / 2, y0, bw, T + plotH - y0);
+  });
+  // MA(20) of volume: white thin line (vol_ma20 is stored per bar,
+  // warmed up over the full history like the stock chart's MA20).
+  ctx.strokeStyle = '#FFFFFF';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  let started = false;
+  items.forEach((it, i) => {
+    if (it.vol_ma20 == null) return;
+    if (!started) { ctx.moveTo(X(i), Y(it.vol_ma20)); started = true; }
+    else ctx.lineTo(X(i), Y(it.vol_ma20));
+  });
+  ctx.stroke();
+  // Right-axis value labels: latest volume (chip colored with that bar's
+  // color) + latest MA(20) (white chip). Larger value on top, never
+  // overlap — same stack-shift placement as the VNINDEX right-axis labels.
+  const last = items[n - 1];
+  const chips = [];
+  if (last.volume != null) {
+    chips.push({ val: last.volume, text: fmtNum(last.volume, 0),
+                 bg: last.color, fg: last.color === '#C40000' ? '#FFFFFF' : '#000000' });
+  }
+  if (last.vol_ma20 != null) {
+    chips.push({ val: last.vol_ma20, text: fmtNum(last.vol_ma20, 0),
+                 bg: '#FFFFFF', fg: '#000000' });
+  }
+  chips.sort((a, b) => b.val - a.val);
+  const LH = 15, GAP = LH + 2; // 2px gap: labels never touch or overlap
+  const chipYs = chips.map(c => Y(c.val)).sort((a, b) => a - b);
+  for (let i = 1; i < chipYs.length; i++) {
+    if (chipYs[i] - chipYs[i - 1] < GAP) chipYs[i] = chipYs[i - 1] + GAP;
+  }
+  if (chipYs.length && chipYs[chipYs.length - 1] + LH / 2 > T + plotH) {
+    const shift = chipYs[chipYs.length - 1] + LH / 2 - (T + plotH);
+    for (let i = 0; i < chipYs.length; i++) chipYs[i] -= shift;
+  }
+  if (chipYs.length && chipYs[0] - LH / 2 < T) {
+    const shift = T - (chipYs[0] - LH / 2);
+    for (let i = 0; i < chipYs.length; i++) chipYs[i] += shift;
+  }
+  // Max-volume label (grey text) at the top, only if it does not touch
+  // a chip label.
+  const maxY = T + 5;
+  if (chipYs.every(y => Math.abs(y - maxY) >= 17)) {
+    ctx.font = '11px Arial';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#aaa';
+    ctx.textAlign = 'left';
+    ctx.fillText(fmtNum(mx, 0), cssW - R + 6, maxY);
+  }
+  chips.forEach((c, k) => {
+    const y = chipYs[k];
+    ctx.font = 'bold 10px Arial';
+    ctx.textBaseline = 'middle';
+    const w = Math.min(R - 4, ctx.measureText(c.text).width + 8);
+    ctx.fillStyle = c.bg;
+    ctx.fillRect(cssW - R + 2, y - 7.5, w, 15);
+    ctx.fillStyle = c.fg;
+    ctx.textAlign = 'center';
+    ctx.fillText(c.text, cssW - R + 2 + w / 2, y + 0.5);
+  });
+  // Info line above the volume chart, like Block 3 Layer 2.
+  const volInfo = document.getElementById('gdnnvolinfo');
+  if (volInfo) {
+    volInfo.textContent = 'Vol: ' + fmtNum(last.volume, 0) +
+      (last.vol_ma20 != null ? ' | MA(20): ' + fmtNum(last.vol_ma20, 0) : '');
+  }
+}
+function drawActiveB1Tab() {
+  if (activeB1Tab === 'gdnn') {
+    drawVNChart('gdnnchart');
+    drawGDNNVolume();
+  } else if (activeB1Tab === 'ttck') {
     drawVNChart();
     if (typeof pctLayers !== 'undefined') {
       Object.keys(pctLayers).forEach(id => {
@@ -462,6 +633,25 @@ window.addEventListener('resize', () => {
     if (typeof tma5Data !== 'undefined' && tma5Data) {
       drawTMA5Chart(document.getElementById('tma5chart'), tma5Data);
     }
+  }
+  // vn30: nothing to draw yet.
+}
+function switchB1Tab(tab) {
+  activeB1Tab = tab;
+  Object.keys(B1_TABS).forEach(t => {
+    document.getElementById('b1-' + t).style.display = (t === tab) ? '' : 'none';
+    document.getElementById(B1_TABS[t]).classList.toggle('on', t === tab);
+  });
+  drawActiveB1Tab();
+}
+Object.keys(B1_TABS).forEach(t => {
+  document.getElementById(B1_TABS[t]).addEventListener('click', () => switchB1Tab(t));
+});
+let vnResizeT = null;
+window.addEventListener('resize', () => {
+  clearTimeout(vnResizeT);
+  vnResizeT = setTimeout(() => {
+    drawActiveB1Tab();
     // Block 3 stock chart too (Dat 2026-11-20): its canvas heights are vh
     // like Block 1, so a viewport resize changes its size and it must
     // redraw from the cached OHLC data (no re-fetch). Guarded: the stock
@@ -862,6 +1052,9 @@ loadTMA();
 let stockOHLC = null;   // stock_ohlc.json: {symbol: {dates, opens, highs, lows, closes, volumes}}
 let scoreHistory = null; // score_history.json: {symbol: {dates, score, group}}
 let scoreLongHistory = null; // score_long_history.json: same structure
+// Block 3 active tab (Dat 2026-11-21): 'sucmanh' (default), 'thanphap',
+// 'sinhkhi', 'noicong. All tabs show the selected symbol's data.
+let activeStockTab = 'sucmanh';
 let selectedStock = null;
 // Score dot colors (Dat 2026-11-21): the day's Setup 1 group. A day the
 // symbol was ranked but below the top 30% (group null) gets cyan.
@@ -933,6 +1126,12 @@ function drawStockChart() {
   const bars = stockDisplayBars(h);
   const n = bars.length;
   if (!n) return;
+  // Block 3 tabs (Dat 2026-11-21): Sức mạnh draws all 5 layers to the
+  // stock* canvases; Thân pháp draws only price + volume to its own
+  // canvases (tpchart / tpvolchart), for the same selected symbol.
+  const isTP = (activeStockTab === 'thanphap');
+  const priceId = isTP ? 'tpchart' : 'stockchart';
+  const volId = isTP ? 'tpvolchart' : 'stockvolchart';
   const L = 6, R = 62, T = 8, B = 26;
   const X = (cv, i) => L + (i + 0.5) * (cv.clientWidth - L - R) / (n + PAD_BARS);
   // Shared month labels (drawn on price + RSI canvases).
@@ -987,7 +1186,7 @@ function drawStockChart() {
     return { cv, ctx, cssW, cssH };
   }
   // ---- Layer 1: price bars (same frame as VNINDEX, 30vh) ----
-  const p = setupCanvas('stockchart');
+  const p = setupCanvas(priceId);
   if (p) {
     const plotW = p.cssW - L - R, plotH = p.cssH - T - B;
     let mn = Infinity, mx = -Infinity;
@@ -1034,7 +1233,7 @@ function drawStockChart() {
     p.ctx.fillText(txt, p.cssW - R + 2 + w / 2, ly + 0.5);
   }
   // ---- Layer 2: daily matched volume (same time axis) ----
-  const v = setupCanvas('stockvolchart');
+  const v = setupCanvas(volId);
   if (v) {
     const plotW = v.cssW - L - R, plotH = v.cssH - T - B;
     let mx = 0;
@@ -1117,6 +1316,28 @@ function drawStockChart() {
       v.ctx.textAlign = 'center';
       v.ctx.fillText(c.text, v.cssW - R + 2 + w / 2, y + 0.5);
     });
+  }
+  // Thân pháp tab: price + volume only (Dat 2026-11-21). Its info lines
+  // are the tab's own (tpinfo / tpvolinfo), same text as the Sức mạnh
+  // ones. Layers 3-5 below run only for Sức mạnh.
+  if (isTP) {
+    const lastTP = bars[n - 1];
+    const prevTP = n > 1 ? bars[n - 2] : null;
+    const chgTP = prevTP ? (lastTP.close / prevTP.close - 1) * 100 : 0;
+    const dstrTP = lastTP.date.split('-').reverse().join('/');
+    document.getElementById('tpinfo').textContent =
+      selectedStock + ' ' + dstrTP +
+      ' | O ' + fmtNum(lastTP.open, 2) + ', H ' + fmtNum(lastTP.high, 2) +
+      ', L ' + fmtNum(lastTP.low, 2) + ', C ' + fmtNum(lastTP.close, 2) +
+      ' (' + (chgTP >= 0 ? '+' : '') + chgTP.toFixed(2) + '%)' +
+      ' | Vol ' + fmtNum(lastTP.volume, 0) +
+      (lastTP.rsi != null ? ' | Momentum ' + lastTP.rsi.toFixed(1) : '');
+    const tpVolInfo = document.getElementById('tpvolinfo');
+    if (tpVolInfo) {
+      tpVolInfo.textContent = 'Vol: ' + fmtNum(lastTP.volume, 0) +
+        (lastTP.ma20vol != null ? ' | MA(20): ' + fmtNum(lastTP.ma20vol, 0) : '');
+    }
+    return;
   }
   // ---- Layer 3: Momentum, white line, 0-100 ----
   const r = setupCanvas('stockrsichart');
@@ -1283,6 +1504,22 @@ function drawStockChart() {
     scoreLongInfo.textContent = 'L-Score: ' + latestScoreLong;
   }
 }
+// Block 3 tabs (Dat 2026-11-21): Sức mạnh / Thân pháp / Sinh khí / Nội
+// công. All tabs show the selected symbol's data. Switching tabs redraws
+// the new tab's layers (a hidden canvas has 0 size, so it must be drawn
+// after it becomes visible). Sinh khí / Nội công have no content yet.
+const B3_TABS = { sucmanh: 'b3TabSucManh', thanphap: 'b3TabThanPhap', sinhkhi: 'b3TabSinhKhi', noicong: 'b3TabNoiCong' };
+function switchB3Tab(tab) {
+  activeStockTab = tab;
+  Object.keys(B3_TABS).forEach(t => {
+    document.getElementById('b3-' + t).style.display = (t === tab) ? '' : 'none';
+    document.getElementById(B3_TABS[t]).classList.toggle('on', t === tab);
+  });
+  drawStockChart();
+}
+Object.keys(B3_TABS).forEach(t => {
+  document.getElementById(B3_TABS[t]).addEventListener('click', () => switchB3Tab(t));
+});
 function selectStock(sym) {
   selectedStock = sym;
   document.getElementById('stockTitle').textContent = sym;
