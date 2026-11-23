@@ -1,13 +1,13 @@
 {
  "date": "2026-11-23",
- "count": 223,
+ "count": 224,
  "cutoffs": {
   "top10": 23,
   "top20": 45,
-  "top30": 67
+  "top30": 68
  },
  "source": "Setup 1 ranking",
- "updated_at": "2026-11-23T11:00:07+07:00",
+ "updated_at": "2026-11-23T11:05:06+07:00",
  "items": [
   {
    "symbol": "VCP",
@@ -50,7 +50,7 @@
    "v10b": false
   },
   {
-   "symbol": "VPI",
+   "symbol": "VPL",
    "rank": 6,
    "diem": 95,
    "group": "Top 10%",
@@ -58,7 +58,7 @@
    "v10b": true
   },
   {
-   "symbol": "VPL",
+   "symbol": "VPI",
    "rank": 7,
    "diem": 94,
    "group": "Top 10%",
@@ -66,20 +66,20 @@
    "v10b": true
   },
   {
-   "symbol": "HVN",
+   "symbol": "MSB",
    "rank": 8,
    "diem": 93,
    "group": "Top 10%",
    "star": false,
-   "v10b": true
+   "v10b": false
   },
   {
-   "symbol": "MSB",
+   "symbol": "HVN",
    "rank": 9,
    "diem": 92,
    "group": "Top 10%",
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
    "symbol": "NT2",
@@ -98,36 +98,36 @@
    "v10b": true
   },
   {
-   "symbol": "TCH",
+   "symbol": "CLI",
    "rank": 12,
    "diem": 89,
-   "group": "Top 10%",
-   "star": false,
-   "v10b": true
-  },
-  {
-   "symbol": "CLI",
-   "rank": 13,
-   "diem": 88,
    "group": "Top 10%",
    "star": true,
    "v10b": false
   },
   {
    "symbol": "NKG",
-   "rank": 14,
-   "diem": 87,
+   "rank": 13,
+   "diem": 88,
    "group": "Top 10%",
    "star": false,
    "v10b": true
   },
   {
    "symbol": "TAL",
+   "rank": 14,
+   "diem": 87,
+   "group": "Top 10%",
+   "star": false,
+   "v10b": false
+  },
+  {
+   "symbol": "TCH",
    "rank": 15,
    "diem": 86,
    "group": "Top 10%",
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
    "symbol": "TV2",
@@ -170,36 +170,36 @@
    "v10b": false
   },
   {
-   "symbol": "HNM",
+   "symbol": "NAB",
    "rank": 21,
    "diem": 80,
    "group": "Top 10%",
    "star": false,
-   "v10b": false
-  },
-  {
-   "symbol": "HDG",
-   "rank": 22,
-   "diem": 79,
-   "group": "Top 10%",
-   "star": true,
    "v10b": true
   },
   {
-   "symbol": "NAB",
-   "rank": 23,
-   "diem": 78,
+   "symbol": "HNM",
+   "rank": 22,
+   "diem": 79,
    "group": "Top 10%",
    "star": false,
    "v10b": false
   },
   {
    "symbol": "HDA",
+   "rank": 23,
+   "diem": 78,
+   "group": "Top 10%",
+   "star": true,
+   "v10b": false
+  },
+  {
+   "symbol": "HDG",
    "rank": 24,
    "diem": 77,
    "group": "Top 20%",
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
    "symbol": "MSH",
@@ -226,39 +226,39 @@
    "v10b": true
   },
   {
-   "symbol": "VND",
+   "symbol": "PV2",
    "rank": 28,
    "diem": 73,
-   "group": "Top 20%",
-   "star": false,
-   "v10b": true
-  },
-  {
-   "symbol": "PV2",
-   "rank": 29,
-   "diem": 72,
    "group": "Top 20%",
    "star": true,
    "v10b": false
   },
   {
-   "symbol": "SHI",
-   "rank": 30,
-   "diem": 71,
-   "group": "Top 20%",
-   "star": false,
-   "v10b": false
-  },
-  {
-   "symbol": "FRT",
-   "rank": 31,
-   "diem": 70,
+   "symbol": "VND",
+   "rank": 29,
+   "diem": 72,
    "group": "Top 20%",
    "star": false,
    "v10b": true
   },
   {
-   "symbol": "VIC",
+   "symbol": "VJC",
+   "rank": 30,
+   "diem": 71,
+   "group": "Top 20%",
+   "star": true,
+   "v10b": true
+  },
+  {
+   "symbol": "SHI",
+   "rank": 31,
+   "diem": 70,
+   "group": "Top 20%",
+   "star": false,
+   "v10b": false
+  },
+  {
+   "symbol": "DBC",
    "rank": 32,
    "diem": 69,
    "group": "Top 20%",
@@ -266,7 +266,7 @@
    "v10b": true
   },
   {
-   "symbol": "DBC",
+   "symbol": "DXG",
    "rank": 33,
    "diem": 68,
    "group": "Top 20%",
@@ -274,15 +274,15 @@
    "v10b": true
   },
   {
-   "symbol": "VTZ",
+   "symbol": "VIC",
    "rank": 34,
    "diem": 67,
    "group": "Top 20%",
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
-   "symbol": "STB",
+   "symbol": "FRT",
    "rank": 35,
    "diem": 66,
    "group": "Top 20%",
@@ -290,28 +290,28 @@
    "v10b": true
   },
   {
-   "symbol": "DXG",
+   "symbol": "VTZ",
    "rank": 36,
    "diem": 65,
+   "group": "Top 20%",
+   "star": false,
+   "v10b": false
+  },
+  {
+   "symbol": "STB",
+   "rank": 37,
+   "diem": 64,
    "group": "Top 20%",
    "star": false,
    "v10b": true
   },
   {
    "symbol": "VHC",
-   "rank": 37,
-   "diem": 64,
-   "group": "Top 20%",
-   "star": false,
-   "v10b": false
-  },
-  {
-   "symbol": "VJC",
    "rank": 38,
    "diem": 63,
    "group": "Top 20%",
-   "star": true,
-   "v10b": true
+   "star": false,
+   "v10b": false
   },
   {
    "symbol": "PHP",
@@ -346,7 +346,7 @@
    "v10b": false
   },
   {
-   "symbol": "NAF",
+   "symbol": "AAN",
    "rank": 43,
    "diem": 58,
    "group": "Top 20%",
@@ -354,7 +354,7 @@
    "v10b": false
   },
   {
-   "symbol": "AAN",
+   "symbol": "NAF",
    "rank": 44,
    "diem": 57,
    "group": "Top 20%",
@@ -386,12 +386,12 @@
    "v10b": true
   },
   {
-   "symbol": "REE",
+   "symbol": "VC7",
    "rank": 48,
    "diem": 53,
    "group": "Top 30%",
-   "star": false,
-   "v10b": true
+   "star": true,
+   "v10b": false
   },
   {
    "symbol": "IDC",
@@ -402,7 +402,7 @@
    "v10b": false
   },
   {
-   "symbol": "AFX",
+   "symbol": "VAB",
    "rank": 50,
    "diem": 51,
    "group": "Top 30%",
@@ -410,7 +410,7 @@
    "v10b": false
   },
   {
-   "symbol": "VAB",
+   "symbol": "SAB",
    "rank": 51,
    "diem": 50,
    "group": "Top 30%",
@@ -418,15 +418,15 @@
    "v10b": false
   },
   {
-   "symbol": "DMX",
+   "symbol": "AFX",
    "rank": 52,
    "diem": 49,
    "group": "Top 30%",
-   "star": true,
+   "star": false,
    "v10b": false
   },
   {
-   "symbol": "NVB",
+   "symbol": "L40",
    "rank": 53,
    "diem": 48,
    "group": "Top 30%",
@@ -434,47 +434,47 @@
    "v10b": false
   },
   {
-   "symbol": "SAB",
+   "symbol": "DMX",
    "rank": 54,
    "diem": 47,
    "group": "Top 30%",
-   "star": false,
+   "star": true,
    "v10b": false
   },
   {
-   "symbol": "SHS",
+   "symbol": "NVB",
    "rank": 55,
    "diem": 46,
    "group": "Top 30%",
    "star": true,
-   "v10b": true
+   "v10b": false
   },
   {
-   "symbol": "L40",
+   "symbol": "SHS",
    "rank": 56,
    "diem": 45,
    "group": "Top 30%",
    "star": true,
-   "v10b": false
+   "v10b": true
   },
   {
-   "symbol": "PCB",
+   "symbol": "REE",
    "rank": 57,
    "diem": 44,
-   "group": "Top 30%",
-   "star": true,
-   "v10b": false
-  },
-  {
-   "symbol": "SBT",
-   "rank": 58,
-   "diem": 43,
    "group": "Top 30%",
    "star": false,
    "v10b": true
   },
   {
-   "symbol": "HAG",
+   "symbol": "PCB",
+   "rank": 58,
+   "diem": 43,
+   "group": "Top 30%",
+   "star": true,
+   "v10b": false
+  },
+  {
+   "symbol": "CII",
    "rank": 59,
    "diem": 42,
    "group": "Top 30%",
@@ -482,20 +482,20 @@
    "v10b": true
   },
   {
-   "symbol": "VC7",
+   "symbol": "KBC",
    "rank": 60,
    "diem": 41,
    "group": "Top 30%",
-   "star": true,
+   "star": false,
    "v10b": false
   },
   {
-   "symbol": "HHS",
+   "symbol": "CEO",
    "rank": 61,
    "diem": 40,
    "group": "Top 30%",
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
    "symbol": "VIX",
@@ -506,12 +506,12 @@
    "v10b": true
   },
   {
-   "symbol": "CII",
+   "symbol": "HHS",
    "rank": 63,
    "diem": 38,
    "group": "Top 30%",
-   "star": true,
-   "v10b": true
+   "star": false,
+   "v10b": false
   },
   {
    "symbol": "ABB",
@@ -522,76 +522,76 @@
    "v10b": false
   },
   {
-   "symbol": "KBC",
+   "symbol": "SBT",
    "rank": 65,
    "diem": 36,
    "group": "Top 30%",
    "star": false,
-   "v10b": false
+   "v10b": true
+  },
+  {
+   "symbol": "MCH",
+   "rank": 66,
+   "diem": 35,
+   "group": "Top 30%",
+   "star": false,
+   "v10b": true
+  },
+  {
+   "symbol": "HAG",
+   "rank": 67,
+   "diem": 34,
+   "group": "Top 30%",
+   "star": true,
+   "v10b": true
   },
   {
    "symbol": "PPC",
-   "rank": 66,
-   "diem": 35,
+   "rank": 68,
+   "diem": 33,
    "group": "Top 30%",
    "star": true,
    "v10b": false
   },
   {
    "symbol": "KHG",
-   "rank": 67,
-   "diem": 34,
-   "group": "Top 30%",
+   "rank": 69,
+   "diem": 32,
+   "group": null,
    "star": false,
    "v10b": false
   },
   {
-   "symbol": "MCH",
-   "rank": 68,
-   "diem": 33,
-   "group": null,
-   "star": false,
-   "v10b": true
-  },
-  {
    "symbol": "MSN",
-   "rank": 69,
-   "diem": 32,
+   "rank": 70,
+   "diem": 31,
    "group": null,
    "star": false,
    "v10b": true
   },
   {
    "symbol": "TTA",
-   "rank": 70,
-   "diem": 31,
+   "rank": 71,
+   "diem": 30,
+   "group": null,
+   "star": false,
+   "v10b": false
+  },
+  {
+   "symbol": "TDP",
+   "rank": 72,
+   "diem": 29,
    "group": null,
    "star": false,
    "v10b": false
   },
   {
    "symbol": "SSI",
-   "rank": 71,
-   "diem": 30,
-   "group": null,
-   "star": false,
-   "v10b": true
-  },
-  {
-   "symbol": "CEO",
-   "rank": 72,
-   "diem": 29,
-   "group": null,
-   "star": false,
-   "v10b": true
-  },
-  {
-   "symbol": "TLG",
    "rank": 73,
    "diem": 28,
    "group": null,
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
    "symbol": "DIG",
@@ -602,7 +602,7 @@
    "v10b": true
   },
   {
-   "symbol": "NTP",
+   "symbol": "TLG",
    "rank": 75,
    "diem": 26,
    "group": null,
@@ -610,7 +610,7 @@
    "v10b": false
   },
   {
-   "symbol": "TCM",
+   "symbol": "NTP",
    "rank": 76,
    "diem": 25,
    "group": null,
@@ -618,7 +618,7 @@
    "v10b": false
   },
   {
-   "symbol": "NTL",
+   "symbol": "TCM",
    "rank": 77,
    "diem": 24,
    "group": null,
@@ -626,39 +626,39 @@
    "v10b": false
   },
   {
-   "symbol": "TPB",
+   "symbol": "NTL",
    "rank": 78,
    "diem": 23,
+   "group": null,
+   "star": false,
+   "v10b": false
+  },
+  {
+   "symbol": "TPB",
+   "rank": 79,
+   "diem": 22,
    "group": null,
    "star": false,
    "v10b": true
   },
   {
    "symbol": "BMP",
-   "rank": 79,
-   "diem": 22,
+   "rank": 80,
+   "diem": 21,
    "group": null,
    "star": false,
    "v10b": false
   },
   {
    "symbol": "HPG",
-   "rank": 80,
-   "diem": 21,
+   "rank": 81,
+   "diem": 20,
    "group": null,
    "star": false,
    "v10b": true
   },
   {
-   "symbol": "TDP",
-   "rank": 81,
-   "diem": 20,
-   "group": null,
-   "star": false,
-   "v10b": false
-  },
-  {
-   "symbol": "SZC",
+   "symbol": "QNS",
    "rank": 82,
    "diem": 19,
    "group": null,
@@ -666,7 +666,7 @@
    "v10b": false
   },
   {
-   "symbol": "QNS",
+   "symbol": "SZC",
    "rank": 83,
    "diem": 18,
    "group": null,
@@ -674,39 +674,39 @@
    "v10b": false
   },
   {
-   "symbol": "TNG",
+   "symbol": "HDB",
    "rank": 84,
    "diem": 17,
-   "group": null,
-   "star": false,
-   "v10b": false
-  },
-  {
-   "symbol": "SCS",
-   "rank": 85,
-   "diem": 16,
-   "group": null,
-   "star": false,
-   "v10b": false
-  },
-  {
-   "symbol": "HDB",
-   "rank": 86,
-   "diem": 15,
    "group": null,
    "star": false,
    "v10b": true
   },
   {
    "symbol": "VRE",
-   "rank": 87,
-   "diem": 14,
+   "rank": 85,
+   "diem": 16,
    "group": null,
    "star": false,
    "v10b": true
   },
   {
-   "symbol": "BSI",
+   "symbol": "TNG",
+   "rank": 86,
+   "diem": 15,
+   "group": null,
+   "star": false,
+   "v10b": false
+  },
+  {
+   "symbol": "SCS",
+   "rank": 87,
+   "diem": 14,
+   "group": null,
+   "star": false,
+   "v10b": false
+  },
+  {
+   "symbol": "PC1",
    "rank": 88,
    "diem": 13,
    "group": null,
@@ -714,15 +714,15 @@
    "v10b": false
   },
   {
-   "symbol": "TCX",
+   "symbol": "HT1",
    "rank": 89,
    "diem": 12,
    "group": null,
    "star": false,
-   "v10b": true
+   "v10b": false
   },
   {
-   "symbol": "DSE",
+   "symbol": "BSI",
    "rank": 90,
    "diem": 11,
    "group": null,
@@ -730,15 +730,15 @@
    "v10b": false
   },
   {
-   "symbol": "MST",
+   "symbol": "TCX",
    "rank": 91,
    "diem": 10,
    "group": null,
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
-   "symbol": "PC1",
+   "symbol": "DSE",
    "rank": 92,
    "diem": 9,
    "group": null,
@@ -746,7 +746,7 @@
    "v10b": false
   },
   {
-   "symbol": "VDS",
+   "symbol": "MST",
    "rank": 93,
    "diem": 8,
    "group": null,
@@ -770,7 +770,7 @@
    "v10b": true
   },
   {
-   "symbol": "HNG",
+   "symbol": "VDS",
    "rank": 96,
    "diem": 5,
    "group": null,
@@ -778,20 +778,20 @@
    "v10b": false
   },
   {
-   "symbol": "CTG",
+   "symbol": "HNG",
    "rank": 97,
    "diem": 4,
    "group": null,
    "star": false,
-   "v10b": true
+   "v10b": false
   },
   {
-   "symbol": "HT1",
+   "symbol": "CTG",
    "rank": 98,
    "diem": 3,
    "group": null,
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
    "symbol": "EVF",
@@ -802,12 +802,12 @@
    "v10b": false
   },
   {
-   "symbol": "IJC",
+   "symbol": "HHV",
    "rank": 100,
    "diem": 1,
    "group": null,
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
    "symbol": "VSC",
@@ -818,7 +818,7 @@
    "v10b": true
   },
   {
-   "symbol": "HHV",
+   "symbol": "VIB",
    "rank": 102,
    "diem": -1,
    "group": null,
@@ -826,31 +826,31 @@
    "v10b": true
   },
   {
-   "symbol": "AGR",
+   "symbol": "MBS",
    "rank": 103,
    "diem": -2,
+   "group": null,
+   "star": false,
+   "v10b": true
+  },
+  {
+   "symbol": "VPX",
+   "rank": 104,
+   "diem": -3,
    "group": null,
    "star": false,
    "v10b": false
   },
   {
-   "symbol": "MBS",
-   "rank": 104,
-   "diem": -3,
+   "symbol": "VCI",
+   "rank": 105,
+   "diem": -4,
    "group": null,
    "star": false,
    "v10b": true
   },
   {
    "symbol": "BVB",
-   "rank": 105,
-   "diem": -4,
-   "group": null,
-   "star": false,
-   "v10b": false
-  },
-  {
-   "symbol": "VPX",
    "rank": 106,
    "diem": -5,
    "group": null,
@@ -858,7 +858,7 @@
    "v10b": false
   },
   {
-   "symbol": "VCI",
+   "symbol": "HSG",
    "rank": 107,
    "diem": -6,
    "group": null,
@@ -866,23 +866,23 @@
    "v10b": true
   },
   {
-   "symbol": "VIB",
+   "symbol": "IJC",
    "rank": 108,
    "diem": -7,
    "group": null,
    "star": false,
-   "v10b": true
+   "v10b": false
   },
   {
-   "symbol": "HSG",
+   "symbol": "GEG",
    "rank": 109,
    "diem": -8,
    "group": null,
    "star": false,
-   "v10b": true
+   "v10b": false
   },
   {
-   "symbol": "GEG",
+   "symbol": "AGR",
    "rank": 110,
    "diem": -9,
    "group": null,
@@ -890,31 +890,31 @@
    "v10b": false
   },
   {
-   "symbol": "VCG",
+   "symbol": "TDT",
    "rank": 111,
    "diem": -10,
-   "group": null,
-   "star": false,
-   "v10b": true
-  },
-  {
-   "symbol": "DHC",
-   "rank": 112,
-   "diem": -11,
    "group": null,
    "star": false,
    "v10b": false
   },
   {
-   "symbol": "VHM",
-   "rank": 113,
-   "diem": -12,
+   "symbol": "VCG",
+   "rank": 112,
+   "diem": -11,
    "group": null,
    "star": false,
    "v10b": true
   },
   {
-   "symbol": "TDT",
+   "symbol": "BVS",
+   "rank": 113,
+   "diem": -12,
+   "group": null,
+   "star": false,
+   "v10b": false
+  },
+  {
+   "symbol": "DHC",
    "rank": 114,
    "diem": -13,
    "group": null,
@@ -922,12 +922,12 @@
    "v10b": false
   },
   {
-   "symbol": "BVS",
+   "symbol": "VHM",
    "rank": 115,
    "diem": -14,
    "group": null,
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
    "symbol": "DCM",
@@ -946,23 +946,23 @@
    "v10b": false
   },
   {
-   "symbol": "SHB",
+   "symbol": "LDG",
    "rank": 118,
    "diem": -17,
+   "group": null,
+   "star": false,
+   "v10b": false
+  },
+  {
+   "symbol": "EIB",
+   "rank": 119,
+   "diem": -18,
    "group": null,
    "star": false,
    "v10b": true
   },
   {
    "symbol": "FCN",
-   "rank": 119,
-   "diem": -18,
-   "group": null,
-   "star": false,
-   "v10b": false
-  },
-  {
-   "symbol": "FOX",
    "rank": 120,
    "diem": -19,
    "group": null,
@@ -970,15 +970,15 @@
    "v10b": false
   },
   {
-   "symbol": "GMD",
+   "symbol": "FOX",
    "rank": 121,
    "diem": -20,
    "group": null,
    "star": false,
-   "v10b": true
+   "v10b": false
   },
   {
-   "symbol": "TCB",
+   "symbol": "GMD",
    "rank": 122,
    "diem": -21,
    "group": null,
@@ -986,23 +986,23 @@
    "v10b": true
   },
   {
-   "symbol": "KSF",
+   "symbol": "TCB",
    "rank": 123,
    "diem": -22,
-   "group": null,
-   "star": false,
-   "v10b": false
-  },
-  {
-   "symbol": "EIB",
-   "rank": 124,
-   "diem": -23,
    "group": null,
    "star": false,
    "v10b": true
   },
   {
-   "symbol": "AMV",
+   "symbol": "KSF",
+   "rank": 124,
+   "diem": -23,
+   "group": null,
+   "star": false,
+   "v10b": false
+  },
+  {
+   "symbol": "HQC",
    "rank": 125,
    "diem": -24,
    "group": null,
@@ -1010,15 +1010,15 @@
    "v10b": false
   },
   {
-   "symbol": "FIT",
+   "symbol": "SHB",
    "rank": 126,
    "diem": -25,
    "group": null,
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
-   "symbol": "HAH",
+   "symbol": "AMV",
    "rank": 127,
    "diem": -26,
    "group": null,
@@ -1034,7 +1034,7 @@
    "v10b": true
   },
   {
-   "symbol": "HQC",
+   "symbol": "FIT",
    "rank": 129,
    "diem": -28,
    "group": null,
@@ -1042,31 +1042,31 @@
    "v10b": false
   },
   {
-   "symbol": "DGW",
+   "symbol": "HAH",
    "rank": 130,
    "diem": -29,
+   "group": null,
+   "star": false,
+   "v10b": false
+  },
+  {
+   "symbol": "ACB",
+   "rank": 131,
+   "diem": -30,
+   "group": null,
+   "star": false,
+   "v10b": true
+  },
+  {
+   "symbol": "VNM",
+   "rank": 132,
+   "diem": -31,
    "group": null,
    "star": false,
    "v10b": true
   },
   {
    "symbol": "DSH",
-   "rank": 131,
-   "diem": -30,
-   "group": null,
-   "star": false,
-   "v10b": false
-  },
-  {
-   "symbol": "KLB",
-   "rank": 132,
-   "diem": -31,
-   "group": null,
-   "star": false,
-   "v10b": false
-  },
-  {
-   "symbol": "DLG",
    "rank": 133,
    "diem": -32,
    "group": null,
@@ -1074,7 +1074,7 @@
    "v10b": false
   },
   {
-   "symbol": "SBS",
+   "symbol": "KLB",
    "rank": 134,
    "diem": -33,
    "group": null,
@@ -1082,23 +1082,23 @@
    "v10b": false
   },
   {
-   "symbol": "ACB",
+   "symbol": "DLG",
    "rank": 135,
    "diem": -34,
    "group": null,
    "star": false,
-   "v10b": true
+   "v10b": false
   },
   {
-   "symbol": "PDR",
+   "symbol": "ORS",
    "rank": 136,
    "diem": -35,
    "group": null,
    "star": false,
-   "v10b": true
+   "v10b": false
   },
   {
-   "symbol": "VFS",
+   "symbol": "SBS",
    "rank": 137,
    "diem": -36,
    "group": null,
@@ -1106,15 +1106,15 @@
    "v10b": false
   },
   {
-   "symbol": "FTS",
+   "symbol": "PDR",
    "rank": 138,
    "diem": -37,
    "group": null,
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
-   "symbol": "TNI",
+   "symbol": "VFS",
    "rank": 139,
    "diem": -38,
    "group": null,
@@ -1122,7 +1122,7 @@
    "v10b": false
   },
   {
-   "symbol": "F88",
+   "symbol": "FTS",
    "rank": 140,
    "diem": -39,
    "group": null,
@@ -1130,15 +1130,15 @@
    "v10b": false
   },
   {
-   "symbol": "VNM",
+   "symbol": "TNI",
    "rank": 141,
    "diem": -40,
    "group": null,
    "star": false,
-   "v10b": true
+   "v10b": false
   },
   {
-   "symbol": "LDG",
+   "symbol": "F88",
    "rank": 142,
    "diem": -41,
    "group": null,
@@ -1154,12 +1154,12 @@
    "v10b": false
   },
   {
-   "symbol": "ORS",
+   "symbol": "DGW",
    "rank": 144,
    "diem": -43,
    "group": null,
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
    "symbol": "LIG",
@@ -1170,23 +1170,23 @@
    "v10b": false
   },
   {
-   "symbol": "GEE",
+   "symbol": "LCG",
    "rank": 146,
    "diem": -45,
+   "group": null,
+   "star": false,
+   "v10b": false
+  },
+  {
+   "symbol": "GEE",
+   "rank": 147,
+   "diem": -46,
    "group": null,
    "star": false,
    "v10b": true
   },
   {
    "symbol": "YEG",
-   "rank": 147,
-   "diem": -46,
-   "group": null,
-   "star": false,
-   "v10b": false
-  },
-  {
-   "symbol": "TVN",
    "rank": 148,
    "diem": -47,
    "group": null,
@@ -1194,15 +1194,15 @@
    "v10b": false
   },
   {
-   "symbol": "MBB",
+   "symbol": "ANV",
    "rank": 149,
    "diem": -48,
    "group": null,
    "star": false,
-   "v10b": true
+   "v10b": false
   },
   {
-   "symbol": "KSB",
+   "symbol": "TVN",
    "rank": 150,
    "diem": -49,
    "group": null,
@@ -1210,15 +1210,15 @@
    "v10b": false
   },
   {
-   "symbol": "LCG",
+   "symbol": "MBB",
    "rank": 151,
    "diem": -50,
    "group": null,
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
-   "symbol": "AAA",
+   "symbol": "KSB",
    "rank": 152,
    "diem": -51,
    "group": null,
@@ -1226,7 +1226,7 @@
    "v10b": false
   },
   {
-   "symbol": "ANV",
+   "symbol": "DXS",
    "rank": 153,
    "diem": -52,
    "group": null,
@@ -1234,7 +1234,7 @@
    "v10b": false
   },
   {
-   "symbol": "DXS",
+   "symbol": "VNE",
    "rank": 154,
    "diem": -53,
    "group": null,
@@ -1250,7 +1250,7 @@
    "v10b": false
   },
   {
-   "symbol": "VNE",
+   "symbol": "AAA",
    "rank": 156,
    "diem": -55,
    "group": null,
@@ -1298,23 +1298,23 @@
    "v10b": false
   },
   {
-   "symbol": "SCR",
+   "symbol": "PVD",
    "rank": 162,
    "diem": -61,
-   "group": null,
-   "star": false,
-   "v10b": false
-  },
-  {
-   "symbol": "PVD",
-   "rank": 163,
-   "diem": -62,
    "group": null,
    "star": false,
    "v10b": true
   },
   {
    "symbol": "HBC",
+   "rank": 163,
+   "diem": -62,
+   "group": null,
+   "star": false,
+   "v10b": false
+  },
+  {
+   "symbol": "OGC",
    "rank": 164,
    "diem": -63,
    "group": null,
@@ -1322,7 +1322,7 @@
    "v10b": false
   },
   {
-   "symbol": "CSV",
+   "symbol": "SCR",
    "rank": 165,
    "diem": -64,
    "group": null,
@@ -1330,7 +1330,7 @@
    "v10b": false
   },
   {
-   "symbol": "PAN",
+   "symbol": "CSV",
    "rank": 166,
    "diem": -65,
    "group": null,
@@ -1338,7 +1338,7 @@
    "v10b": false
   },
   {
-   "symbol": "MZG",
+   "symbol": "GAS",
    "rank": 167,
    "diem": -66,
    "group": null,
@@ -1346,7 +1346,7 @@
    "v10b": false
   },
   {
-   "symbol": "GAS",
+   "symbol": "PAN",
    "rank": 168,
    "diem": -67,
    "group": null,
@@ -1354,7 +1354,7 @@
    "v10b": false
   },
   {
-   "symbol": "PVP",
+   "symbol": "MZG",
    "rank": 169,
    "diem": -68,
    "group": null,
@@ -1362,7 +1362,7 @@
    "v10b": false
   },
   {
-   "symbol": "OGC",
+   "symbol": "PVP",
    "rank": 170,
    "diem": -69,
    "group": null,
@@ -1378,20 +1378,20 @@
    "v10b": true
   },
   {
-   "symbol": "DDV",
+   "symbol": "VCB",
    "rank": 172,
    "diem": -71,
    "group": null,
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
-   "symbol": "VCB",
+   "symbol": "DDV",
    "rank": 173,
    "diem": -72,
    "group": null,
    "star": false,
-   "v10b": true
+   "v10b": false
   },
   {
    "symbol": "DRI",
@@ -1402,7 +1402,7 @@
    "v10b": false
   },
   {
-   "symbol": "BKG",
+   "symbol": "PHR",
    "rank": 175,
    "diem": -74,
    "group": null,
@@ -1410,7 +1410,7 @@
    "v10b": false
   },
   {
-   "symbol": "TNH",
+   "symbol": "BKG",
    "rank": 176,
    "diem": -75,
    "group": null,
@@ -1418,20 +1418,20 @@
    "v10b": false
   },
   {
-   "symbol": "BID",
+   "symbol": "TNH",
    "rank": 177,
    "diem": -76,
    "group": null,
    "star": false,
-   "v10b": true
+   "v10b": false
   },
   {
-   "symbol": "PLX",
+   "symbol": "BID",
    "rank": 178,
    "diem": -77,
    "group": null,
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
    "symbol": "IDI",
@@ -1442,7 +1442,7 @@
    "v10b": false
   },
   {
-   "symbol": "PHR",
+   "symbol": "PLX",
    "rank": 180,
    "diem": -79,
    "group": null,
@@ -1474,12 +1474,12 @@
    "v10b": false
   },
   {
-   "symbol": "GEL",
+   "symbol": "LPB",
    "rank": 184,
    "diem": -83,
    "group": null,
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
    "symbol": "SSB",
@@ -1498,7 +1498,7 @@
    "v10b": false
   },
   {
-   "symbol": "PVC",
+   "symbol": "GEL",
    "rank": 187,
    "diem": -86,
    "group": null,
@@ -1506,23 +1506,23 @@
    "v10b": false
   },
   {
-   "symbol": "LPB",
+   "symbol": "PVC",
    "rank": 188,
    "diem": -87,
    "group": null,
    "star": false,
-   "v10b": true
+   "v10b": false
   },
   {
-   "symbol": "PVS",
+   "symbol": "TRC",
    "rank": 189,
    "diem": -88,
    "group": null,
    "star": false,
-   "v10b": true
+   "v10b": false
   },
   {
-   "symbol": "SVN",
+   "symbol": "ASM",
    "rank": 190,
    "diem": -89,
    "group": null,
@@ -1530,31 +1530,31 @@
    "v10b": false
   },
   {
-   "symbol": "TRC",
+   "symbol": "PVS",
    "rank": 191,
    "diem": -90,
    "group": null,
    "star": false,
-   "v10b": false
-  },
-  {
-   "symbol": "ASM",
-   "rank": 192,
-   "diem": -91,
-   "group": null,
-   "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
    "symbol": "PVT",
-   "rank": 193,
-   "diem": -92,
+   "rank": 192,
+   "diem": -91,
    "group": null,
    "star": false,
    "v10b": true
   },
   {
    "symbol": "CRC",
+   "rank": 193,
+   "diem": -92,
+   "group": null,
+   "star": false,
+   "v10b": false
+  },
+  {
+   "symbol": "LPS",
    "rank": 194,
    "diem": -93,
    "group": null,
@@ -1562,7 +1562,7 @@
    "v10b": false
   },
   {
-   "symbol": "LPS",
+   "symbol": "CTR",
    "rank": 195,
    "diem": -94,
    "group": null,
@@ -1570,7 +1570,7 @@
    "v10b": false
   },
   {
-   "symbol": "CTR",
+   "symbol": "DPR",
    "rank": 196,
    "diem": -95,
    "group": null,
@@ -1578,7 +1578,7 @@
    "v10b": false
   },
   {
-   "symbol": "DPR",
+   "symbol": "VTP",
    "rank": 197,
    "diem": -96,
    "group": null,
@@ -1586,15 +1586,15 @@
    "v10b": false
   },
   {
-   "symbol": "NRC",
+   "symbol": "GEX",
    "rank": 198,
    "diem": -97,
    "group": null,
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
-   "symbol": "VTP",
+   "symbol": "SIP",
    "rank": 199,
    "diem": -98,
    "group": null,
@@ -1602,15 +1602,15 @@
    "v10b": false
   },
   {
-   "symbol": "GEX",
+   "symbol": "BVH",
    "rank": 200,
    "diem": -99,
    "group": null,
    "star": false,
-   "v10b": true
+   "v10b": false
   },
   {
-   "symbol": "SIP",
+   "symbol": "VEA",
    "rank": 201,
    "diem": -100,
    "group": null,
@@ -1618,7 +1618,7 @@
    "v10b": false
   },
   {
-   "symbol": "BVH",
+   "symbol": "HID",
    "rank": 202,
    "diem": -101,
    "group": null,
@@ -1626,7 +1626,7 @@
    "v10b": false
   },
   {
-   "symbol": "VEA",
+   "symbol": "CMG",
    "rank": 203,
    "diem": -102,
    "group": null,
@@ -1634,7 +1634,7 @@
    "v10b": false
   },
   {
-   "symbol": "HID",
+   "symbol": "TVS",
    "rank": 204,
    "diem": -103,
    "group": null,
@@ -1650,7 +1650,7 @@
    "v10b": true
   },
   {
-   "symbol": "CMG",
+   "symbol": "ELC",
    "rank": 206,
    "diem": -105,
    "group": null,
@@ -1658,7 +1658,7 @@
    "v10b": false
   },
   {
-   "symbol": "TVS",
+   "symbol": "NRC",
    "rank": 207,
    "diem": -106,
    "group": null,
@@ -1666,7 +1666,7 @@
    "v10b": false
   },
   {
-   "symbol": "EVG",
+   "symbol": "SVN",
    "rank": 208,
    "diem": -107,
    "group": null,
@@ -1674,20 +1674,20 @@
    "v10b": false
   },
   {
-   "symbol": "ELC",
+   "symbol": "MSR",
    "rank": 209,
    "diem": -108,
    "group": null,
    "star": false,
-   "v10b": false
+   "v10b": true
   },
   {
-   "symbol": "MSR",
+   "symbol": "EVG",
    "rank": 210,
    "diem": -109,
    "group": null,
    "star": false,
-   "v10b": true
+   "v10b": false
   },
   {
    "symbol": "FPT",
@@ -1706,7 +1706,7 @@
    "v10b": false
   },
   {
-   "symbol": "HII",
+   "symbol": "IDJ",
    "rank": 213,
    "diem": -112,
    "group": null,
@@ -1714,7 +1714,7 @@
    "v10b": false
   },
   {
-   "symbol": "IDJ",
+   "symbol": "HII",
    "rank": 214,
    "diem": -113,
    "group": null,
@@ -1738,23 +1738,23 @@
    "v10b": false
   },
   {
-   "symbol": "PNJ",
+   "symbol": "CRE",
    "rank": 217,
    "diem": -116,
+   "group": null,
+   "star": false,
+   "v10b": false
+  },
+  {
+   "symbol": "PNJ",
+   "rank": 218,
+   "diem": -117,
    "group": null,
    "star": false,
    "v10b": true
   },
   {
    "symbol": "APS",
-   "rank": 218,
-   "diem": -117,
-   "group": null,
-   "star": false,
-   "v10b": false
-  },
-  {
-   "symbol": "KOS",
    "rank": 219,
    "diem": -118,
    "group": null,
@@ -1762,7 +1762,7 @@
    "v10b": false
   },
   {
-   "symbol": "TIG",
+   "symbol": "KOS",
    "rank": 220,
    "diem": -119,
    "group": null,
@@ -1770,7 +1770,7 @@
    "v10b": false
   },
   {
-   "symbol": "AAV",
+   "symbol": "TIG",
    "rank": 221,
    "diem": -120,
    "group": null,
@@ -1778,7 +1778,7 @@
    "v10b": false
   },
   {
-   "symbol": "THD",
+   "symbol": "AAV",
    "rank": 222,
    "diem": -121,
    "group": null,
@@ -1786,9 +1786,17 @@
    "v10b": false
   },
   {
-   "symbol": "DST",
+   "symbol": "THD",
    "rank": 223,
    "diem": -122,
+   "group": null,
+   "star": false,
+   "v10b": false
+  },
+  {
+   "symbol": "DST",
+   "rank": 224,
+   "diem": -123,
    "group": null,
    "star": false,
    "v10b": false
