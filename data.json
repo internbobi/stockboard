@@ -1,19 +1,19 @@
 {
  "date": "2026-11-25",
  "source": "vnstock 4.x KBS (live price board)",
- "count_filtered": 41,
+ "count_filtered": 45,
  "count_total_symbols": 1517,
  "failed_symbols": 652,
  "items": [
   {
    "symbol": "FPT",
    "exchange": "HOSE",
-   "close": 46.85,
+   "close": 46.9,
    "prev_close": 46.85,
-   "change": 0.0,
-   "pct": 0.0,
-   "volume": 2633000,
-   "value_billion": 124.27
+   "change": 0.05,
+   "pct": 0.1,
+   "volume": 2740300,
+   "value_billion": 129.3
   },
   {
    "symbol": "VIX",
@@ -22,38 +22,58 @@
    "prev_close": 12.65,
    "change": 0.05,
    "pct": 0.4,
-   "volume": 5514600,
-   "value_billion": 70.37
+   "volume": 5611500,
+   "value_billion": 71.59
   },
   {
    "symbol": "VIC",
    "exchange": "HOSE",
-   "close": 246.0,
+   "close": 246.4,
    "prev_close": 245.7,
-   "change": 0.3,
-   "pct": 0.1,
-   "volume": 231600,
-   "value_billion": 57.13
+   "change": 0.7,
+   "pct": 0.3,
+   "volume": 259000,
+   "value_billion": 63.88
+  },
+  {
+   "symbol": "HDB",
+   "exchange": "HOSE",
+   "close": 21.7,
+   "prev_close": 21.8,
+   "change": -0.1,
+   "pct": -0.5,
+   "volume": 2206200,
+   "value_billion": 48.02
   },
   {
    "symbol": "SSI",
    "exchange": "HOSE",
-   "close": 19.7,
+   "close": 19.75,
    "prev_close": 19.75,
-   "change": -0.05,
-   "pct": -0.3,
-   "volume": 2226900,
-   "value_billion": 44.23
+   "change": 0.0,
+   "pct": 0.0,
+   "volume": 2387300,
+   "value_billion": 47.4
+  },
+  {
+   "symbol": "VPI",
+   "exchange": "HOSE",
+   "close": 56.7,
+   "prev_close": 58.1,
+   "change": -1.4,
+   "pct": -2.4,
+   "volume": 829000,
+   "value_billion": 47.3
   },
   {
    "symbol": "VJC",
    "exchange": "HOSE",
-   "close": 136.1,
+   "close": 136.5,
    "prev_close": 137.3,
-   "change": -1.2,
-   "pct": -0.9,
-   "volume": 312100,
-   "value_billion": 42.63
+   "change": -0.8,
+   "pct": -0.6,
+   "volume": 340000,
+   "value_billion": 46.43
   },
   {
    "symbol": "HPG",
@@ -62,28 +82,18 @@
    "prev_close": 20.4,
    "change": 0.05,
    "pct": 0.2,
-   "volume": 2078600,
-   "value_billion": 42.6
-  },
-  {
-   "symbol": "HDB",
-   "exchange": "HOSE",
-   "close": 21.65,
-   "prev_close": 21.8,
-   "change": -0.15,
-   "pct": -0.7,
-   "volume": 1943400,
-   "value_billion": 42.32
+   "volume": 2143600,
+   "value_billion": 43.93
   },
   {
    "symbol": "VHM",
    "exchange": "HOSE",
-   "close": 61.2,
+   "close": 61.3,
    "prev_close": 61.5,
-   "change": -0.3,
-   "pct": -0.5,
-   "volume": 662100,
-   "value_billion": 40.87
+   "change": -0.2,
+   "pct": -0.3,
+   "volume": 700300,
+   "value_billion": 43.21
   },
   {
    "symbol": "SHS",
@@ -92,8 +102,8 @@
    "prev_close": 13.4,
    "change": -0.1,
    "pct": -0.7,
-   "volume": 3035200,
-   "value_billion": 40.7
+   "volume": 3057800,
+   "value_billion": 41.0
   },
   {
    "symbol": "MSN",
@@ -102,18 +112,28 @@
    "prev_close": 69.1,
    "change": -0.2,
    "pct": -0.3,
-   "volume": 542800,
-   "value_billion": 37.55
+   "volume": 566000,
+   "value_billion": 39.15
   },
   {
    "symbol": "TCB",
    "exchange": "HOSE",
-   "close": 20.75,
+   "close": 20.8,
    "prev_close": 20.75,
-   "change": 0.0,
-   "pct": 0.0,
-   "volume": 1789000,
-   "value_billion": 37.13
+   "change": 0.05,
+   "pct": 0.2,
+   "volume": 1877000,
+   "value_billion": 38.96
+  },
+  {
+   "symbol": "PNJ",
+   "exchange": "HOSE",
+   "close": 12.8,
+   "prev_close": 12.6,
+   "change": 0.2,
+   "pct": 1.6,
+   "volume": 3039900,
+   "value_billion": 38.37
   },
   {
    "symbol": "GEX",
@@ -122,58 +142,28 @@
    "prev_close": 19.85,
    "change": 0.25,
    "pct": 1.3,
-   "volume": 1810800,
-   "value_billion": 36.51
+   "volume": 1897400,
+   "value_billion": 38.25
   },
   {
    "symbol": "MSR",
    "exchange": "UPCOM",
-   "close": 52.1,
+   "close": 52.0,
    "prev_close": 48.2,
-   "change": 3.9,
-   "pct": 8.1,
-   "volume": 677400,
-   "value_billion": 34.71
-  },
-  {
-   "symbol": "VPI",
-   "exchange": "HOSE",
-   "close": 56.6,
-   "prev_close": 58.1,
-   "change": -1.5,
-   "pct": -2.6,
-   "volume": 606000,
-   "value_billion": 34.64
-  },
-  {
-   "symbol": "PNJ",
-   "exchange": "HOSE",
-   "close": 12.7,
-   "prev_close": 12.6,
-   "change": 0.1,
-   "pct": 0.8,
-   "volume": 2524100,
-   "value_billion": 31.77
-  },
-  {
-   "symbol": "VPB",
-   "exchange": "HOSE",
-   "close": 20.5,
-   "prev_close": 20.45,
-   "change": 0.05,
-   "pct": 0.2,
-   "volume": 1170700,
-   "value_billion": 24.09
+   "change": 3.8,
+   "pct": 7.9,
+   "volume": 702500,
+   "value_billion": 36.02
   },
   {
    "symbol": "MBB",
    "exchange": "HOSE",
-   "close": 18.2,
+   "close": 18.25,
    "prev_close": 18.1,
-   "change": 0.1,
-   "pct": 0.6,
-   "volume": 1305400,
-   "value_billion": 23.88
+   "change": 0.15,
+   "pct": 0.8,
+   "volume": 1416600,
+   "value_billion": 25.91
   },
   {
    "symbol": "CII",
@@ -182,18 +172,28 @@
    "prev_close": 13.35,
    "change": 0.15,
    "pct": 1.1,
-   "volume": 1714000,
-   "value_billion": 23.35
+   "volume": 1867200,
+   "value_billion": 25.42
+  },
+  {
+   "symbol": "VPB",
+   "exchange": "HOSE",
+   "close": 20.5,
+   "prev_close": 20.45,
+   "change": 0.05,
+   "pct": 0.2,
+   "volume": 1211400,
+   "value_billion": 24.92
   },
   {
    "symbol": "VNM",
    "exchange": "HOSE",
-   "close": 52.7,
+   "close": 52.6,
    "prev_close": 52.3,
-   "change": 0.4,
-   "pct": 0.8,
-   "volume": 412300,
-   "value_billion": 21.66
+   "change": 0.3,
+   "pct": 0.6,
+   "volume": 456500,
+   "value_billion": 23.99
   },
   {
    "symbol": "VCB",
@@ -202,68 +202,8 @@
    "prev_close": 50.3,
    "change": 0.2,
    "pct": 0.4,
-   "volume": 410200,
-   "value_billion": 20.78
-  },
-  {
-   "symbol": "VND",
-   "exchange": "HOSE",
-   "close": 14.4,
-   "prev_close": 14.45,
-   "change": -0.05,
-   "pct": -0.3,
-   "volume": 1412400,
-   "value_billion": 20.5
-  },
-  {
-   "symbol": "KDH",
-   "exchange": "HOSE",
-   "close": 15.15,
-   "prev_close": 15.35,
-   "change": -0.2,
-   "pct": -1.3,
-   "volume": 1113600,
-   "value_billion": 17.06
-  },
-  {
-   "symbol": "NKG",
-   "exchange": "HOSE",
-   "close": 11.95,
-   "prev_close": 12.15,
-   "change": -0.2,
-   "pct": -1.6,
-   "volume": 1380300,
-   "value_billion": 16.65
-  },
-  {
-   "symbol": "BSR",
-   "exchange": "HOSE",
-   "close": 23.5,
-   "prev_close": 23.5,
-   "change": 0.0,
-   "pct": 0.0,
-   "volume": 701900,
-   "value_billion": 16.58
-  },
-  {
-   "symbol": "BAF",
-   "exchange": "HOSE",
-   "close": 30.6,
-   "prev_close": 30.8,
-   "change": -0.2,
-   "pct": -0.6,
-   "volume": 535700,
-   "value_billion": 16.43
-  },
-  {
-   "symbol": "SAB",
-   "exchange": "HOSE",
-   "close": 43.35,
-   "prev_close": 43.0,
-   "change": 0.35,
-   "pct": 0.8,
-   "volume": 370000,
-   "value_billion": 16.02
+   "volume": 455600,
+   "value_billion": 23.08
   },
   {
    "symbol": "HUT",
@@ -272,8 +212,78 @@
    "prev_close": 12.4,
    "change": -0.1,
    "pct": -0.8,
-   "volume": 1264000,
-   "value_billion": 15.55
+   "volume": 1736400,
+   "value_billion": 21.36
+  },
+  {
+   "symbol": "VND",
+   "exchange": "HOSE",
+   "close": 14.4,
+   "prev_close": 14.45,
+   "change": -0.05,
+   "pct": -0.3,
+   "volume": 1427100,
+   "value_billion": 20.71
+  },
+  {
+   "symbol": "KDH",
+   "exchange": "HOSE",
+   "close": 15.2,
+   "prev_close": 15.35,
+   "change": -0.15,
+   "pct": -1.0,
+   "volume": 1166300,
+   "value_billion": 17.86
+  },
+  {
+   "symbol": "SAB",
+   "exchange": "HOSE",
+   "close": 43.55,
+   "prev_close": 43.0,
+   "change": 0.55,
+   "pct": 1.3,
+   "volume": 412100,
+   "value_billion": 17.85
+  },
+  {
+   "symbol": "NKG",
+   "exchange": "HOSE",
+   "close": 11.95,
+   "prev_close": 12.15,
+   "change": -0.2,
+   "pct": -1.6,
+   "volume": 1477500,
+   "value_billion": 17.81
+  },
+  {
+   "symbol": "BAF",
+   "exchange": "HOSE",
+   "close": 30.6,
+   "prev_close": 30.8,
+   "change": -0.2,
+   "pct": -0.6,
+   "volume": 561100,
+   "value_billion": 17.2
+  },
+  {
+   "symbol": "BSR",
+   "exchange": "HOSE",
+   "close": 23.5,
+   "prev_close": 23.5,
+   "change": 0.0,
+   "pct": 0.0,
+   "volume": 725600,
+   "value_billion": 17.14
+  },
+  {
+   "symbol": "VPL",
+   "exchange": "HOSE",
+   "close": 95.9,
+   "prev_close": 96.0,
+   "change": -0.1,
+   "pct": -0.1,
+   "volume": 161800,
+   "value_billion": 15.54
   },
   {
    "symbol": "TPB",
@@ -282,28 +292,28 @@
    "prev_close": 12.35,
    "change": 0.0,
    "pct": 0.0,
-   "volume": 1216700,
-   "value_billion": 15.04
+   "volume": 1232700,
+   "value_billion": 15.24
   },
   {
    "symbol": "BID",
    "exchange": "HOSE",
-   "close": 30.2,
+   "close": 30.25,
    "prev_close": 30.1,
-   "change": 0.1,
-   "pct": 0.3,
-   "volume": 465000,
-   "value_billion": 14.13
+   "change": 0.15,
+   "pct": 0.5,
+   "volume": 494200,
+   "value_billion": 15.02
   },
   {
    "symbol": "VC3",
    "exchange": "HNX",
-   "close": 23.5,
+   "close": 23.4,
    "prev_close": 23.4,
-   "change": 0.1,
-   "pct": 0.4,
-   "volume": 606300,
-   "value_billion": 14.13
+   "change": 0.0,
+   "pct": 0.0,
+   "volume": 610100,
+   "value_billion": 14.22
   },
   {
    "symbol": "DBC",
@@ -312,18 +322,8 @@
    "prev_close": 16.4,
    "change": -0.1,
    "pct": -0.6,
-   "volume": 844700,
-   "value_billion": 13.68
-  },
-  {
-   "symbol": "VPL",
-   "exchange": "HOSE",
-   "close": 96.0,
-   "prev_close": 96.0,
-   "change": 0.0,
-   "pct": 0.0,
-   "volume": 141700,
-   "value_billion": 13.61
+   "volume": 865200,
+   "value_billion": 14.01
   },
   {
    "symbol": "MWG",
@@ -332,28 +332,18 @@
    "prev_close": 70.9,
    "change": 0.0,
    "pct": 0.0,
-   "volume": 178600,
-   "value_billion": 12.7
+   "volume": 187100,
+   "value_billion": 13.31
   },
   {
    "symbol": "NVL",
    "exchange": "HOSE",
-   "close": 9.95,
+   "close": 9.96,
    "prev_close": 9.89,
-   "change": 0.06,
-   "pct": 0.6,
-   "volume": 1241100,
-   "value_billion": 12.39
-  },
-  {
-   "symbol": "DCM",
-   "exchange": "HOSE",
-   "close": 30.55,
-   "prev_close": 30.55,
-   "change": 0.0,
-   "pct": 0.0,
-   "volume": 390000,
-   "value_billion": 11.98
+   "change": 0.07,
+   "pct": 0.7,
+   "volume": 1297100,
+   "value_billion": 12.95
   },
   {
    "symbol": "ACB",
@@ -362,8 +352,8 @@
    "prev_close": 19.75,
    "change": -0.1,
    "pct": -0.5,
-   "volume": 602100,
-   "value_billion": 11.88
+   "volume": 655500,
+   "value_billion": 12.93
   },
   {
    "symbol": "TCH",
@@ -372,8 +362,8 @@
    "prev_close": 13.3,
    "change": -0.05,
    "pct": -0.4,
-   "volume": 880600,
-   "value_billion": 11.71
+   "volume": 943300,
+   "value_billion": 12.54
   },
   {
    "symbol": "PAN",
@@ -382,8 +372,18 @@
    "prev_close": 15.85,
    "change": -0.45,
    "pct": -2.8,
-   "volume": 749900,
-   "value_billion": 11.61
+   "volume": 798800,
+   "value_billion": 12.36
+  },
+  {
+   "symbol": "DCM",
+   "exchange": "HOSE",
+   "close": 30.6,
+   "prev_close": 30.55,
+   "change": 0.05,
+   "pct": 0.2,
+   "volume": 395700,
+   "value_billion": 12.16
   },
   {
    "symbol": "VCI",
@@ -392,8 +392,8 @@
    "prev_close": 18.8,
    "change": 0.05,
    "pct": 0.3,
-   "volume": 596600,
-   "value_billion": 11.31
+   "volume": 618000,
+   "value_billion": 11.71
   },
   {
    "symbol": "POW",
@@ -402,8 +402,8 @@
    "prev_close": 13.7,
    "change": -0.1,
    "pct": -0.7,
-   "volume": 785700,
-   "value_billion": 10.73
+   "volume": 847000,
+   "value_billion": 11.57
   },
   {
    "symbol": "SHB",
@@ -412,10 +412,50 @@
    "prev_close": 10.5,
    "change": -0.05,
    "pct": -0.5,
-   "volume": 987200,
-   "value_billion": 10.32
+   "volume": 1073900,
+   "value_billion": 11.23
+  },
+  {
+   "symbol": "CTG",
+   "exchange": "HOSE",
+   "close": 30.35,
+   "prev_close": 30.35,
+   "change": 0.0,
+   "pct": 0.0,
+   "volume": 367900,
+   "value_billion": 11.18
+  },
+  {
+   "symbol": "FRT",
+   "exchange": "HOSE",
+   "close": 146.0,
+   "prev_close": 148.0,
+   "change": -2.0,
+   "pct": -1.4,
+   "volume": 71600,
+   "value_billion": 10.61
+  },
+  {
+   "symbol": "VSC",
+   "exchange": "HOSE",
+   "close": 13.2,
+   "prev_close": 13.1,
+   "change": 0.1,
+   "pct": 0.8,
+   "volume": 764500,
+   "value_billion": 10.11
+  },
+  {
+   "symbol": "HAG",
+   "exchange": "HOSE",
+   "close": 13.85,
+   "prev_close": 13.85,
+   "change": 0.0,
+   "pct": 0.0,
+   "volume": 721000,
+   "value_billion": 10.01
   }
  ],
  "sort_by": "value_billion_desc",
- "updated_at": "2026-11-25T09:55:04+07:00"
+ "updated_at": "2026-11-25T10:00:07+07:00"
 }
