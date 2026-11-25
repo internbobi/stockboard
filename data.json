@@ -1,29 +1,109 @@
 {
  "date": "2026-11-25",
  "source": "vnstock 4.x KBS (live price board)",
- "count_filtered": 4,
+ "count_filtered": 15,
  "count_total_symbols": 1517,
  "failed_symbols": 652,
  "items": [
   {
    "symbol": "FPT",
    "exchange": "HOSE",
-   "close": 47.55,
+   "close": 47.2,
    "prev_close": 46.85,
-   "change": 0.7,
-   "pct": 1.5,
-   "volume": 311700,
-   "value_billion": 14.82
+   "change": 0.35,
+   "pct": 0.7,
+   "volume": 992500,
+   "value_billion": 47.15
+  },
+  {
+   "symbol": "VIX",
+   "exchange": "HOSE",
+   "close": 12.8,
+   "prev_close": 12.65,
+   "change": 0.15,
+   "pct": 1.2,
+   "volume": 1528300,
+   "value_billion": 19.59
+  },
+  {
+   "symbol": "TCB",
+   "exchange": "HOSE",
+   "close": 20.7,
+   "prev_close": 20.75,
+   "change": -0.05,
+   "pct": -0.2,
+   "volume": 917400,
+   "value_billion": 19.03
+  },
+  {
+   "symbol": "SSI",
+   "exchange": "HOSE",
+   "close": 19.9,
+   "prev_close": 19.75,
+   "change": 0.15,
+   "pct": 0.8,
+   "volume": 926400,
+   "value_billion": 18.49
+  },
+  {
+   "symbol": "MSR",
+   "exchange": "UPCOM",
+   "close": 51.5,
+   "prev_close": 48.2,
+   "change": 3.3,
+   "pct": 6.8,
+   "volume": 343500,
+   "value_billion": 17.5
+  },
+  {
+   "symbol": "SHS",
+   "exchange": "HNX",
+   "close": 13.5,
+   "prev_close": 13.4,
+   "change": 0.1,
+   "pct": 0.7,
+   "volume": 1260400,
+   "value_billion": 16.97
+  },
+  {
+   "symbol": "HPG",
+   "exchange": "HOSE",
+   "close": 20.5,
+   "prev_close": 20.4,
+   "change": 0.1,
+   "pct": 0.5,
+   "volume": 804400,
+   "value_billion": 16.52
+  },
+  {
+   "symbol": "HDB",
+   "exchange": "HOSE",
+   "close": 21.75,
+   "prev_close": 21.8,
+   "change": -0.05,
+   "pct": -0.2,
+   "volume": 728000,
+   "value_billion": 15.9
+  },
+  {
+   "symbol": "VPI",
+   "exchange": "HOSE",
+   "close": 57.1,
+   "prev_close": 58.1,
+   "change": -1.0,
+   "pct": -1.7,
+   "volume": 245600,
+   "value_billion": 14.14
   },
   {
    "symbol": "VJC",
    "exchange": "HOSE",
-   "close": 137.4,
+   "close": 135.5,
    "prev_close": 137.3,
-   "change": 0.1,
-   "pct": 0.1,
-   "volume": 86700,
-   "value_billion": 11.91
+   "change": -1.8,
+   "pct": -1.3,
+   "volume": 102100,
+   "value_billion": 14.01
   },
   {
    "symbol": "VC3",
@@ -32,20 +112,50 @@
    "prev_close": 23.4,
    "change": 0.0,
    "pct": 0.0,
-   "volume": 477300,
-   "value_billion": 11.12
+   "volume": 588200,
+   "value_billion": 13.71
   },
   {
-   "symbol": "VPI",
+   "symbol": "VIC",
    "exchange": "HOSE",
-   "close": 57.7,
-   "prev_close": 58.1,
-   "change": -0.4,
-   "pct": -0.7,
-   "volume": 189300,
-   "value_billion": 10.92
+   "close": 246.0,
+   "prev_close": 245.7,
+   "change": 0.3,
+   "pct": 0.1,
+   "volume": 47900,
+   "value_billion": 11.78
+  },
+  {
+   "symbol": "VHM",
+   "exchange": "HOSE",
+   "close": 61.6,
+   "prev_close": 61.5,
+   "change": 0.1,
+   "pct": 0.2,
+   "volume": 189100,
+   "value_billion": 11.69
+  },
+  {
+   "symbol": "CII",
+   "exchange": "HOSE",
+   "close": 13.65,
+   "prev_close": 13.35,
+   "change": 0.3,
+   "pct": 2.2,
+   "volume": 757400,
+   "value_billion": 10.36
+  },
+  {
+   "symbol": "PNJ",
+   "exchange": "HOSE",
+   "close": 12.8,
+   "prev_close": 12.6,
+   "change": 0.2,
+   "pct": 1.6,
+   "volume": 800100,
+   "value_billion": 10.1
   }
  ],
  "sort_by": "value_billion_desc",
- "updated_at": "2026-11-25T09:15:04+07:00"
+ "updated_at": "2026-11-25T09:20:02+07:00"
 }
