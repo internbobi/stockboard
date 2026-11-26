@@ -1,20 +1,10 @@
 {
  "date": "2026-11-26",
  "source": "vnstock 4.x KBS (live price board)",
- "count_filtered": 2,
+ "count_filtered": 5,
  "count_total_symbols": 1517,
  "failed_symbols": 652,
  "items": [
-  {
-   "symbol": "MSR",
-   "exchange": "UPCOM",
-   "close": 55.1,
-   "prev_close": 53.6,
-   "change": 1.5,
-   "pct": 2.8,
-   "volume": 269200,
-   "value_billion": 15.07
-  },
   {
    "symbol": "SHS",
    "exchange": "HNX",
@@ -22,10 +12,50 @@
    "prev_close": 12.9,
    "change": -0.3,
    "pct": -2.3,
-   "volume": 997200,
-   "value_billion": 12.6
+   "volume": 1319100,
+   "value_billion": 16.64
+  },
+  {
+   "symbol": "MSR",
+   "exchange": "UPCOM",
+   "close": 55.4,
+   "prev_close": 53.6,
+   "change": 1.8,
+   "pct": 3.4,
+   "volume": 287400,
+   "value_billion": 16.07
+  },
+  {
+   "symbol": "VIX",
+   "exchange": "HOSE",
+   "close": 12.1,
+   "prev_close": 12.3,
+   "change": -0.2,
+   "pct": -1.6,
+   "volume": 999800,
+   "value_billion": 12.1
+  },
+  {
+   "symbol": "VJC",
+   "exchange": "HOSE",
+   "close": 137.0,
+   "prev_close": 137.8,
+   "change": -0.8,
+   "pct": -0.6,
+   "volume": 85500,
+   "value_billion": 11.71
+  },
+  {
+   "symbol": "VPB",
+   "exchange": "HOSE",
+   "close": 19.8,
+   "prev_close": 20.25,
+   "change": -0.45,
+   "pct": -2.2,
+   "volume": 573500,
+   "value_billion": 11.36
   }
  ],
  "sort_by": "value_billion_desc",
- "updated_at": "2026-11-26T09:10:03+07:00"
+ "updated_at": "2026-11-26T09:15:04+07:00"
 }
