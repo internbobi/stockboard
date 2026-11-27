@@ -68,6 +68,11 @@
   .setup-toggle, .tab-toggle { display: flex; gap: 6px; justify-content: center; margin: 0 0 6px; }
   .setup-toggle button, .tab-toggle button { background: #333; color: #fff; border: 1px solid #666; border-radius: 6px; font-size: 2.6cqw; font-weight: bold; padding: 3px 12px; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
   .setup-toggle button.on, .tab-toggle button.on { background: #fff; color: #000; border-color: #fff; }
+  /* Timeframe buttons (Dat 2026-11-27): 3M / 6M / 1Y per Block, below the
+     tab row and smaller than it. */
+  .tf-toggle { display: flex; gap: 6px; justify-content: center; margin: 0 0 6px; }
+  .tf-toggle button { background: #333; color: #fff; border: 1px solid #666; border-radius: 6px; font-size: 1.8cqw; font-weight: bold; padding: 2px 10px; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+  .tf-toggle button.on { background: #fff; color: #000; border-color: #fff; }
   /* Block 3 (new, Dat 2026-11-20): per-symbol chart for the symbol clicked
      in Block 2 (Setup 1). Layer 1 = price bars (same frame as the VNINDEX
      chart, 30vh), Layer 2 = matched volume, Layer 3 = Momentum. All three
@@ -84,6 +89,7 @@
 <div class="market">
 <h1>Trạng thái TTCKVN</h1>
 <div class="tab-toggle"><button id="b1TabTTCK" class="on">TTCK</button><button id="b1TabGDNN">GDNN</button><button id="b1TabVN30">VN30</button></div>
+<div class="tf-toggle"><button id="b1Tf3M">3M</button><button id="b1Tf6M">6M</button><button id="b1Tf1Y" class="on">1Y</button></div>
 <div id="b1-ttck">
 <div id="vninfo" class="vninfo">Đang tải dữ liệu…</div>
 <canvas id="vnchart"></canvas>
@@ -114,6 +120,7 @@
 <div class="stock">
 <h1 id="stockTitle">Chọn mã ở Block 2</h1>
 <div class="tab-toggle"><button id="b3TabSucManh" class="on">Sức mạnh</button><button id="b3TabThanPhap">Thân pháp</button><button id="b3TabSinhKhi">Sinh khí</button><button id="b3TabNoiCong">Nội công</button></div>
+<div class="tf-toggle"><button id="b3Tf3M">3M</button><button id="b3Tf6M">6M</button><button id="b3Tf1Y" class="on">1Y</button></div>
 <div id="b3-sucmanh">
 <div id="stockinfo" class="stockinfo">Bấm vào một mã trong danh sách Setup 1 để xem chart.</div>
 <canvas id="stockchart"></canvas>
@@ -314,6 +321,12 @@ const VN_MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','
 // room on the right of every Block 2 chart, so the last bar is not jammed
 // against the right edge and the value labels sit clear of the data.
 const PAD_BARS = 15;
+// Timeframe buttons (Dat 2026-11-27): 3M / 6M / 1Y display window per
+// Block. Indicators are computed on the FULL history; only the view
+// window changes. 3M ~ 63 trading days, 6M ~ 126, 1Y ~ 250.
+const TF_BARS = { '3M': 63, '6M': 126, '1Y': 250 };
+function tfBars(tf) { return TF_BARS[tf] || 250; }
+let b1Timeframe = '1Y';
 function fmtNum(x, dec) {
   return x.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
 }
@@ -328,7 +341,7 @@ function drawVNChart(canvasId) {
   const ctx = cv.getContext('2d');
   ctx.scale(dpr, dpr);
   ctx.clearRect(0, 0, cssW, cssH);
-  const items = vnData.items, n = items.length;
+  const items = vnData.items.slice(-tfBars(b1Timeframe)), n = items.length;
   const L = 6, R = 62, T = 8, B = 26;
   const plotW = cssW - L - R, plotH = cssH - T - B;
   let mn = Infinity, mx = -Infinity;
@@ -514,7 +527,7 @@ function drawGDNNVolume() {
   const ctx = cv.getContext('2d');
   ctx.scale(dpr, dpr);
   ctx.clearRect(0, 0, cssW, cssH);
-  const items = vnData.items, n = items.length;
+  const items = vnData.items.slice(-tfBars(b1Timeframe)), n = items.length;
   const L = 6, R = 62, T = 8, B = 26;
   const plotW = cssW - L - R, plotH = cssH - T - B;
   let mx = 0;
@@ -657,6 +670,18 @@ function switchB1Tab(tab) {
 Object.keys(B1_TABS).forEach(t => {
   document.getElementById(B1_TABS[t]).addEventListener('click', () => switchB1Tab(t));
 });
+// Timeframe buttons (Dat 2026-11-27): 3M / 6M / 1Y display window for
+// Block 1. Indicators stay computed on the full history; only the view
+// window changes, so redraw the active tab with the new window.
+const B1_TF = { '3M': 'b1Tf3M', '6M': 'b1Tf6M', '1Y': 'b1Tf1Y' };
+Object.keys(B1_TF).forEach(tf => {
+  document.getElementById(B1_TF[tf]).addEventListener('click', () => {
+    b1Timeframe = tf;
+    Object.values(B1_TF).forEach(id => document.getElementById(id).classList.remove('on'));
+    document.getElementById(B1_TF[tf]).classList.add('on');
+    drawActiveB1Tab();
+  });
+});
 let vnResizeT = null;
 window.addEventListener('resize', () => {
   clearTimeout(vnResizeT);
@@ -702,7 +727,7 @@ function drawPctChart(cv, data) {
   const ctx = cv.getContext('2d');
   ctx.scale(dpr, dpr);
   ctx.clearRect(0, 0, cssW, cssH);
-  const items = data.items, n = items.length;
+  const items = data.items.slice(-tfBars(b1Timeframe)), n = items.length;
   // Same time axis as Layer 1: L=6, R=62, same dates (1 year, 2025-11-11..2026-11-11),
   // so every date sits at the exact same x in both layers.
   const L = 6, R = 62, T = 8, B = 26;
@@ -853,8 +878,12 @@ function drawTMA5Chart(cv, data) {
   ctx.scale(dpr, dpr);
   ctx.clearRect(0, 0, cssW, cssH);
   const all = data.items, nAll = all.length;
-  const startIdx = all.findIndex(it => it.date >= data.from);
-  const show = startIdx >= 0 ? all.slice(startIdx) : all;
+  // Display window follows the Block 1 timeframe: start at most tfBars
+  // back, while respecting the 1-year `from` bound. HHV below is still
+  // computed over the FULL history.
+  const baseIdx = all.findIndex(it => it.date >= data.from);
+  const startIdx = Math.max(baseIdx >= 0 ? baseIdx : 0, nAll - tfBars(b1Timeframe));
+  const show = all.slice(startIdx);
   const n = show.length;
   // Rolling HHV(260) / HHV(65) of the V3 counts over the FULL history
   // (not just the display window).
@@ -1070,7 +1099,11 @@ let selectedStock = null;
 // symbol was ranked but below the top 30% (group null) gets cyan.
 const SCORE_DOT_COLORS = { 'Top 10%': '#FF00FF', 'Top 20%': '#00FF22', 'Top 30%': '#FFCC00' };
 const SCORE_DOT_BELOW = '#00FFFF'; // ranked but below top 30%
-const STOCK_BARS = 250; // ~1 year of trading days, same window as VNINDEX
+// Block 3 display window follows its timeframe buttons (Dat 2026-11-27):
+// 1Y ~ 250 trading days (same window as VNINDEX), 6M ~ 126, 3M ~ 63.
+// RSI and the volume MA(20) are computed over the FULL history first, so
+// the displayed values stay properly warmed up at any window.
+let b3Timeframe = '1Y';
 function stockBarColor(close, prev) {
   // Same AFL rules as the VNINDEX bars (fetch_vnindex.py bar_color).
   if (prev == null || close === prev) return '#FFCC00';
@@ -1113,11 +1146,11 @@ function computeMA(values, period) {
   return out;
 }
 function stockDisplayBars(h) {
-  // Last STOCK_BARS bars (1 year). RSI and the volume MA(20) are computed
+  // Last tfBars(b3Timeframe) bars. RSI and the volume MA(20) are computed
   // over the FULL history first, so the displayed values are properly
   // warmed up.
   const n = h.dates.length;
-  const start = Math.max(0, n - STOCK_BARS);
+  const start = Math.max(0, n - tfBars(b3Timeframe));
   const rsi = computeRSI(h.closes, 14);
   const ma20vol = computeMA(h.volumes, 20);
   const bars = [];
@@ -1531,6 +1564,18 @@ function switchB3Tab(tab) {
 }
 Object.keys(B3_TABS).forEach(t => {
   document.getElementById(B3_TABS[t]).addEventListener('click', () => switchB3Tab(t));
+});
+// Timeframe buttons (Dat 2026-11-27): 3M / 6M / 1Y display window for
+// Block 3. Indicators stay computed on the full history; only the view
+// window changes, so redraw the selected symbol with the new window.
+const B3_TF = { '3M': 'b3Tf3M', '6M': 'b3Tf6M', '1Y': 'b3Tf1Y' };
+Object.keys(B3_TF).forEach(tf => {
+  document.getElementById(B3_TF[tf]).addEventListener('click', () => {
+    b3Timeframe = tf;
+    Object.values(B3_TF).forEach(id => document.getElementById(id).classList.remove('on'));
+    document.getElementById(B3_TF[tf]).classList.add('on');
+    drawStockChart();
+  });
 });
 function selectStock(sym) {
   selectedStock = sym;
